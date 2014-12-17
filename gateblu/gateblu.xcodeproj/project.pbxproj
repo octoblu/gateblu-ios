@@ -8,12 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95881A41F77200236CFC /* AppDelegate.swift */; };
-		9A0C958B1A41F77200236CFC /* GatebluViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C958A1A41F77200236CFC /* GatebluViewController.swift */; };
+		9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C958A1A41F77200236CFC /* ViewController.swift */; };
 		9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C958C1A41F77200236CFC /* Main.storyboard */; };
 		9A0C95901A41F77200236CFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C958F1A41F77200236CFC /* Images.xcassets */; };
 		9A0C95931A41F77200236CFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95911A41F77200236CFC /* LaunchScreen.xib */; };
 		9A0C959F1A41F77200236CFC /* gatebluTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C959E1A41F77200236CFC /* gatebluTests.swift */; };
 		9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95AA1A420A1900236CFC /* 256x256spiral.png */; };
+		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,7 +31,7 @@
 		9A0C95831A41F77200236CFC /* gateblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gateblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95871A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C95881A41F77200236CFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		9A0C958A1A41F77200236CFC /* GatebluViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = GatebluViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
+		9A0C958A1A41F77200236CFC /* ViewController.swift */ = {isa = PBXFileReference; indentWidth = 2; lastKnownFileType = sourcecode.swift; lineEnding = 0; path = ViewController.swift; sourceTree = "<group>"; tabWidth = 2; };
 		9A0C958D1A41F77200236CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9A0C958F1A41F77200236CFC /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = gateblu/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		9A0C95921A41F77200236CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -38,6 +39,7 @@
 		9A0C959D1A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C959E1A41F77200236CFC /* gatebluTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gatebluTests.swift; sourceTree = "<group>"; };
 		9A0C95AA1A420A1900236CFC /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 256x256spiral.png; path = ../../octoblu/public/assets/images/256x256spiral.png; sourceTree = SOURCE_ROOT; };
+		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +64,7 @@
 		9A0C957A1A41F77200236CFC = {
 			isa = PBXGroup;
 			children = (
+				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
 				9A0C95851A41F77200236CFC /* gateblu */,
 				9A0C959B1A41F77200236CFC /* gatebluTests */,
 				9A0C95841A41F77200236CFC /* Products */,
@@ -80,7 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				9A0C95881A41F77200236CFC /* AppDelegate.swift */,
-				9A0C958A1A41F77200236CFC /* GatebluViewController.swift */,
+				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 				9A0C95AA1A420A1900236CFC /* 256x256spiral.png */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
@@ -165,6 +169,11 @@
 					9A0C95821A41F77200236CFC = {
 						CreatedOnToolsVersion = 6.1.1;
 						DevelopmentTeam = JLSZ8Q5945;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					9A0C95971A41F77200236CFC = {
 						CreatedOnToolsVersion = 6.1.1;
@@ -217,7 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9A0C958B1A41F77200236CFC /* GatebluViewController.swift in Sources */,
+				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
