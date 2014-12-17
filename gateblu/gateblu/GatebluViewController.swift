@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class GatebluViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
