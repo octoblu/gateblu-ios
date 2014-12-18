@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--GatebluController-->
+        <!--ViewController-->
         <scene sceneID="dJ2-SP-p0U">
             <objects>
-                <viewController id="PLA-6g-YLR" userLabel="GatebluController" sceneMemberID="viewController">
+                <viewController id="PLA-6g-YLR" userLabel="ViewController" customClass="ViewController" customModule="gateblu" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleAspectFill" id="Trm-5o-Fcc" userLabel="mainView">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

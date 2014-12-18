@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		522F9D7762F5BBA9EF54F5EF /* libPods-gateblu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1981509205167E4CC4BCA124 /* libPods-gateblu.a */; };
 		9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95881A41F77200236CFC /* AppDelegate.swift */; };
 		9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C958A1A41F77200236CFC /* ViewController.swift */; };
 		9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C958C1A41F77200236CFC /* Main.storyboard */; };
@@ -15,6 +16,10 @@
 		9A0C959F1A41F77200236CFC /* gatebluTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C959E1A41F77200236CFC /* gatebluTests.swift */; };
 		9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95AA1A420A1900236CFC /* 256x256spiral.png */; };
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
+		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
+		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
+		BB6D7CB41A429816007B8E17 /* www in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CB31A429816007B8E17 /* www */; };
+		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1981509205167E4CC4BCA124 /* libPods-gateblu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gateblu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95831A41F77200236CFC /* gateblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gateblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95871A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C95881A41F77200236CFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -40,6 +46,13 @@
 		9A0C959E1A41F77200236CFC /* gatebluTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gatebluTests.swift; sourceTree = "<group>"; };
 		9A0C95AA1A420A1900236CFC /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 256x256spiral.png; path = ../../octoblu/public/assets/images/256x256spiral.png; sourceTree = SOURCE_ROOT; };
 		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
+		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
+		BB6D7CB31A429816007B8E17 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
+		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
+		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -48,6 +61,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */,
+				522F9D7762F5BBA9EF54F5EF /* libPods-gateblu.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,13 +75,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		455BA00AC7ADB8C113D7E52E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */,
+				EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1981509205167E4CC4BCA124 /* libPods-gateblu.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9A0C957A1A41F77200236CFC = {
 			isa = PBXGroup;
 			children = (
+				BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */,
+				BB6D7CB31A429816007B8E17 /* www */,
+				BB6D7CAE1A42968F007B8E17 /* config.xml */,
+				BB6D7CAB1A424F50007B8E17 /* Podfile */,
 				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
 				9A0C95851A41F77200236CFC /* gateblu */,
 				9A0C959B1A41F77200236CFC /* gatebluTests */,
 				9A0C95841A41F77200236CFC /* Products */,
+				455BA00AC7ADB8C113D7E52E /* Pods */,
+				6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +127,7 @@
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
 				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
+				BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -126,9 +164,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9A0C95A21A41F77200236CFC /* Build configuration list for PBXNativeTarget "gateblu" */;
 			buildPhases = (
+				BD21FFB860DABDE210D76BD3 /* Check Pods Manifest.lock */,
 				9A0C957F1A41F77200236CFC /* Sources */,
 				9A0C95801A41F77200236CFC /* Frameworks */,
 				9A0C95811A41F77200236CFC /* Resources */,
+				2BBEED015D3FE6B4D9EE52E0 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -205,8 +245,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */,
+				BB6D7CB41A429816007B8E17 /* www in Resources */,
 				9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */,
 				9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */,
+				BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */,
 				9A0C95931A41F77200236CFC /* LaunchScreen.xib in Resources */,
 				9A0C95901A41F77200236CFC /* Images.xcassets in Resources */,
 			);
@@ -221,11 +264,45 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		2BBEED015D3FE6B4D9EE52E0 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-gateblu/Pods-gateblu-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BD21FFB860DABDE210D76BD3 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		9A0C957F1A41F77200236CFC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 			);
@@ -350,24 +427,28 @@
 		};
 		9A0C95A31A41F77200236CFC /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gateblu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
 		9A0C95A41A41F77200236CFC /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gateblu/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
