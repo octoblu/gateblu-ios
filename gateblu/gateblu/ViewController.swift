@@ -9,25 +9,55 @@
 import UIKit
 import CoreBluetooth
 
-class ViewController: UIViewController, CBCentralManagerDelegate {
+class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
   var centralManager:CBCentralManager!
   var blueToothReady = false
   var webViewController:CDVViewController!
   var server = BLWebSocketsServer.sharedInstance()
+  @IBOutlet var deviceCollectionView : UICollectionView?
+  
+  var devices : [Device] = []
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        println("Starting Manager")
-        startWebsocketServer()
-        startUpCentralManager()
-        startCordovaView()
-    }
+  override func viewDidLoad() {
+      super.viewDidLoad()
+      println("Starting Manager")
+      startDeviceCollectionView()
+      startWebsocketServer()
+      startUpCentralManager()
+      startCordovaView()
+  }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+  override func didReceiveMemoryWarning() {
+      super.didReceiveMemoryWarning()
+      // Dispose of any resources that can be recreated.
+  }
+  
+  func startDeviceCollectionView(){
+    for i in 1...10 {
+        devices.append(Device())
     }
+    let frame = CGRect(x: 0, y: 60, width: self.view.bounds.width, height: self.view.bounds.height - 60)
+    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+    layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+    layout.itemSize = CGSize(width: 150, height: 100)
+    deviceCollectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
+    deviceCollectionView!.delegate = self
+    deviceCollectionView!.dataSource = self
+    deviceCollectionView!.backgroundColor = UIColor.whiteColor()
+    deviceCollectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+    self.view.addSubview(deviceCollectionView!)
+  }
+  
+  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return devices.count
+  }
+  
+  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
+    cell.backgroundColor = UIColor.grayColor()
+    return cell
+  }
   
   func startWebsocketServer() {
     let onCompletion = { (error: NSError!) -> Void in

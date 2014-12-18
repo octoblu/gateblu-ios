@@ -15,6 +15,7 @@
 		9A0C95931A41F77200236CFC /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95911A41F77200236CFC /* LaunchScreen.xib */; };
 		9A0C959F1A41F77200236CFC /* gatebluTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C959E1A41F77200236CFC /* gatebluTests.swift */; };
 		9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95AA1A420A1900236CFC /* 256x256spiral.png */; };
+		9A0C95B21A434A9F00236CFC /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95B11A434A9F00236CFC /* Device.swift */; };
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
@@ -45,6 +46,7 @@
 		9A0C959D1A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C959E1A41F77200236CFC /* gatebluTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gatebluTests.swift; sourceTree = "<group>"; };
 		9A0C95AA1A420A1900236CFC /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 256x256spiral.png; path = ../../octoblu/public/assets/images/256x256spiral.png; sourceTree = SOURCE_ROOT; };
+		9A0C95B11A434A9F00236CFC /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
 				BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */,
+				9A0C95B11A434A9F00236CFC /* Device.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -305,6 +308,7 @@
 				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
+				9A0C95B21A434A9F00236CFC /* Device.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
