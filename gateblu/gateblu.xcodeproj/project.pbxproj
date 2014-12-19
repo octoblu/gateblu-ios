@@ -19,7 +19,6 @@
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
-		BB6D7CB41A429816007B8E17 /* www in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CB31A429816007B8E17 /* www */; };
 		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +50,6 @@
 		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		BB6D7CB31A429816007B8E17 /* www */ = {isa = PBXFileReference; lastKnownFileType = folder; path = www; sourceTree = "<group>"; };
 		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
 		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 			isa = PBXGroup;
 			children = (
 				BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */,
-				BB6D7CB31A429816007B8E17 /* www */,
 				BB6D7CAE1A42968F007B8E17 /* config.xml */,
 				BB6D7CAB1A424F50007B8E17 /* Podfile */,
 				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
@@ -249,7 +246,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */,
-				BB6D7CB41A429816007B8E17 /* www in Resources */,
 				9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */,
 				9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */,
 				BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */,
@@ -436,6 +432,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gateblu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
@@ -450,6 +447,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = gateblu/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";

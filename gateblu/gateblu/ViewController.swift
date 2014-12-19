@@ -8,12 +8,20 @@
 
 import UIKit
 import CoreBluetooth
+import WebKit
 
-class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
+  func userContentController(_userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
+    println(message.body)
+  }
+}
+
+class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
   
   var centralManager:CBCentralManager!
   var blueToothReady = false
-  var webViewController:CDVViewController!
+  var webView:WKWebView!
+  var foundPeripherals = Dictionary<String,CBPeripheral>()
   var server = BLWebSocketsServer.sharedInstance()
   @IBOutlet var deviceCollectionView : UICollectionView?
   
@@ -25,7 +33,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionVi
       startDeviceCollectionView()
       startWebsocketServer()
       startUpCentralManager()
-      startCordovaView()
+      startWebView()
   }
 
   override func didReceiveMemoryWarning() {
@@ -67,21 +75,42 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionVi
     }
     
     let handleRequest = { (data: NSData!) -> NSData! in
-      var err: NSError?
-      var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as NSDictionary
-      let action = jsonResult["action"] as NSString;
-
-    
+      let jsonResult = JSON(data: data)
+      let action = jsonResult["action"];
+      
+      println(action)
+      println(jsonResult)
+      
       switch action {
         case "startScanning":
           if self.blueToothReady {
-            self.discoverDevices(jsonResult["serviceUuids"]!)
+            var serviceUUIDs = Array<String>()
+            for uuid in jsonResult["serviceUuids"].arrayValue {
+              serviceUUIDs.append(uuid.stringValue)
+            }
+            self.discoverDevices(serviceUUIDs)
           }
 
           return data;
         
         case "stopScanning":
           self.stopDiscoveringDevices()
+          return data;
+        
+        case "connect":
+          self.connectToDevice(jsonResult["peripheralUuid"].stringValue)
+          return data;
+        
+        case "discoverServices":
+          var services = Array<String>()
+          for uuid in jsonResult["uuids"].arrayValue {
+            services.append(uuid.stringValue)
+          }
+          self.discoverServices(jsonResult["peripheralUuid"].stringValue, services: services)
+          return data;
+        
+        case "discoverCharacteristics":
+          self.discoverCharacteristics(jsonResult["peripheralUuid"].stringValue, serviceUuid: jsonResult["serviceUuid"].stringValue)
           return data;
         
         default:
@@ -92,7 +121,6 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionVi
     server.setHandleRequestBlock(handleRequest)
     
     server.startListeningOnPort(0xB1e, withProtocolName: nil, andCompletionBlock: onCompletion)
-    
   }
 
   
@@ -101,34 +129,117 @@ class ViewController: UIViewController, CBCentralManagerDelegate, UICollectionVi
     centralManager = CBCentralManager(delegate: self, queue: nil)
   }
   
-  func startCordovaView() {
-    println("Initializing cordova")
-    webViewController = CDVViewController()
-    webViewController.view.frame = CGRectMake(0, 0, 0, 0)
-    view.addSubview(webViewController.view)
+  func startWebView() {
+    println("Initializing WebView")
+    let userContentController = WKUserContentController()
+    let handler = NotificationScriptMessageHandler()
+    userContentController.addScriptMessageHandler(handler, name: "notification")
+    let configuration = WKWebViewConfiguration()
+    configuration.userContentController = userContentController
+    let rect:CGRect = CGRectMake(0,0,0,0)
+    webView = WKWebView(frame: rect, configuration: configuration)
+    let htmlString = "<html>" +
+    "<head>" +
+      "<script src=\"http://gateblu.s3.amazonaws.com/javascript/meshblu-bean.js\"></script>" +
+    "</head>" +
+    "<body>" +
+      "<h1>HELLO!!!!!</h1>" +
+      "<script>" +
+          "console.error = function(error) { window.webkit.messageHandlers.notification.postMessage({body:error}); };" +
+          "console.log = console.error;" +
+          "window.connector = new Connector({" +
+            "server: \"meshblu.octoblu.com\"," +
+            "port: 80," +
+            "uuid: \"920e6261-5f0c-11e4-b71e-c1e4be219849\"," +
+            "token: \"e2emvhdmsi7ctyb9dzvv7zzmrgnfjemi\"" +
+          "});" +
+      "</script>" +
+    "</body>" +
+    "</html>"
+    
+    webView.loadHTMLString(htmlString, baseURL: NSURL(string: "http://app.octoblu.com"))
+    webView.frame = CGRectMake(0, 0, 0, 0)
+    view.addSubview(webView)
   }
   
-  func discoverDevices(uuids: AnyObject) {
+  func discoverDevices(serviceUUIDs: Array<String>) {
     println("discovering devices")
-    centralManager.scanForPeripheralsWithServices(nil, options: nil)
+    let regex = NSRegularExpression(pattern: "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", options: nil, error: nil)
+    var uuids = Array<CBUUID>()
+    for uuid in serviceUUIDs {
+      var muuid = NSMutableString(string: uuid)
+      if countElements(uuid) <= 36 {
+        regex?.replaceMatchesInString(muuid, options: nil, range: NSMakeRange(0, countElements(uuid)), withTemplate: "$1-$2-$3-$4-$5")
+      }
+      uuids.append(CBUUID(string: muuid))
+    }
+    
+    centralManager.scanForPeripheralsWithServices(uuids, options: nil)
+  }
+  
+  func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
+    peripheral.discoverServices(nil)
+    let data:JSON = [
+      "type": "connect",
+      "peripheralUuid": peripheral.identifier.UUIDString
+    ]
+    self.server.pushToAll(data.rawData());
   }
   
   func stopDiscoveringDevices() {
     println("stopping discovery")
-//    centralManager.stopScan()
+    centralManager.stopScan()
+  }
+  
+  func connectToDevice(identifier: NSString) {
+    println("connecting to device")
+    centralManager.connectPeripheral(self.foundPeripherals[identifier], options: nil)
+  }
+  
+  func discoverServices(identifier: NSString, services: Array<String>) {
+    let peripheral:CBPeripheral = self.foundPeripherals[identifier]!
+    let data:JSON = [
+      "type": "servicesDiscover",
+      "peripheralUuid": identifier,
+      "serviceUuids" : services
+    ]
+    self.server.pushToAll(data.rawData());
+  }
+
+  
+  func discoverCharacteristics(identifier: NSString, serviceUuid: NSString) {
+    let peripheral:CBPeripheral = self.foundPeripherals[identifier]!
+    let data:JSON = [
+      "type": "characteristicsDiscover",
+      "peripheralUuid": identifier,
+      "serviceUuid" : serviceUuid,
+      "characteristics": []
+    ]
+    println(data)
+    self.server.pushToAll(data.rawData());
   }
   
   func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
     if peripheral.name != nil {
-    let data:JSON = [
-      "uuid":peripheral.identifier,
-      "type":"discover",
-      "localName":peripheral.name
-    ]
-    self.server.pushToAll(data.rawData());
-    }
+      let identifier = peripheral.identifier.UUIDString
+      println("Discovered \(peripheral.name) \(identifier)")
+      peripheral.discoverServices(nil)
+      self.foundPeripherals[identifier] = peripheral
 
-    println("Discovered \(peripheral.name) \(peripheral.identifier)")
+      var services = peripheral.services
+      if services == nil {
+        services = []
+      }
+      let data:JSON = [
+        "type": "discover",
+        "peripheralUuid": identifier,
+        "advertisement": [
+          "localName": peripheral.name,
+          "serviceUuids": services
+        ]
+      ]
+      self.server.pushToAll(data.rawData());
+    }
   }
   
   func centralManagerDidUpdateState(central: CBCentralManager!) {

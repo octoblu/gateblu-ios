@@ -3,7 +3,6 @@
 
 target 'gateblu' do
     pod 'BLWebSocketsServer'
-    pod 'Cordova', '~> 3.7'
 end
 
 target 'gatebluTests' do
