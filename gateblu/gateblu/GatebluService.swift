@@ -18,9 +18,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var deviceServices = Dictionary<String, GatebluDeviceService>()
     
     override init() {
+        super.init()
         startUpCentralManager()
         startWebsocketServer()
-        super.init()
     }
     
     func startWebsocketServer() {
@@ -32,13 +32,24 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         
         let handleRequest = { (data: NSData!) -> NSData! in
             let jsonResult = JSON(data: data)
-            //      println("Imma gonna \(jsonResult)")
+//            println("Imma gonna \(jsonResult)")
             let action = jsonResult["action"].stringValue
+            let identifier:String = jsonResult["peripheralUuid"].stringValue
+            
+            var deviceService:GatebluDeviceService!
+            
+            if identifier != "" {
+                deviceService = self.deviceServices[identifier]
+                if deviceService == nil {
+                    return data
+                }
+            }
             
             switch action {
             case "startScanning":
+                println("Imma scanning for ya: \(self.scanning)")
                 if self.blueToothReady && !self.scanning {
-                    self.scanning = true
+//                    self.scanning = true
                     var serviceUUIDs = Array<String>()
                     for uuid in jsonResult["serviceUuids"].arrayValue {
                         serviceUUIDs.append(uuid.stringValue)
@@ -49,45 +60,45 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                 return data;
                 
             case "stopScanning":
-                self.stopDiscoveringDevices()
+//                self.stopDiscoveringDevices()
                 let timer = NSTimer(timeInterval: 5000, target: self, selector: Selector("setStopScanning"), userInfo: nil, repeats: false)
                 return data
                 
             case "connect":
-                let deviceService = self.deviceServices[jsonResult["peripheralUuid"].stringValue]!
+                println("I wanna hook up witchu: \(identifier)")
                 deviceService.connect()
                 return data
                 
             case "discoverServices":
                 var services = Array<String>()
                 for uuid in jsonResult["uuids"].arrayValue {
-                    services.append(self.derosenthal(uuid.stringValue))
+                    services.append(uuid.stringValue)
                 }
-                self.discoverServices(jsonResult["peripheralUuid"].stringValue, services: services)
+                deviceService.discoverServices(services)
                 return data
                 
             case "discoverCharacteristics":
                 var characteristicUuids = Array<String>()
                 for uuid in jsonResult["characteristicUuids"].arrayValue {
-                    characteristicUuids.append(self.derosenthal(uuid.stringValue))
+                    characteristicUuids.append(uuid.stringValue)
                 }
                 
-                self.discoverCharacteristics(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuids: characteristicUuids)
+                deviceService.discoverCharacteristics(jsonResult["serviceUuid"].stringValue, characteristicUuids: characteristicUuids)
                 return data
                 
             case "updateRssi":
-                self.updateRssi(jsonResult["peripheralUuid"].stringValue)
+                deviceService.updateRssi()
                 return data
                 
             case "write":
                 let dataStr = jsonResult["data"].stringValue
                 let ddata = dataStr.dataFromHexadecimalString()
                 
-                self.write(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuid: self.derosenthal(jsonResult["characteristicUuid"].stringValue), data: ddata!)
+                deviceService.write(jsonResult["serviceUuid"].stringValue, characteristicUuid: jsonResult["characteristicUuid"].stringValue, data: ddata!)
                 return data
                 
             case "notify":
-                self.notify(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuid: self.derosenthal(jsonResult["characteristicUuid"].stringValue), notify: jsonResult["notify"].boolValue)
+                deviceService.notify(jsonResult["serviceUuid"].stringValue, characteristicUuid: jsonResult["characteristicUuid"].stringValue, notify: jsonResult["notify"].boolValue)
                 return data
                 
             default:
@@ -99,19 +110,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         websocketServer.start(handleRequest, onCompletion)
     }
     
-    func derosenthal(uuid: String) -> String {
-        let regex = NSRegularExpression(pattern: "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", options: nil, error: nil)
-        var muuid = NSMutableString(string: uuid)
-        if countElements(uuid) <= 36 {
-            regex?.replaceMatchesInString(muuid, options: nil, range: NSMakeRange(0, countElements(uuid)), withTemplate: "$1-$2-$3-$4-$5")
-        }
-        return NSString(string: muuid).uppercaseString;
-    }
-    
     func setStopScanning() {
         self.scanning = false
     }
-    
     
     func startUpCentralManager() {
         println("Initializing central manager")
@@ -122,7 +123,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         println("discovering devices")
         var uuids = Array<CBUUID>()
         for uuid in serviceUUIDs {
-            uuids.append(CBUUID(string: self.derosenthal(uuid)))
+            uuids.append(CBUUID(string: uuid.derosenthal()))
         }
         
         centralManager.scanForPeripheralsWithServices(uuids, options: nil)
@@ -141,21 +142,16 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         centralManager.stopScan()
     }
     
-    func discoverServices(identifier: NSString, services: Array<String>) {
-        let peripheral:CBPeripheral = self.foundPeripherals[identifier]!
-        var cbServices = Array<CBUUID>()
-        for service in services {
-            cbServices.append(CBUUID(string: service))
-        }
-        peripheral.discoverServices(cbServices);
-    }
-    
-    
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if peripheral.name != nil {
             let identifier = peripheral.identifier.UUIDString
             println("Discovered \(peripheral.name) \(identifier)")
             self.foundPeripherals[identifier] = peripheral
+            let onDeviceEmit = {
+                (data:NSData!) -> (NSData!) in
+                self.websocketServer.pushToAll(data)
+                return data
+            }
             var deviceService = GatebluDeviceService(identifier: identifier, peripheral: peripheral, centralManager: centralManager, onEmit: onDeviceEmit)
             self.deviceServices[identifier] = deviceService
 

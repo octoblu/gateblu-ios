@@ -25,11 +25,20 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func connect() {
+        println("Connecting to: \(identifier)")
         centralManager.connectPeripheral(peripheral, options: nil)
     }
     
     func emit(data: NSData!){
-        
+        onEmit(data: data)
+    }
+    
+    func discoverServices(serviceUuids: Array<String>) {
+        var cbServices = Array<CBUUID>()
+        for uuid in serviceUuids {
+            cbServices.append(CBUUID(string: uuid.derosenthal()))
+        }
+        peripheral.discoverServices(cbServices);
     }
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
@@ -43,11 +52,10 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "serviceUuids" : services
         ]
-        println(data)
         emit(data.rawData())
     }
     
-    func updateRssi(identifier: NSString) {
+    func updateRssi() {
         println("Reading RSSI")
         peripheral.readRSSI()
     }
@@ -59,7 +67,6 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "rssi" : peripheral.RSSI
         ]
-        println(data)
         emit(data.rawData())
     }
     
@@ -69,22 +76,20 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "rssi" : RSSI
         ]
-        println(data)
         emit(data.rawData())
     }
     
-    func discoverCharacteristics(identifier: NSString, serviceUuid: NSString, characteristicUuids: Array<String>) {
+    func discoverCharacteristics(serviceUuid: String, characteristicUuids: Array<String>) {
         var foundService:CBService!
-        for service in peripheral.services {
-            let s = service as CBService
-            if s.UUID.UUIDString == serviceUuid {
-                foundService = s
+        for service in peripheral.services as Array<CBService> {
+            if service.UUID.UUIDString == serviceUuid.derosenthal() {
+                foundService = service
             }
         }
         
         var cbUuids = Array<CBUUID>()
         for uuid in characteristicUuids {
-            cbUuids.append(CBUUID(string: uuid))
+            cbUuids.append(CBUUID(string: uuid.derosenthal()))
         }
         peripheral.discoverCharacteristics(cbUuids, forService: foundService)
     }
@@ -120,18 +125,15 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "serviceUuid" : service.UUID.UUIDString,
             "characteristics": characteristics
         ]
-        
-        
-        println(data)
         emit(data.rawData())
     }
     
     
-    func write(identifier: NSString, serviceUuid: NSString, characteristicUuid: NSString, data: NSData) {
+    func write(serviceUuid: String, characteristicUuid: String, data: NSData) {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as CBService
-            if s.UUID.UUIDString == serviceUuid {
+            if s.UUID.UUIDString == serviceUuid.derosenthal() {
                 foundService = s
             }
         }
@@ -139,7 +141,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as CBCharacteristic
-            if c.UUID.UUIDString == characteristicUuid {
+            if c.UUID.UUIDString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }
         }
@@ -147,11 +149,11 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
         peripheral.writeValue(data, forCharacteristic: foundCharacteristic, type: CBCharacteristicWriteType(rawValue: 1)!)
     }
     
-    func notify(identifier: NSString, serviceUuid: NSString, characteristicUuid: NSString, notify: Bool) {
+    func notify(serviceUuid: String, characteristicUuid: String, notify: Bool) {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as CBService
-            if s.UUID.UUIDString == serviceUuid {
+            if s.UUID.UUIDString == serviceUuid.derosenthal() {
                 foundService = s
             }
         }
@@ -159,7 +161,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as CBCharacteristic
-            if c.UUID.UUIDString == characteristicUuid {
+            if c.UUID.UUIDString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }
         }
@@ -173,7 +175,6 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "characteristicUuid": foundCharacteristic.UUID.UUIDString,
             "state": notify
         ]
-        println(data)
         emit(data.rawData())
     }
     
@@ -182,6 +183,8 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
+        println(peripheral.identifier.UUIDString)
+        println(characteristic.value.hexString())
         var data:JSON = [
             "type": "read",
             "peripheralUuid": peripheral.identifier.UUIDString,
@@ -190,7 +193,6 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "data": characteristic.value.hexString(),
             "isNotification": true
         ]
-        println(data)
         emit(data.rawData())
     }
 }

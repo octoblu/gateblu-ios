@@ -10,6 +10,12 @@ import Foundation
 
 class Device {
     
-    let name  = "Device Name"
+    var uuid:String
+    var token:String
+    
+    init(uuid: String, token: String) {
+        self.uuid = uuid
+        self.token = token
+    }
     
 }

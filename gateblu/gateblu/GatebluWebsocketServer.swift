@@ -17,6 +17,7 @@ class GatebluWebsocketServer {
     }
     
     func pushToAll(data:NSData!){
+//        println(NSString(data: data, encoding: NSUTF8StringEncoding))
         server.pushToAll(data)
     }
 }
