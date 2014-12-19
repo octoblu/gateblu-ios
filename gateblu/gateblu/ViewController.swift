@@ -10,6 +10,55 @@ import UIKit
 import CoreBluetooth
 import WebKit
 
+extension String {
+  
+  /// Create NSData from hexadecimal string representation
+  ///
+  /// This takes a hexadecimal representation and creates a NSData object. Note, if the string has any spaces, those are removed. Also if the string started with a '<' or ended with a '>', those are removed, too. This does no validation of the string to ensure it's a valid hexadecimal string
+  ///
+  /// The use of `strtoul` inspired by Martin R at http://stackoverflow.com/a/26284562/1271826
+  ///
+  /// :returns: NSData represented by this hexadecimal string. Returns nil if string contains characters outside the 0-9 and a-f range.
+  
+  func dataFromHexadecimalString() -> NSData? {
+    let trimmedString = self.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "<> ")).stringByReplacingOccurrencesOfString(" ", withString: "")
+    
+    // make sure the cleaned up string consists solely of hex digits, and that we have even number of them
+    
+    var error: NSError?
+    let regex = NSRegularExpression(pattern: "^[0-9a-f]*$", options: .CaseInsensitive, error: &error)
+    let found = regex?.firstMatchInString(trimmedString, options: nil, range: NSMakeRange(0, countElements(trimmedString)))
+    if found == nil || found?.range.location == NSNotFound || countElements(trimmedString) % 2 != 0 {
+      return nil
+    }
+    
+    // everything ok, so now let's build NSData
+    
+    let data = NSMutableData(capacity: countElements(trimmedString) / 2)
+    
+    for var index = trimmedString.startIndex; index < trimmedString.endIndex; index = index.successor().successor() {
+      let byteString = trimmedString.substringWithRange(Range<String.Index>(start: index, end: index.successor().successor()))
+      let num = Byte(byteString.withCString { strtoul($0, nil, 16) })
+      data?.appendBytes([num] as [Byte], length: 1)
+    }
+    
+    return data
+  }
+}
+
+extension NSData {
+  func hexString() -> NSString {
+    var str = NSMutableString()
+    let bytes = UnsafeBufferPointer<UInt8>(start: UnsafePointer(self.bytes), count:self.length)
+    for byte in bytes {
+      str.appendFormat("%02hhx", byte)
+    }
+    return str
+  }
+}
+
+
+
 class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
   func userContentController(_userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
     println(message.body)
@@ -24,6 +73,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
   var foundPeripherals = Dictionary<String,CBPeripheral>()
   var server = BLWebSocketsServer.sharedInstance()
   @IBOutlet var deviceCollectionView : UICollectionView?
+  var scanning = false
   
   var devices : [Device] = []
 
@@ -76,6 +126,10 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     return NSString(string: muuid).uppercaseString;
   }
   
+  func setStopScanning() {
+    self.scanning = false
+  }
+  
   func startWebsocketServer() {
     let onCompletion = { (error: NSError!) -> Void in
       if ((error?) != nil) {
@@ -85,12 +139,13 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     
     let handleRequest = { (data: NSData!) -> NSData! in
       let jsonResult = JSON(data: data)
-      println("Imma gonna \(jsonResult)")
+//      println("Imma gonna \(jsonResult)")
       let action = jsonResult["action"].stringValue
       
       switch action {
         case "startScanning":
-          if self.blueToothReady {
+          if self.blueToothReady && !self.scanning {
+            self.scanning = true
             var serviceUUIDs = Array<String>()
             for uuid in jsonResult["serviceUuids"].arrayValue {
               serviceUUIDs.append(uuid.stringValue)
@@ -102,6 +157,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
         
         case "stopScanning":
           self.stopDiscoveringDevices()
+          let timer = NSTimer(timeInterval: 5000, target: self, selector: Selector("setStopScanning"), userInfo: nil, repeats: false)
           return data
         
         case "connect":
@@ -130,8 +186,14 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
           return data
         
         case "write":
-          let ddata = NSData(base64EncodedString: jsonResult["data"].stringValue, options: nil)!
-          self.write(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuid: self.derosenthal(jsonResult["characteristicUuid"].stringValue), data: ddata)
+          let dataStr = jsonResult["data"].stringValue
+          let ddata = dataStr.dataFromHexadecimalString()
+          
+          self.write(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuid: self.derosenthal(jsonResult["characteristicUuid"].stringValue), data: ddata!)
+          return data
+        
+        case "notify":
+          self.notify(jsonResult["peripheralUuid"].stringValue, serviceUuid: self.derosenthal(jsonResult["serviceUuid"].stringValue), characteristicUuid: self.derosenthal(jsonResult["characteristicUuid"].stringValue), notify: jsonResult["notify"].boolValue)
           return data
         
         default:
@@ -243,6 +305,7 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
   }
   
   func peripheralDidUpdateRSSI(peripheral: CBPeripheral!, error: NSError!) {
+    println("Error: \(error)")
     let data:JSON = [
       "type": "rssiUpdate",
       "peripheralUuid": peripheral.identifier.UUIDString,
@@ -251,7 +314,16 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     println(data)
     self.server.pushToAll(data.rawData());
   }
-
+  
+  func peripheral(peripheral:CBPeripheral, didReadRSSI RSSI:NSNumber, error:NSError) {
+    let data:JSON = [
+      "type": "rssiUpdate",
+      "peripheralUuid": peripheral.identifier.UUIDString,
+      "rssi" : RSSI
+    ]
+    println(data)
+    self.server.pushToAll(data.rawData());
+  }
   
   func discoverCharacteristics(identifier: NSString, serviceUuid: NSString, characteristicUuids: Array<String>) {
     let peripheral:CBPeripheral = self.foundPeripherals[identifier]!
@@ -330,6 +402,38 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
     peripheral.writeValue(data, forCharacteristic: foundCharacteristic, type: CBCharacteristicWriteType(rawValue: 1)!)
   }
   
+  func notify(identifier: NSString, serviceUuid: NSString, characteristicUuid: NSString, notify: Bool) {
+    let peripheral:CBPeripheral = self.foundPeripherals[identifier]!
+    
+    var foundService:CBService!
+    for service in peripheral.services {
+      let s = service as CBService
+      if s.UUID.UUIDString == serviceUuid {
+        foundService = s
+      }
+    }
+    
+    var foundCharacteristic:CBCharacteristic!
+    for characteristic in foundService.characteristics {
+      let c = characteristic as CBCharacteristic
+      if c.UUID.UUIDString == characteristicUuid {
+        foundCharacteristic = c
+      }
+    }
+    println("notified \(notify)")
+    peripheral.setNotifyValue(notify, forCharacteristic: foundCharacteristic)
+    
+    var data:JSON = [
+      "type": "notify",
+      "peripheralUuid": peripheral.identifier.UUIDString,
+      "serviceUuid": foundService.UUID.UUIDString,
+      "characteristicUuid": foundCharacteristic.UUID.UUIDString,
+      "state": notify
+    ]
+    println(data)
+    self.server.pushToAll(data.rawData());
+  }
+  
   func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
     peripheral.delegate = self
     if peripheral.name != nil {
@@ -351,6 +455,23 @@ class ViewController: UIViewController, CBCentralManagerDelegate, CBPeripheralDe
       ]
       self.server.pushToAll(data.rawData());
     }
+  }
+  
+  func peripheral(peripheral: CBPeripheral!, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
+    peripheral.readValueForCharacteristic(characteristic)
+  }
+  
+  func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
+    var data:JSON = [
+      "type": "read",
+      "peripheralUuid": peripheral.identifier.UUIDString,
+      "serviceUuid": characteristic.service.UUID.UUIDString,
+      "characteristicUuid": characteristic.UUID.UUIDString,
+      "data": characteristic.value.hexString(),
+      "isNotification": true
+    ]
+    println(data)
+    self.server.pushToAll(data.rawData());
   }
   
   func centralManagerDidUpdateState(central: CBCentralManager!) {
