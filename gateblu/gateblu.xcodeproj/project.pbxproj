@@ -18,6 +18,7 @@
 		9A0C95B21A434A9F00236CFC /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95B11A434A9F00236CFC /* Device.swift */; };
 		BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085791A44A1E500233B1B /* GatebluService.swift */; };
 		BB50857C1A44A25100233B1B /* GatebluWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857B1A44A25100233B1B /* GatebluWebsocketServer.swift */; };
+		BB50857E1A44A71500233B1B /* GatebluDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */; };
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
@@ -50,6 +51,7 @@
 		9A0C95B11A434A9F00236CFC /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BB5085791A44A1E500233B1B /* GatebluService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluService.swift; sourceTree = "<group>"; };
 		BB50857B1A44A25100233B1B /* GatebluWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluWebsocketServer.swift; sourceTree = "<group>"; };
+		BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluDeviceService.swift; sourceTree = "<group>"; };
 		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */,
 				9A0C95B11A434A9F00236CFC /* Device.swift */,
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
+				BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */,
 				BB50857B1A44A25100233B1B /* GatebluWebsocketServer.swift */,
 			);
 			path = gateblu;
@@ -313,6 +316,7 @@
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				9A0C95B21A434A9F00236CFC /* Device.swift in Sources */,
 				BB50857C1A44A25100233B1B /* GatebluWebsocketServer.swift in Sources */,
+				BB50857E1A44A71500233B1B /* GatebluDeviceService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
