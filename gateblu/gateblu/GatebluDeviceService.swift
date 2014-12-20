@@ -26,7 +26,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     
     func connect() {
         println("Connecting to: \(identifier)")
-        centralManager.connectPeripheral(peripheral, options: nil)
+        centralManager.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey: 1])
     }
     
     func emit(data: NSData!){

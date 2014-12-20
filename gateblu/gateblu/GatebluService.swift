@@ -13,7 +13,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var blueToothReady = false
     var centralManager:CBCentralManager!
     var foundPeripherals = Dictionary<String,CBPeripheral>()
-    var scanning = false
+    var scanCount = 0
     var websocketServer = GatebluWebsocketServer()
     var deviceServices = Dictionary<String, GatebluDeviceService>()
     
@@ -47,9 +47,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             
             switch action {
             case "startScanning":
-                println("Imma scanning for ya: \(self.scanning)")
-                if self.blueToothReady && !self.scanning {
-//                    self.scanning = true
+                println("Imma scanning for ya: \(self.scanCount)")
+                self.scanCount++
+                if self.blueToothReady {
                     var serviceUUIDs = Array<String>()
                     for uuid in jsonResult["serviceUuids"].arrayValue {
                         serviceUUIDs.append(uuid.stringValue)
@@ -60,8 +60,13 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                 return data;
                 
             case "stopScanning":
-//                self.stopDiscoveringDevices()
-                let timer = NSTimer(timeInterval: 5000, target: self, selector: Selector("setStopScanning"), userInfo: nil, repeats: false)
+                self.scanCount--
+                if self.scanCount < 0 {
+                    self.scanCount = 0
+                }
+                if self.scanCount == 0 {
+                    self.stopDiscoveringDevices()
+                }
                 return data
                 
             case "connect":
@@ -110,13 +115,13 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         websocketServer.start(handleRequest, onCompletion)
     }
     
-    func setStopScanning() {
-        self.scanning = false
-    }
-    
     func startUpCentralManager() {
         println("Initializing central manager")
-        centralManager = CBCentralManager(delegate: self, queue: nil)
+        centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
+    }
+    
+    func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
+        println("willRestoreState")
     }
     
     func discoverDevices(serviceUUIDs: Array<String>) {
