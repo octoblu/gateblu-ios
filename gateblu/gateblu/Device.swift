@@ -10,12 +10,14 @@ import Foundation
 
 class Device {
     
-    var uuid:String
-    var token:String
+  var uuid:String
+  var token:String
+  var name:String
     
-    init(uuid: String, token: String) {
-        self.uuid = uuid
-        self.token = token
-    }
+  init(uuid: String, token: String, name: String) {
+    self.uuid = uuid
+    self.token = token
+    self.name = name
+  }
     
 }

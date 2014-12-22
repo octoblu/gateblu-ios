@@ -22,8 +22,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   @IBOutlet var deviceCollectionView : UICollectionView?
   
   var devices : [Device] = [
-    Device(uuid: "920e6261-5f0c-11e4-b71e-c1e4be219849", token: "e2emvhdmsi7ctyb9dzvv7zzmrgnfjemi"),
-    Device(uuid: "d58749e0-87d3-11e4-94c5-ab09a6c94ef5", token: "02ui6u933qxquayviks0za2n7acyp66r")
+    Device(uuid: "920e6261-5f0c-11e4-b71e-c1e4be219849", token: "e2emvhdmsi7ctyb9dzvv7zzmrgnfjemi", name : "Bean 1"),
+    Device(uuid: "d58749e0-87d3-11e4-94c5-ab09a6c94ef5", token: "02ui6u933qxquayviks0za2n7acyp66r", name : "Bean 2")
   ]
 
   override func viewDidLoad() {
@@ -38,10 +38,14 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func startDeviceCollectionView(){
-    let frame = CGRect(x: 0, y: 60, width: self.view.bounds.width, height: self.view.bounds.height - 60)
+    let deviceWidth = self.view.bounds.width
+    let deviceHeight = self.view.bounds.height
+    
+    let frame = CGRect(x: 0, y: 60, width: deviceWidth, height: deviceHeight - 60)
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    layout.itemSize = CGSize(width: 150, height: 100)
+    
+    layout.itemSize = CGSize(width: (deviceWidth / 2) - 10, height: 120)
     deviceCollectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
     deviceCollectionView!.delegate = self
     deviceCollectionView!.dataSource = self
@@ -69,8 +73,31 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-    cell.backgroundColor = UIColor.grayColor()
+    cell.backgroundColor = UIColor.lightGrayColor()
+    cell.addSubview(createDeviceView(cell, indexPath: indexPath))
     return cell
+  }
+  
+  func createDeviceView(cellView: UICollectionViewCell, indexPath: NSIndexPath) -> UIView {
+    let height = cellView.bounds.height
+    let width = cellView.bounds.width
+    let deviceView = UIView(frame: cellView.frame)
+    let device: Device? = devices[indexPath.item]
+    println("Index Path \(device!.name)")
+    
+    if device == nil {
+      return deviceView
+    }
+    let labelHeight = (height / 4)
+    let deviceLabelFrame = CGRect(x: 0, y: height -  (labelHeight + 10) , width: width - 10, height: labelHeight)
+    let deviceLabel = UITextView(frame: deviceLabelFrame)
+    
+    deviceLabel.text = device!.name
+    deviceLabel.textColor = UIColor.darkGrayColor()
+    
+    deviceView.addSubview(deviceLabel)
+    
+    return deviceView
   }
   
 }
