@@ -18,17 +18,15 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
   
-  var gatebluService = GatebluService()
   @IBOutlet var deviceCollectionView : UICollectionView?
-  
-  var devices : [Device] = [
-    Device(uuid: "920e6261-5f0c-11e4-b71e-c1e4be219849", token: "e2emvhdmsi7ctyb9dzvv7zzmrgnfjemi", name : "Bean 1"),
-    Device(uuid: "d58749e0-87d3-11e4-94c5-ab09a6c94ef5", token: "02ui6u933qxquayviks0za2n7acyp66r", name : "Bean 2")
-  ]
+  var deviceManager:DeviceManager!
 
   override func viewDidLoad() {
       super.viewDidLoad()
       println("Starting Manager")
+      let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+      deviceManager = appDelegate.deviceManager
+      deviceManager.start()
       startDeviceCollectionView()
   }
 
@@ -54,21 +52,22 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     self.view.addSubview(deviceCollectionView!)
     
-    for device in devices {
-      let userContentController = WKUserContentController()
-      let handler = NotificationScriptMessageHandler()
-      userContentController.addScriptMessageHandler(handler, name: "notification")
-      let configuration = WKWebViewConfiguration()
-      configuration.userContentController = userContentController
-      let rect:CGRect = CGRectMake(0,0,0,0)
-      let webView = DeviceView(frame: rect)
-      webView.setDevice(device)
-      self.view.addSubview(webView)
-    }
+    
+    let buttonView = UIButton(frame: CGRect(x: 0, y: self.view.bounds.height - 70, width: 100, height: 50))
+      
+    buttonView.addTarget(self, action: Selector("killEverything"), forControlEvents: UIControlEvents.TouchUpInside)
+    buttonView.setTitle("KILLL IT!", forState: UIControlState.Normal)
+    buttonView.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
+    
+    self.view.addSubview(buttonView)
+  }
+  
+  func killEverything(){
+    [kill(getpid(), SIGKILL)]
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return devices.count
+    return deviceManager.devices.count
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -82,8 +81,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let height = cellView.bounds.height
     let width = cellView.bounds.width
     let deviceView = UIView(frame: cellView.frame)
-    let device: Device? = devices[indexPath.item]
-    println("Index Path \(device!.name)")
+    let device: Device? = deviceManager.devices[indexPath.item]
+    println("Adding Device view \(device!.name)")
     
     if device == nil {
       return deviceView

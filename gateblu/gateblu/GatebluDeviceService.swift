@@ -25,8 +25,12 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func connect() {
-        println("Connecting to: \(identifier)")
-        centralManager.connectPeripheral(peripheral, options: [CBConnectPeripheralOptionNotifyOnNotificationKey: 1])
+        NSLog("Connecting to: \(identifier)")
+        centralManager.connectPeripheral(peripheral, options: [
+            CBConnectPeripheralOptionNotifyOnConnectionKey: 1,
+            CBConnectPeripheralOptionNotifyOnDisconnectionKey: 1,
+            CBConnectPeripheralOptionNotifyOnNotificationKey: 1
+        ])
     }
     
     func emit(data: NSData!){
@@ -56,12 +60,12 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func updateRssi() {
-        println("Reading RSSI")
+        NSLog("Reading RSSI")
         peripheral.readRSSI()
     }
     
     func peripheralDidUpdateRSSI(peripheral: CBPeripheral!, error: NSError!) {
-        println("Error: \(error)")
+        NSLog("Error: \(error)")
         let data:JSON = [
             "type": "rssiUpdate",
             "peripheralUuid": peripheral.identifier.UUIDString,
@@ -165,7 +169,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
                 foundCharacteristic = c
             }
         }
-        println("notified \(notify)")
+        NSLog("notified \(notify)")
         peripheral.setNotifyValue(notify, forCharacteristic: foundCharacteristic)
         
         var data:JSON = [
@@ -183,8 +187,8 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
-        println(peripheral.identifier.UUIDString)
-        println(characteristic.value.hexString())
+        NSLog(peripheral.identifier.UUIDString)
+        NSLog(characteristic.value.hexString())
         var data:JSON = [
             "type": "read",
             "peripheralUuid": peripheral.identifier.UUIDString,

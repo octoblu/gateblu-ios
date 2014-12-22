@@ -26,13 +26,13 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     func startWebsocketServer() {
         let onCompletion = { (error: NSError!) -> Void in
             if ((error?) != nil) {
-                println("Starting Websocket Server")
+                NSLog("Starting Websocket Server")
             }
         }
         
         let handleRequest = { (data: NSData!) -> NSData! in
             let jsonResult = JSON(data: data)
-//            println("Imma gonna \(jsonResult)")
+//            NSLog("Imma gonna \(jsonResult)")
             let action = jsonResult["action"].stringValue
             let identifier:String = jsonResult["peripheralUuid"].stringValue
             
@@ -47,7 +47,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             
             switch action {
             case "startScanning":
-                println("Imma scanning for ya: \(self.scanCount)")
+                NSLog("Imma scanning for ya: \(self.scanCount)")
                 self.scanCount++
                 if self.blueToothReady {
                     var serviceUUIDs = Array<String>()
@@ -70,7 +70,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                 return data
                 
             case "connect":
-                println("I wanna hook up witchu: \(identifier)")
+                NSLog("I wanna hook up witchu: \(identifier)")
                 deviceService.connect()
                 return data
                 
@@ -107,7 +107,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                 return data
                 
             default:
-                println("I can't even \(action) with \(jsonResult)")
+                NSLog("I can't even \(action) with \(jsonResult)")
                 return data
             }
         }
@@ -116,16 +116,18 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     }
     
     func startUpCentralManager() {
-        println("Initializing central manager")
+        NSLog("Initializing central manager")
         centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
     }
     
     func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
-        println("willRestoreState")
+        NSLog("willRestoreState")
+        let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey]
+        NSLog("Perifs \(peripherals)")
     }
     
     func discoverDevices(serviceUUIDs: Array<String>) {
-        println("discovering devices")
+        NSLog("discovering devices")
         var uuids = Array<CBUUID>()
         for uuid in serviceUUIDs {
             uuids.append(CBUUID(string: uuid.derosenthal()))
@@ -143,14 +145,14 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     }
     
     func stopDiscoveringDevices() {
-        println("stopping discovery")
+        NSLog("stopping discovery")
         centralManager.stopScan()
     }
     
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if peripheral.name != nil {
             let identifier = peripheral.identifier.UUIDString
-            println("Discovered \(peripheral.name) \(identifier)")
+            NSLog("Discovered \(peripheral.name) \(identifier)")
             self.foundPeripherals[identifier] = peripheral
             let onDeviceEmit = {
                 (data:NSData!) -> (NSData!) in
@@ -178,26 +180,26 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        println("checking state")
+        NSLog("checking state")
         switch (central.state) {
         case .PoweredOff:
-            println("CoreBluetooth BLE hardware is powered off")
+            NSLog("CoreBluetooth BLE hardware is powered off")
             
         case .PoweredOn:
-            println("CoreBluetooth BLE hardware is powered on and ready")
+            NSLog("CoreBluetooth BLE hardware is powered on and ready")
             blueToothReady = true;
             
         case .Resetting:
-            println("CoreBluetooth BLE hardware is resetting")
+            NSLog("CoreBluetooth BLE hardware is resetting")
             
         case .Unauthorized:
-            println("CoreBluetooth BLE state is unauthorized")
+            NSLog("CoreBluetooth BLE state is unauthorized")
             
         case .Unknown:
-            println("CoreBluetooth BLE state is unknown");
+            NSLog("CoreBluetooth BLE state is unknown");
             
         case .Unsupported:
-            println("CoreBluetooth BLE hardware is unsupported on this platform");
+            NSLog("CoreBluetooth BLE hardware is unsupported on this platform");
             
         }
     }

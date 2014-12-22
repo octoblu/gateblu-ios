@@ -21,6 +21,8 @@
 		BB50857E1A44A71500233B1B /* GatebluDeviceService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */; };
 		BB5085801A44DDF800233B1B /* DeviceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857F1A44DDF800233B1B /* DeviceView.swift */; };
 		BB5085821A44DE1500233B1B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085811A44DE1500233B1B /* Extensions.swift */; };
+		BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A29E11A48905D00BC648D /* DeviceManager.swift */; };
+		BB5A29F71A48CF9600BC648D /* MockDeviceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5A29F61A48CF9600BC648D /* MockDeviceManager.swift */; };
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
@@ -36,6 +38,19 @@
 			remoteInfo = gateblu;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BB5A29F51A48C07E00BC648D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1981509205167E4CC4BCA124 /* libPods-gateblu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gateblu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +71,8 @@
 		BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluDeviceService.swift; sourceTree = "<group>"; };
 		BB50857F1A44DDF800233B1B /* DeviceView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceView.swift; sourceTree = "<group>"; };
 		BB5085811A44DE1500233B1B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		BB5A29E11A48905D00BC648D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
+		BB5A29F61A48CF9600BC648D /* MockDeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockDeviceManager.swift; sourceTree = "<group>"; };
 		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -130,6 +147,8 @@
 			isa = PBXGroup;
 			children = (
 				9A0C95881A41F77200236CFC /* AppDelegate.swift */,
+				BB5A29F61A48CF9600BC648D /* MockDeviceManager.swift */,
+				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceView.swift */,
 				9A0C95AA1A420A1900236CFC /* 256x256spiral.png */,
@@ -184,6 +203,7 @@
 				9A0C95801A41F77200236CFC /* Frameworks */,
 				9A0C95811A41F77200236CFC /* Resources */,
 				2BBEED015D3FE6B4D9EE52E0 /* Copy Pods Resources */,
+				BB5A29F51A48C07E00BC648D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -317,8 +337,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
+				BB5A29F71A48CF9600BC648D /* MockDeviceManager.swift in Sources */,
 				BB5085821A44DE1500233B1B /* Extensions.swift in Sources */,
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
+				BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */,
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				BB5085801A44DDF800233B1B /* DeviceView.swift in Sources */,
@@ -451,6 +473,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -466,6 +489,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
