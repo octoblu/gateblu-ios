@@ -63,7 +63,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func killEverything(){
-    [kill(getpid(), SIGKILL)]
+    kill(getpid(), SIGKILL)
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

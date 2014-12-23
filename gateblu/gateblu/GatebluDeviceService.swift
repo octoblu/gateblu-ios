@@ -14,6 +14,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     var peripheral:CBPeripheral
     var centralManager:CBCentralManager
     var onEmit:(data: NSData!) -> (NSData!)
+    let centralQueue = dispatch_queue_create("com.octoblu.gateblu.peripheral", DISPATCH_QUEUE_SERIAL)
     
     init(identifier:String, peripheral: CBPeripheral, centralManager: CBCentralManager, onEmit: (data: NSData!) -> (NSData!)) {
         self.identifier = identifier
@@ -27,9 +28,9 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     func connect() {
         NSLog("Connecting to: \(identifier)")
         centralManager.connectPeripheral(peripheral, options: [
-            CBConnectPeripheralOptionNotifyOnConnectionKey: 1,
-            CBConnectPeripheralOptionNotifyOnDisconnectionKey: 1,
-            CBConnectPeripheralOptionNotifyOnNotificationKey: 1
+            CBConnectPeripheralOptionNotifyOnConnectionKey: true,
+            CBConnectPeripheralOptionNotifyOnDisconnectionKey: true,
+            CBConnectPeripheralOptionNotifyOnNotificationKey: true
         ])
     }
     
@@ -187,8 +188,10 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
-        NSLog(peripheral.identifier.UUIDString)
-        NSLog(characteristic.value.hexString())
+        NSLog("Peripheral UUID \(peripheral.identifier.UUIDString)")
+        NSLog("Service UUID: \(characteristic.service.UUID.UUIDString)")
+        NSLog("Characteristic UUID: \(characteristic.UUID.UUIDString)")
+        NSLog("Charactistic HexString \(characteristic.value.hexString())")
         var data:JSON = [
             "type": "read",
             "peripheralUuid": peripheral.identifier.UUIDString,

@@ -16,7 +16,8 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var scanCount = 0
     var websocketServer = GatebluWebsocketServer()
     var deviceServices = Dictionary<String, GatebluDeviceService>()
-    
+    let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
+  
     override init() {
         super.init()
         startUpCentralManager()
@@ -117,17 +118,19 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     
     func startUpCentralManager() {
         NSLog("Initializing central manager")
-        centralManager = CBCentralManager(delegate: self, queue: nil, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
+        centralManager = CBCentralManager(delegate: self, queue: self.centralQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
     }
+
+  
     
     func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
-        NSLog("willRestoreState")
-        let peripherals = dict[CBCentralManagerRestoredStatePeripheralsKey]
-        NSLog("Perifs \(peripherals)")
+        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as [CBPeripheral]! {
+          NSLog("CentralManager#willRestoreState")
+        }
     }
     
     func discoverDevices(serviceUUIDs: Array<String>) {
-        NSLog("discovering devices")
+        NSLog("discovering devices, \(serviceUUIDs)")
         var uuids = Array<CBUUID>()
         for uuid in serviceUUIDs {
             uuids.append(CBUUID(string: uuid.derosenthal()))
