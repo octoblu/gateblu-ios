@@ -17,6 +17,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var websocketServer = GatebluWebsocketServer()
     var deviceServices = Dictionary<String, GatebluDeviceService>()
     let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
+    let DEVICES_STORAGE_IDENTIFIER = "GATEBLU_CONNECTED_DEVICES"
   
     override init() {
         super.init()
@@ -33,7 +34,6 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         
         let handleRequest = { (data: NSData!) -> NSData! in
             let jsonResult = JSON(data: data)
-//            NSLog("Imma gonna \(jsonResult)")
             let action = jsonResult["action"].stringValue
             let identifier:String = jsonResult["peripheralUuid"].stringValue
             
@@ -120,15 +120,29 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         NSLog("Initializing central manager")
         centralManager = CBCentralManager(delegate: self, queue: self.centralQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
     }
-
   
-    
-    func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
-        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as [CBPeripheral]! {
-          NSLog("CentralManager#willRestoreState")
+    func getConnectedDevices() -> Array<String>? {
+        let userDefaults = NSUserDefaults.standardUserDefaults()
+        let peripheralUUIDs = userDefaults.objectForKey(DEVICES_STORAGE_IDENTIFIER) as Array<String>?
+        return peripheralUUIDs
+    }
+  
+    func storeConnectedDevice(deviceUuid: String){
+        var devicesUuids = getConnectedDevices()
+        var userDefaults = NSUserDefaults.standardUserDefaults()
+        if !contains(devicesUuids!, deviceUuid) {
+          devicesUuids!.append(deviceUuid)
+          userDefaults.setObject(devicesUuids!, forKey: DEVICES_STORAGE_IDENTIFIER)
+          userDefaults.synchronize()
         }
     }
-    
+
+    func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
+        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as [CBPeripheral]! {
+          NSLog("willRestoreState")
+        }
+    }
+  
     func discoverDevices(serviceUUIDs: Array<String>) {
         NSLog("discovering devices, \(serviceUUIDs)")
         var uuids = Array<CBUUID>()
@@ -138,8 +152,10 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         
         centralManager.scanForPeripheralsWithServices(uuids, options: nil)
     }
-    
+  
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
+        storeConnectedDevice(peripheral.identifier.UUIDString)
+
         let data:JSON = [
             "type": "connect",
             "peripheralUuid": peripheral.identifier.UUIDString
@@ -191,7 +207,33 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         case .PoweredOn:
             NSLog("CoreBluetooth BLE hardware is powered on and ready")
             blueToothReady = true;
-            
+            let peripheralUuids = getConnectedDevices()
+            if peripheralUuids == nil {
+              return
+            }
+            for peripheralUUID : String? in peripheralUuids! {
+                if peripheralUUID != nil {
+                    NSLog("CentralManager#retrievePeripheralsWithIdentifiers \(peripheralUUID)")
+                    for p:AnyObject in centralManager.retrievePeripheralsWithIdentifiers([CBUUID(string: peripheralUUID)]) {
+                      if p is CBPeripheral {
+                        return
+                      }
+                    }
+                    NSLog("CentralManager#retrieveConnectedPeripheralsWithServices")
+                    let services = self.foundPeripherals[peripheralUUID!]!.services as Array<String>
+                    var servicesCBUuids = Array<CBUUID>()
+                    for service in services {
+                      servicesCBUuids.append(CBUUID(string: service))
+                    }
+                    for p:AnyObject in centralManager.retrieveConnectedPeripheralsWithServices(servicesCBUuids) {
+                      if p is CBPeripheral {
+                        NSLog("Peripheral Found with Services")
+                        return
+                      }
+                    }
+                }
+            }
+          
         case .Resetting:
             NSLog("CoreBluetooth BLE hardware is resetting")
             

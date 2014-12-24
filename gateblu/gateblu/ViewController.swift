@@ -82,7 +82,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let width = cellView.bounds.width
     let deviceView = UIView(frame: cellView.frame)
     let device: Device? = deviceManager.devices[indexPath.item]
-    println("Adding Device view \(device!.name)")
+    NSLog("Adding Device view \(device!.name)")
     
     if device == nil {
       return deviceView

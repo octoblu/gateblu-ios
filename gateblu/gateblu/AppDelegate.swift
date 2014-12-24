@@ -25,15 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
         // Override point for customization after application launch.
         NSLog("RISE UP FROM THE DEPTHS OF HELL!")
-        if launchOptions != nil {
-            var centralManagerIdentifiers = launchOptions[UIApplicationLaunchOptionsBluetoothCentralsKey] as NSArray;
-            NSLog("DEEEEEEEEBUG \(centralManagerIdentifiers)")
-        
-            for id in centralManagerIdentifiers {
-                NSLog("\(id)")
-            }
+        if let options = launchOptions {
+          if var centralManagerIdentifiers: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {
+            // Awake as Bluetooth Central
+            // No further logic here, will be handled by centralManager willRestoreState
+            NSLog("_--_ Did Wake Central Manager -__-")
+            return true
+          }
         }
-        
+      
         deviceManager = DeviceManager()
         return true
     }
