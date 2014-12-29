@@ -18,30 +18,11 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var deviceServices = Dictionary<String, GatebluDeviceService>()
     let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
     let DEVICES_STORAGE_IDENTIFIER = "GATEBLU_CONNECTED_DEVICES"
-    var meshblu : Meshblu!
   
     override init() {
         super.init()
-        startMeshblu()
         startUpCentralManager()
         startWebsocketServer()
-    }
-  
-    func startMeshblu(){
-      let userDefaults = NSUserDefaults.standardUserDefaults()
-      let uuid : String? = userDefaults.stringForKey("uuid")
-      let token : String? = userDefaults.stringForKey("token")
-      
-      self.meshblu = Meshblu(uuid: uuid, token: token)
-      if uuid == nil || token == nil {
-        self.meshblu.register({ (uuid: String, token : String) in
-          NSLog("Registered uuid: \(uuid), token: \(token)")
-          userDefaults.setObject(uuid, forKey: "uuid")
-          userDefaults.setObject(token, forKey: "token")
-        })
-      }else{
-        NSLog("Already Registered")
-      }
     }
   
     func startWebsocketServer() {

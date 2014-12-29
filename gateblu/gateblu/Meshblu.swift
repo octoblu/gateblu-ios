@@ -21,8 +21,9 @@ class Meshblu {
   }
   
   func register(onSuccess: (uuid: String, token: String) -> ()){
-    var parameters = Dictionary<String, String>()
+    var parameters = Dictionary<String, AnyObject>()
     parameters["type"] = "device:gateblu:ios"
+    parameters["devices"] = []
     self.makeRequest("POST", path: "/devices", parameters: parameters, onResponse: { (response : AnyObject?) in
       if response == nil {
         NSLog("Registration response invalid")
@@ -32,6 +33,20 @@ class Meshblu {
       self.uuid = responseDict["uuid"] as String!
       self.token = responseDict["token"] as String!
       onSuccess(uuid: self.uuid!, token: self.token!)
+    })
+  }
+
+  func whoami(onSuccess : (device: Dictionary<String, AnyObject>) -> ()){
+    NSLog("Requesting device object from God")
+    self.makeRequest("GET", path: "/devices/\(self.uuid!)", parameters: [], onResponse: { (response : AnyObject?) in
+      if response == nil {
+        NSLog("WHOAMI? response invalid")
+        return
+      }
+      let responseDict = response as Dictionary<String, AnyObject>
+      let deviceArray = responseDict["devices"] as Array<AnyObject>
+      onSuccess(device: deviceArray[0] as Dictionary<String, AnyObject>)
+      
     })
   }
   
