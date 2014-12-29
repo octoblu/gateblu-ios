@@ -19,11 +19,32 @@ class Meshblu {
     self.uuid = uuid
     self.token = token
   }
+
+  func goOnline(){
+    let parameters = [
+      "online" : true
+    ]
+    self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
+      NSLog("Houston going online")
+    })
+  }
+  
+  func goOffline(){
+    let parameters = [
+      "online" : false,
+      "uuid" : self.uuid!,
+      "token" : self.token!,
+    ]
+    self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
+      NSLog("Houston going offline")
+    })
+  }
   
   func register(onSuccess: (uuid: String, token: String) -> ()){
     var parameters = Dictionary<String, AnyObject>()
     parameters["type"] = "device:gateblu:ios"
     parameters["devices"] = []
+    parameters["online"] = true
     self.makeRequest("POST", path: "/devices", parameters: parameters, onResponse: { (response : AnyObject?) in
       if response == nil {
         NSLog("Registration response invalid")
@@ -77,6 +98,8 @@ class Meshblu {
       manager.GET(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
     case "POST":
       manager.POST(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
+    case "PUT":
+      manager.PUT(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
     default:
       NSLog("No Type Specified")
     }

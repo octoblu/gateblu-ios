@@ -20,10 +20,10 @@ class DeviceView: WKWebView, UIWebViewDelegate {
     }
     
     func startWebView() {
-        println("Initializing WebView")
         let uuid = device.uuid
         let token = device.token
         let connector = device.connector!
+        println("Initializing WebView for connector \(connector)")
         let htmlString = "<html>" +
             "<head>" +
             "<script src=\"http://gateblu.s3.amazonaws.com/javascript/" + connector + ".js\"></script>" +

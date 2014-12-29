@@ -42,6 +42,9 @@ class Device {
     if self.name == nil {
       self.name = self.connector
     }
+    if self.connector == nil {
+      self.connector = ""
+    }
   }
   
 }
