@@ -9,6 +9,7 @@
 #ifndef gateblu_gateblu_Bridging_Header_h
 
 #import <BLWebSocketsServer/BLWebSocketsServer.h>
+#import "AFNetworking.h"
 
 #define gateblu_gateblu_Bridging_Header_h
 

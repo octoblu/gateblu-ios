@@ -27,6 +27,7 @@
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
 		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
+		D00F5C4C1A51B89000498ADB /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F5C4B1A51B89000498ADB /* Meshblu.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +80,7 @@
 		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
+		D00F5C4B1A51B89000498ADB /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
 		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -160,6 +162,7 @@
 				9A0C95B11A434A9F00236CFC /* Device.swift */,
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
 				BB50857D1A44A71500233B1B /* GatebluDeviceService.swift */,
+				D00F5C4B1A51B89000498ADB /* Meshblu.swift */,
 				BB50857B1A44A25100233B1B /* GatebluWebsocketServer.swift */,
 				BB5085811A44DE1500233B1B /* Extensions.swift */,
 			);
@@ -344,6 +347,7 @@
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				BB5085801A44DDF800233B1B /* DeviceView.swift in Sources */,
+				D00F5C4C1A51B89000498ADB /* Meshblu.swift in Sources */,
 				9A0C95B21A434A9F00236CFC /* Device.swift in Sources */,
 				BB50857C1A44A25100233B1B /* GatebluWebsocketServer.swift in Sources */,
 				BB50857E1A44A71500233B1B /* GatebluDeviceService.swift in Sources */,
