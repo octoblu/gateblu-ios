@@ -23,9 +23,10 @@ class DeviceView: WKWebView, UIWebViewDelegate {
         println("Initializing WebView")
         let uuid = device.uuid
         let token = device.token
+        let connector = device.connector!
         let htmlString = "<html>" +
             "<head>" +
-            "<script src=\"http://gateblu.s3.amazonaws.com/javascript/meshblu-bean.js\"></script>" +
+            "<script src=\"http://gateblu.s3.amazonaws.com/javascript/" + connector + ".js\"></script>" +
             "</head>" +
             "<body>" +
             "<h1>HELLO!!!!!</h1>" +

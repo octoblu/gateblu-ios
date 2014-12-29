@@ -18,7 +18,7 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
 
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIWebViewDelegate {
   
-  @IBOutlet var deviceCollectionView : UICollectionView?
+  var deviceCollectionView : UICollectionView?
   var deviceManager:DeviceManager!
 
   override func viewDidLoad() {

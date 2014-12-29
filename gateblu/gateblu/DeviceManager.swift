@@ -34,6 +34,7 @@ class DeviceManager {
         if devices == nil {
           devices = []
         }
+        
         self.devices = self.parseDevices( devices as Array<AnyObject>);
         for device in self.devices {
           let userContentController = WKUserContentController()
@@ -46,6 +47,7 @@ class DeviceManager {
           webView.setDevice(device)
           view.addSubview(webView)
         }
+        controller.deviceCollectionView!.reloadData();
       })
       
     }
@@ -71,12 +73,13 @@ class DeviceManager {
     }
   
   func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
-    NSLog("parseDevices: \(rawDevices)")
     var devices = Array<Device>()
     
     for rawDevice in rawDevices {
       devices.append(Device(device: rawDevice as Dictionary<String, AnyObject>))
     }
+    
+    NSLog("devices from parseDevices: \(devices)")
     return devices
   }
 }
