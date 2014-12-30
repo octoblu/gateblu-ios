@@ -20,9 +20,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   var deviceCollectionView : UICollectionView?
   var deviceManager:DeviceManager!
+  var cellSize : CGSize!
 
   override func viewDidLoad() {
       super.viewDidLoad()
+      self.cellSize = CGSize(width: (self.view.bounds.width / 2) - 10, height: 120)
       println("Starting Manager")
       let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
       deviceManager = appDelegate.deviceManager
@@ -42,8 +44,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let frame = CGRect(x: 0, y: 60, width: deviceWidth, height: deviceHeight - 60)
     let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
     layout.sectionInset = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
-    
-    layout.itemSize = CGSize(width: (deviceWidth / 2) - 10, height: 120)
+    layout.itemSize = self.cellSize
     deviceCollectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
     deviceCollectionView!.delegate = self
     deviceCollectionView!.dataSource = self
@@ -51,19 +52,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     deviceCollectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
     
     self.view.addSubview(deviceCollectionView!)
-    
-    
-    let buttonView = UIButton(frame: CGRect(x: 0, y: self.view.bounds.height - 70, width: 100, height: 50))
-      
-    buttonView.addTarget(self, action: Selector("killEverything"), forControlEvents: UIControlEvents.TouchUpInside)
-    buttonView.setTitle("KILLL IT!", forState: UIControlState.Normal)
-    buttonView.setTitleColor(UIColor.redColor(), forState: UIControlState.Normal)
-    
-    self.view.addSubview(buttonView)
-  }
-  
-  func killEverything(){
-    kill(getpid(), SIGKILL)
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -72,7 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-    cell.backgroundColor = UIColor.lightGrayColor()
+    cell.backgroundColor = UIColor.grayColor()
     cell.addSubview(createDeviceView(cell, indexPath: indexPath))
     return cell
   }
@@ -83,22 +71,59 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let deviceView = UIView(frame: cellView.frame)
     let device: Device? = deviceManager.devices[indexPath.item]
     NSLog("Adding Device view \(device!.name)")
-    
     if device == nil {
       return deviceView
     }
+    let deviceImage: UIImage! = getDeviceImage(device)
+//    deviceView.backgroundColor = UIColor(patternImage: deviceImage)
+    let deviceImageView: UIImageView = UIImageView(image: deviceImage)
+    deviceImageView.backgroundColor = UIColor.clearColor()
+    deviceView.addSubview(deviceImageView)
     let labelHeight = (height / 4)
     let deviceLabelFrame = CGRect(x: 0, y: height -  (labelHeight + 10) , width: width - 10, height: labelHeight)
     let deviceLabel = UITextView(frame: deviceLabelFrame)
     
     deviceLabel.text = device!.name
     deviceLabel.textColor = UIColor.darkGrayColor()
+    deviceLabel.backgroundColor = UIColor.clearColor()
     
     deviceView.addSubview(deviceLabel)
     
     return deviceView
   }
   
+  func imageResize (imageObj:UIImage, sizeChange:CGSize)-> UIImage{
+    
+    let hasAlpha = false
+    let scale: CGFloat = 0.0 // Automatically use scale factor of main screen
+    
+    UIGraphicsBeginImageContextWithOptions(sizeChange, !hasAlpha, scale)
+    imageObj.drawInRect(CGRect(origin: CGPointZero, size: sizeChange))
+    
+    let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
+    return scaledImage
+  }
+  
+  func getDeviceImage(device : Device!) -> UIImage {
+    var heightScale : CGFloat
+    var widthScale : CGFloat
+    
+    let file = device.getImagePath()
+    var iconImage : UIImage! = UIImage(named: file)
+
+    if iconImage.size.height > iconImage.size.width {
+      heightScale = 1
+      widthScale = iconImage.size.width / iconImage.size.height
+    } else {
+      widthScale = 1
+      heightScale = iconImage.size.height / iconImage.size.width
+    }
+    let widthSize = widthScale * self.cellSize.width
+    let heightSize = heightScale * self.cellSize.height
+    
+    NSLog("device dimensions: \(widthSize) x \(heightSize)")
+    NSLog("cell dimensions: \(self.cellSize.width) x \(self.cellSize.height)")
+    return imageResize(iconImage, sizeChange: CGSize(width: widthSize, height: heightSize))
+  }
+  
 }
-
-

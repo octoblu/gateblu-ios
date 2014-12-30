@@ -79,7 +79,6 @@ class Meshblu {
     let requestSuccess = {
       (operation :AFHTTPRequestOperation!, responseObject :AnyObject!) -> Void in
       onResponse(responseObject);
-      NSLog("requestSuccess \(responseObject)")
     }
     
     // Request Failure

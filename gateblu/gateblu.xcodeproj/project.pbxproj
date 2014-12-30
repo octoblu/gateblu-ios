@@ -27,6 +27,10 @@
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
 		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
 		D00F5C4C1A51B89000498ADB /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F5C4B1A51B89000498ADB /* Meshblu.swift */; };
+		D00F5C511A52132700498ADB /* bean.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4D1A52132700498ADB /* bean.png */; };
+		D00F5C521A52132700498ADB /* blink1.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4E1A52132700498ADB /* blink1.png */; };
+		D00F5C531A52132700498ADB /* generic.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4F1A52132700498ADB /* generic.png */; };
+		D00F5C541A52132700498ADB /* hue.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C501A52132700498ADB /* hue.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,6 +83,10 @@
 		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
 		D00F5C4B1A51B89000498ADB /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
+		D00F5C4D1A52132700498ADB /* bean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bean.png; sourceTree = "<group>"; };
+		D00F5C4E1A52132700498ADB /* blink1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink1.png; sourceTree = "<group>"; };
+		D00F5C4F1A52132700498ADB /* generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = generic.png; sourceTree = "<group>"; };
+		D00F5C501A52132700498ADB /* hue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue.png; sourceTree = "<group>"; };
 		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -169,6 +177,10 @@
 		9A0C95861A41F77200236CFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				D00F5C4D1A52132700498ADB /* bean.png */,
+				D00F5C4E1A52132700498ADB /* blink1.png */,
+				D00F5C4F1A52132700498ADB /* generic.png */,
+				D00F5C501A52132700498ADB /* hue.png */,
 				9A0C95871A41F77200236CFC /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -280,11 +292,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D00F5C541A52132700498ADB /* hue.png in Resources */,
 				BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */,
 				9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */,
 				9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */,
 				BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */,
 				9A0C95931A41F77200236CFC /* LaunchScreen.xib in Resources */,
+				D00F5C531A52132700498ADB /* generic.png in Resources */,
+				D00F5C511A52132700498ADB /* bean.png in Resources */,
+				D00F5C521A52132700498ADB /* blink1.png in Resources */,
 				9A0C95901A41F77200236CFC /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

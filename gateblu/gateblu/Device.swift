@@ -47,4 +47,11 @@ class Device {
     }
   }
   
+  func getImagePath() -> String {
+    let parsedType = split(self.type!) {$0 == ":"}
+    let folder = parsedType[0]
+    let file = "blink1"
+    return file + ".png"
+  }
+  
 }
