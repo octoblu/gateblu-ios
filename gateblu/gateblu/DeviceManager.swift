@@ -32,6 +32,7 @@ class DeviceManager {
           }
           
           self.devices = self.parseDevices( devices as Array<AnyObject>);
+          var deviceResponseCount = 0
           for device in self.devices {
             let userContentController = WKUserContentController()
             let handler = NotificationScriptMessageHandler()
@@ -42,8 +43,16 @@ class DeviceManager {
             let webView = DeviceView(frame: rect)
             webView.setDevice(device)
             view.addSubview(webView)
+            
+            self.meshblu!.getDevice(device.uuid, token: device.token, onSuccess: { (response : Dictionary<String, AnyObject>) in
+              device.update(response)
+              deviceResponseCount++
+              if deviceResponseCount == self.devices.count {
+                controller.deviceCollectionView!.reloadData();
+              }
+            })
+            
           }
-          controller.deviceCollectionView!.reloadData();
         })
       
     }

@@ -73,6 +73,20 @@ class Meshblu {
     })
   }
   
+  func getDevice(uuid: String, token: String, onSuccess : (device: Dictionary<String, AnyObject>) -> ()){
+    let parameters = ["uuid": uuid, "token": token]
+    self.makeRequest("GET", path: "/devices/\(uuid)", parameters: parameters, onResponse: { (response : AnyObject?) in
+      if response == nil {
+        NSLog("Get Device? response invalid")
+        return
+      }
+      let responseDict = response as Dictionary<String, AnyObject>
+      let deviceArray = responseDict["devices"] as Array<AnyObject>
+      onSuccess(device: deviceArray[0] as Dictionary<String, AnyObject>)
+    })
+  }
+
+  
   func makeRequest(type: String, path : String, parameters : AnyObject, onResponse: (AnyObject?) -> ()){
     let manager :AFHTTPRequestOperationManager = AFHTTPRequestOperationManager()
     let url :String = self.meshbluUrl + path

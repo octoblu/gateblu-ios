@@ -42,6 +42,15 @@ class Device {
     setDefaults()
   }
   
+  func update(device: Dictionary<String, AnyObject>){
+    self.uuid = device["uuid"] as String
+    self.name = device["name"] as String?
+    var online = device["online"] as Bool?
+    self.online = online == true
+    self.type = device["type"] as String?
+    setDefaults()
+  }
+  
   func setDefaults(){
     if self.name == nil {
       self.name = self.connector
