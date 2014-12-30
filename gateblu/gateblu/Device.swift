@@ -8,6 +8,8 @@
 
 import Foundation
 
+
+
 class Device {
     
   var uuid:String
@@ -16,6 +18,8 @@ class Device {
   var online:Bool
   var type:String?
   var connector:String?
+  let notSoSmartRobots : Array<String> = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
+  let soSmartDevices : Array<String> = ["blink1", "bean", "hue", "generic"]
     
   init(uuid: String, token: String, name: String, online : Bool, type: String, connector: String) {
     self.uuid = uuid
@@ -51,7 +55,12 @@ class Device {
     let parsedType = split(self.type!) {$0 == ":"}
     let folder = parsedType[0]
     let file = parsedType[1]
-    return file + ".png"
+    if contains(soSmartDevices, file) {
+      return file + ".png"
+    } else {
+      var randomIndex = abs(self.type!.hash) % notSoSmartRobots.count
+      return notSoSmartRobots[randomIndex];
+    }
   }
   
 }

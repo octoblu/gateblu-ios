@@ -65,7 +65,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-    cell.backgroundColor = UIColor.lightGrayColor()
+    cell.backgroundColor = UIColor.clearColor()
     let deviceView = createDeviceView(cell, indexPath: indexPath)
     let width = NSLayoutConstraint(item: deviceView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: cell, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
     let height = NSLayoutConstraint(item: deviceView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: cell, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
@@ -94,13 +94,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     deviceImageView.backgroundColor = UIColor.clearColor()
     
     let centerx = NSLayoutConstraint(item: deviceImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: deviceView, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
-    let deviceTop = NSLayoutConstraint(item: deviceImageView, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deviceView, attribute: NSLayoutAttribute.Top, multiplier: 1.0, constant: 10)
     
     deviceView.setTranslatesAutoresizingMaskIntoConstraints(false)
     deviceView.addSubview(deviceImageView)
     
     deviceView.addConstraint(centerx)
-//    deviceView.addConstraint(deviceTop)
     
     let deviceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.cellSize.width, height: 20))
     deviceLabel.text = device!.name

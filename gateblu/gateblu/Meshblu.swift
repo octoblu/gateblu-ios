@@ -22,7 +22,9 @@ class Meshblu {
 
   func goOnline(){
     let parameters = [
-      "online" : true
+      "online" : "true",
+      "uuid" : self.uuid!,
+      "token" : self.token!
     ]
     self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
       NSLog("Houston going online")
@@ -31,9 +33,9 @@ class Meshblu {
   
   func goOffline(){
     let parameters = [
-      "online" : false,
+      "online" : "false",
       "uuid" : self.uuid!,
-      "token" : self.token!,
+      "token" : self.token!
     ]
     self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
       NSLog("Houston going offline")
