@@ -158,7 +158,6 @@
 				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceView.swift */,
-				9A0C95AA1A420A1900236CFC /* 256x256spiral.png */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
 				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
@@ -177,6 +176,7 @@
 		9A0C95861A41F77200236CFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9A0C95AA1A420A1900236CFC /* 256x256spiral.png */,
 				D00F5C4D1A52132700498ADB /* bean.png */,
 				D00F5C4E1A52132700498ADB /* blink1.png */,
 				D00F5C4F1A52132700498ADB /* generic.png */,
