@@ -10,14 +10,36 @@ import Foundation
 
 class Meshblu {
   
-  let meshbluUrl : String = "https://meshblu.octoblu.com"
-  
+  let MESHBLU_URL = "https://meshblu.octoblu.com"
+  let MESHBLU_PORT = 443
+  var socket : SIOSocket!
   var uuid : String? = "uuid"
   var token : String? = "token"
   
+
   init(uuid: String?, token: String?){
     self.uuid = uuid
     self.token = token
+  }
+  
+  func connect() {
+    NSLog("connecting to \(MESHBLU_URL):\(MESHBLU_PORT)")
+    SIOSocket.socketWithHost("\(MESHBLU_URL):\(MESHBLU_PORT)") { (socket: SIOSocket!) in
+      NSLog("Socket Connected")
+      self.socket = socket
+      
+      var identityMessage = Dictionary<String, AnyObject>()
+      identityMessage["uuid"] = self.uuid
+      identityMessage["token"] = self.token
+//      identityMessage["socketid"] = self.socket.
+      socket.emit("identity", args: [identityMessage])
+      
+      self.socket.on("identify", self.identify);
+    }
+  }
+  
+  func identify(message : [AnyObject]!) {
+    NSLog("Message \(message)")
   }
 
   func goOnline(){
@@ -89,7 +111,7 @@ class Meshblu {
   
   func makeRequest(type: String, path : String, parameters : AnyObject, onResponse: (AnyObject?) -> ()){
     let manager :AFHTTPRequestOperationManager = AFHTTPRequestOperationManager()
-    let url :String = self.meshbluUrl + path
+    let url :String = self.MESHBLU_URL + path
     
     // Request Success
     let requestSuccess = {

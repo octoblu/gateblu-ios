@@ -21,13 +21,16 @@ PODS:
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - BLWebSocketsServer (0.1.0)
+  - SIOSocket (0.2.0)
 
 DEPENDENCIES:
   - AFNetworking
   - BLWebSocketsServer
+  - SIOSocket
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   BLWebSocketsServer: 52317c2bb48961f36eaed6a1818df39c7f2d7304
+  SIOSocket: 40ebc9f014b9fec4ec595212faaf6f19cf29d1f2
 
 COCOAPODS: 0.35.0

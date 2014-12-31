@@ -10,6 +10,7 @@
 
 #import <BLWebSocketsServer/BLWebSocketsServer.h>
 #import "AFNetworking.h"
+#import <SIOSocket/SIOSocket.h>
 
 #define gateblu_gateblu_Bridging_Header_h
 
