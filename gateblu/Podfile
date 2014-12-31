@@ -4,6 +4,7 @@
 target 'gateblu' do
     pod 'BLWebSocketsServer'
     pod 'AFNetworking'
+    pod 'SIOSocket'
 end
 
 target 'gatebluTests' do

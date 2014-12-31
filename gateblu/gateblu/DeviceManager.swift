@@ -63,7 +63,7 @@ class DeviceManager {
       let token : String? = userDefaults.stringForKey("token")
       
       self.meshblu = Meshblu(uuid: uuid, token: token)
-      
+      self.meshblu!.connect()
       if uuid == nil || token == nil {
         self.meshblu!.register({ (uuid: String, token : String) in
           NSLog("Registered uuid: \(uuid), token: \(token)")
