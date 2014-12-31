@@ -26,13 +26,15 @@ class DeviceView: WKWebView, UIWebViewDelegate {
         println("Initializing WebView for connector \(connector)")
         let htmlString = "<html>" +
             "<head>" +
+            "<script>" +
+            "console.error = function(error) { window.webkit.messageHandlers.notification.postMessage({body:error}); };" +
+            "console.log = console.error;" +
+            "</script>" +
             "<script src=\"http://gateblu.s3.amazonaws.com/javascript/" + connector + ".js\"></script>" +
             "</head>" +
             "<body>" +
             "<h1>HELLO!!!!!</h1>" +
             "<script>" +
-            "console.error = function(error) { window.webkit.messageHandlers.notification.postMessage({body:error}); };" +
-            "console.log = console.error;" +
             "window.connector = new Connector({" +
             "server: \"meshblu.octoblu.com\"," +
             "port: 80," +

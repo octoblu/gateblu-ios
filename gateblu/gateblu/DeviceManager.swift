@@ -40,7 +40,7 @@ class DeviceManager {
             let configuration = WKWebViewConfiguration()
             configuration.userContentController = userContentController
             let rect:CGRect = CGRectMake(0,0,0,0)
-            let webView = DeviceView(frame: rect)
+            let webView = DeviceView(frame: rect, configuration: configuration)
             webView.setDevice(device)
             view.addSubview(webView)
             

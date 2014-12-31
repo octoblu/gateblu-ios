@@ -46,7 +46,7 @@ class Meshblu {
     var parameters = Dictionary<String, AnyObject>()
     parameters["type"] = "device:gateblu:ios"
     parameters["devices"] = []
-    parameters["online"] = true
+    parameters["online"] = "true"
     self.makeRequest("POST", path: "/devices", parameters: parameters, onResponse: { (response : AnyObject?) in
       if response == nil {
         NSLog("Registration response invalid")

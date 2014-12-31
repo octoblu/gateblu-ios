@@ -14,7 +14,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
     var peripheral:CBPeripheral
     var centralManager:CBCentralManager
     var onEmit:(data: NSData!) -> (NSData!)
-    let centralQueue = dispatch_queue_create("com.octoblu.gateblu.peripheral", DISPATCH_QUEUE_SERIAL)
+    let peripheralQueue = dispatch_queue_create("com.octoblu.gateblu.peripheral", DISPATCH_QUEUE_SERIAL)
     
     init(identifier:String, peripheral: CBPeripheral, centralManager: CBCentralManager, onEmit: (data: NSData!) -> (NSData!)) {
         self.identifier = identifier
@@ -96,7 +96,9 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
         for uuid in characteristicUuids {
             cbUuids.append(CBUUID(string: uuid.derosenthal()))
         }
-        peripheral.discoverCharacteristics(cbUuids, forService: foundService)
+        if foundService != nil {
+            peripheral.discoverCharacteristics(cbUuids, forService: foundService)
+        }
     }
     
     func peripheral(peripheral: CBPeripheral!, didDiscoverCharacteristicsForService service: CBService!, error: NSError!) {

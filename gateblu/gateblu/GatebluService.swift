@@ -147,22 +147,23 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     }
   
     func discoverDevices(serviceUUIDs: Array<String>) {
-        NSLog("discovering devices, \(serviceUUIDs)")
         var uuids = Array<CBUUID>()
         for uuid in serviceUUIDs {
             uuids.append(CBUUID(string: uuid.derosenthal()))
         }
-        
-        centralManager.scanForPeripheralsWithServices(uuids, options: nil)
+        NSLog("discovering devices, \(uuids)")
+
+        centralManager.scanForPeripheralsWithServices(uuids, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
     }
   
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         storeConnectedDevice(peripheral.identifier.UUIDString)
-
+        
         let data:JSON = [
             "type": "connect",
             "peripheralUuid": peripheral.identifier.UUIDString
         ]
+        NSLog("Connected \(data)")
         self.websocketServer.pushToAll(data.rawData());
     }
     
@@ -174,7 +175,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
         if peripheral.name != nil {
             let identifier = peripheral.identifier.UUIDString
-            NSLog("Discovered \(peripheral.name) \(identifier)")
+            NSLog("Discovered \(peripheral.name) \(identifier) \(advertisementData)")
             self.foundPeripherals[identifier] = peripheral
             let onDeviceEmit = {
                 (data:NSData!) -> (NSData!) in
@@ -184,9 +185,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             var deviceService = GatebluDeviceService(identifier: identifier, peripheral: peripheral, centralManager: centralManager, onEmit: onDeviceEmit)
             self.deviceServices[identifier] = deviceService
 
-            var services = peripheral.services
-            if services == nil {
-                services = []
+            var services = Array<String>()
+            for s in advertisementData["kCBAdvDataServiceUUIDs"]  as Array<CBUUID> {
+                services.append(s.UUIDString)
             }
             let data:JSON = [
                 "type": "discover",
@@ -196,6 +197,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                     "serviceUuids": services
                 ]
             ]
+            NSLog("data: \(data)")
             self.websocketServer.pushToAll(data.rawData());
         }
     }

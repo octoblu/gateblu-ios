@@ -12,7 +12,7 @@ import WebKit
 
 class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
   func userContentController(_userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-    println(message.body)
+    NSLog("DEBUG: \(message.body)")
   }
 }
 
