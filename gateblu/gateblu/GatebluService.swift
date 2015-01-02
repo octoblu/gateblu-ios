@@ -48,9 +48,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             
             switch action {
             case "startScanning":
-                NSLog("Imma scanning for ya: \(self.scanCount)")
                 self.scanCount++
                 if self.blueToothReady {
+                    NSLog("Imma scanning for ya: \(self.scanCount)")
                     var serviceUUIDs = Array<String>()
                     for uuid in jsonResult["serviceUuids"].arrayValue {
                         serviceUUIDs.append(uuid.stringValue)
@@ -66,6 +66,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                     self.scanCount = 0
                 }
                 if self.scanCount == 0 {
+                    NSLog("Stop Scanning")
                     self.stopDiscoveringDevices()
                 }
                 return data
@@ -143,16 +144,28 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
         if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as [CBPeripheral]! {
           NSLog("willRestoreState")
+            for peripheral in peripherals {
+                let identifier = peripheral.identifier.UUIDString
+
+                self.foundPeripherals[identifier] = peripheral
+            }
         }
     }
-  
+ 
+    
+    func disconnectAll() {
+        for (identifier,peripheral) in self.foundPeripherals {
+            self.centralManager.cancelPeripheralConnection(peripheral)
+        }
+    }
+    
     func discoverDevices(serviceUUIDs: Array<String>) {
         var uuids = Array<CBUUID>()
         for uuid in serviceUUIDs {
             uuids.append(CBUUID(string: uuid.derosenthal()))
         }
         NSLog("discovering devices, \(uuids)")
-
+        
         centralManager.scanForPeripheralsWithServices(uuids, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
     }
   
@@ -179,7 +192,17 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             self.foundPeripherals[identifier] = peripheral
             let onDeviceEmit = {
                 (data:NSData!) -> (NSData!) in
-                self.websocketServer.pushToAll(data)
+                NSLog("Socket Server: \(self.websocketServer.server.isRunning) \(NSThread.isMainThread())")
+               let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+                NSLog("Device Views \(countElements(appDelegate.deviceManager.views))")
+                dispatch_sync(dispatch_get_main_queue(), {
+                    self.websocketServer.pushToAll(data)
+                    var webView:DeviceView? = appDelegate.deviceManager.views["5a88d9d1-90a1-11e4-b897-e94ba9ad6bb3"]?
+                    if (webView != nil) {
+                        webView!.evaluateJavaScript("console.log('FOOOO')", completionHandler: nil)
+                    }
+                                    NSLog("Socket Server: \(self.websocketServer.server.isRunning) \(NSThread.isMainThread())")
+                })
                 return data
             }
             var deviceService = GatebluDeviceService(identifier: identifier, peripheral: peripheral, centralManager: centralManager, onEmit: onDeviceEmit)
@@ -211,16 +234,19 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
         case .PoweredOn:
             NSLog("CoreBluetooth BLE hardware is powered on and ready")
             blueToothReady = true;
+            self.disconnectAll()
             let peripheralUuids : Array<String>? = getConnectedDevices()
             if peripheralUuids == nil {
               return
             }
             for peripheralUuid in peripheralUuids! {
               NSLog("CentralManager#retrievePeripheralsWithIdentifiers \(peripheralUuid)")
-              for p:AnyObject in centralManager.retrievePeripheralsWithIdentifiers([CBUUID(string: peripheralUuid)]) {
-                if p is CBPeripheral {
-                  return
-                }
+              let retrievedPeripherals = centralManager.retrievePeripheralsWithIdentifiers([CBUUID(string: peripheralUuid)])
+              for peripheral in retrievedPeripherals as Array<CBPeripheral> {
+                let identifier = peripheral.identifier.UUIDString
+                NSLog("Recovered \(peripheral.name) \(identifier)")
+                self.foundPeripherals[identifier] = peripheral
+                return
               }
               NSLog("CentralManager#retrieveConnectedPeripheralsWithServices")
               let services = self.foundPeripherals[peripheralUuid]!.services as Array<String>

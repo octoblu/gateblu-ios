@@ -41,6 +41,7 @@ class DeviceView: WKWebView, UIWebViewDelegate {
             "uuid: \"" + uuid + "\"," +
             "token: \"" + token + "\"" +
             "});" +
+            "setInterval(function(){console.log('heartbeat')}, 1000);" + 
             "</script>" +
             "</body>" +
         "</html>"

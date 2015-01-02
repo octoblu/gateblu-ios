@@ -15,11 +15,16 @@ class DeviceManager {
     var meshblu : Meshblu?
     
     var devices : [Device] = []
+    var views: [String: DeviceView] = Dictionary<String,DeviceView>()
   
     init() {
       
     }
   
+    func disconnectAll() {
+        gatebluService.disconnectAll()
+    }
+    
     func start() {
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let controller = appDelegate.window?.rootViewController as ViewController
@@ -43,6 +48,7 @@ class DeviceManager {
             let webView = DeviceView(frame: rect, configuration: configuration)
             webView.setDevice(device)
             view.addSubview(webView)
+            self.views[device.uuid] = webView
             
             self.meshblu!.getDevice(device.uuid, token: device.token, onSuccess: { (response : Dictionary<String, AnyObject>) in
               device.update(response)
