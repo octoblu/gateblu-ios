@@ -20,11 +20,7 @@ class DeviceManager: NSObject {
     var scanningSockets = [PSWebSocket]()
     var serviceMap = [String:[PSWebSocket]]()
     var connectedSockets = [String:PSWebSocket]()
- 
-    func disconnectAll() {
-        deviceDiscoverer.disconnectAll()
-    }
-    
+
     override init() {
         super.init()
         self.devicesWebsocketServer = DevicesWebsocketServer(onMessage: self.onMessage)
@@ -50,6 +46,10 @@ class DeviceManager: NSObject {
                 })
             }
         })
+    }
+    
+    func disconnectAll() {
+        deviceDiscoverer.disconnectAll()
     }
     
     func onMessage(webSocket:PSWebSocket, message:String) {

@@ -16,14 +16,10 @@ class DeviceBackgroundService: NSObject {
             self.setMaxTimeout()
             let taskID = self.beginBackgroundUpdateTask()
             
-            while true {
-                println("Doing background stuff")
+            while self.backgroundTimeout > 0 {
                 objc_sync_enter(self)
                 self.backgroundTimeout--
                 objc_sync_exit(self)
-                if self.backgroundTimeout <= 0 {
-                    break
-                }
                 
                 callback()
                 NSThread.sleepForTimeInterval(1)
