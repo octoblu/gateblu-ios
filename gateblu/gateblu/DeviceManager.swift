@@ -13,6 +13,7 @@ import WebKit
 class DeviceManager: NSObject {
     var deviceDiscoverer:DeviceDiscoverer!
     var devicesWebsocketServer:DevicesWebsocketServer!
+    var deviceBackgroundService:DeviceBackgroundService!
     var meshblu : Meshblu?
     
     var devices = [Device]()
@@ -27,6 +28,7 @@ class DeviceManager: NSObject {
     override init() {
         super.init()
         self.devicesWebsocketServer = DevicesWebsocketServer(onMessage: self.onMessage)
+        self.deviceBackgroundService = DeviceBackgroundService()
         self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let controller = appDelegate.window?.rootViewController as ViewController
@@ -197,6 +199,17 @@ class DeviceManager: NSObject {
         }
     
         return devices
+    }
+    
+    
+    func backgroundDevices() {
+        deviceBackgroundService.doUpdate({
+            self.wakeDevices()
+        })
+    }
+    
+    func stopBackgroundDevices() {
+        deviceBackgroundService.clearTimeout()
     }
     
     func wakeDevices() {

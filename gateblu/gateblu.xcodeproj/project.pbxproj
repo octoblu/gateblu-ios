@@ -30,6 +30,7 @@
 		BB43DA8E1A57F5380097026D /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA811A57F5380097026D /* Range.swift */; };
 		BB43DA8F1A57F5380097026D /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA821A57F5380097026D /* Sequence.swift */; };
 		BB43DA901A57F5380097026D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA831A57F5380097026D /* String.swift */; };
+		BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */; };
 		BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085791A44A1E500233B1B /* GatebluService.swift */; };
 		BB50857C1A44A25100233B1B /* DevicesWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857B1A44A25100233B1B /* DevicesWebsocketServer.swift */; };
 		BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857D1A44A71500233B1B /* PeripheralService.swift */; };
@@ -108,6 +109,7 @@
 		BB43DA811A57F5380097026D /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
 		BB43DA821A57F5380097026D /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
 		BB43DA831A57F5380097026D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBackgroundService.swift; sourceTree = "<group>"; };
 		BB5085791A44A1E500233B1B /* GatebluService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluService.swift; sourceTree = "<group>"; };
 		BB50857B1A44A25100233B1B /* DevicesWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesWebsocketServer.swift; sourceTree = "<group>"; };
 		BB50857D1A44A71500233B1B /* PeripheralService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralService.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 			children = (
 				9A0C95881A41F77200236CFC /* AppDelegate.swift */,
 				9A0C95B11A434A9F00236CFC /* Device.swift */,
+				BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */,
 				BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */,
 				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
@@ -465,6 +468,7 @@
 				BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */,
 				BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */,
 				BB43DA881A57F5380097026D /* ExSwift.swift in Sources */,
+				BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
