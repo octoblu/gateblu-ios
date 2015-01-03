@@ -18,9 +18,11 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     var deviceServices = Dictionary<String, GatebluDeviceService>()
     let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
     let DEVICES_STORAGE_IDENTIFIER = "GATEBLU_CONNECTED_DEVICES"
-  
-    override init() {
+    var onWake: ((Void) -> (Void))?
+    
+    init(onWake: (Void) -> (Void)) {
         super.init()
+        self.onWake = onWake
         startUpCentralManager()
         startWebsocketServer()
     }
@@ -151,11 +153,11 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             }
         }
     }
- 
     
     func disconnectAll() {
         for (identifier,peripheral) in self.foundPeripherals {
             self.centralManager.cancelPeripheralConnection(peripheral)
+            self.foundPeripherals[identifier] = nil
         }
     }
     
@@ -192,16 +194,9 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             self.foundPeripherals[identifier] = peripheral
             let onDeviceEmit = {
                 (data:NSData!) -> (NSData!) in
-                NSLog("Socket Server: \(self.websocketServer.server.isRunning) \(NSThread.isMainThread())")
-               let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-                NSLog("Device Views \(countElements(appDelegate.deviceManager.views))")
                 dispatch_sync(dispatch_get_main_queue(), {
                     self.websocketServer.pushToAll(data)
-                    var webView:DeviceView? = appDelegate.deviceManager.views["5a88d9d1-90a1-11e4-b897-e94ba9ad6bb3"]?
-                    if (webView != nil) {
-                        webView!.evaluateJavaScript("console.log('FOOOO')", completionHandler: nil)
-                    }
-                                    NSLog("Socket Server: \(self.websocketServer.server.isRunning) \(NSThread.isMainThread())")
+                    self.onWake!()
                 })
                 return data
             }

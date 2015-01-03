@@ -13,6 +13,7 @@ import WebKit
 
 class DeviceView: WKWebView, UIWebViewDelegate {
     var device:Device!
+    var lastAwoke:NSDate = NSDate()
     
     func setDevice(device:Device) {
         self.device = device
@@ -41,12 +42,23 @@ class DeviceView: WKWebView, UIWebViewDelegate {
             "uuid: \"" + uuid + "\"," +
             "token: \"" + token + "\"" +
             "});" +
-            "setInterval(function(){console.log('heartbeat')}, 1000);" + 
             "</script>" +
             "</body>" +
         "</html>"
         
         self.loadHTMLString(htmlString, baseURL: NSURL(string: "http://app.octoblu.com"))
+    }
+    
+    func wakeIfNotRecentlyAwoken() {
+        let interval = self.lastAwoke.timeIntervalSinceNow
+        if interval < 1 {
+            wake()
+        }
+    }
+    
+    func wake() {
+        self.evaluateJavaScript("function(){}()", completionHandler: nil)
+        self.lastAwoke = NSDate()
     }
     
 }
