@@ -194,10 +194,8 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
             self.foundPeripherals[identifier] = peripheral
             let onDeviceEmit = {
                 (data:NSData!) -> (NSData!) in
-                dispatch_sync(dispatch_get_main_queue(), {
-                    self.websocketServer.pushToAll(data)
-                    self.onWake!()
-                })
+                self.websocketServer.pushToAll(data)
+                self.onWake!()
                 return data
             }
             var deviceService = GatebluDeviceService(identifier: identifier, peripheral: peripheral, centralManager: centralManager, onEmit: onDeviceEmit)

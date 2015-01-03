@@ -57,8 +57,10 @@ class DeviceView: WKWebView, UIWebViewDelegate {
     }
     
     func wake() {
-        self.evaluateJavaScript("function(){}()", completionHandler: nil)
-        self.lastAwoke = NSDate()
+        dispatch_sync(dispatch_get_main_queue(), {
+            self.evaluateJavaScript("function(){}()", completionHandler: nil)
+            self.lastAwoke = NSDate()
+        })
     }
     
 }
