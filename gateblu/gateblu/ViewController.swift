@@ -28,10 +28,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    NSLog("Starting Manager")
     let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     deviceManager = appDelegate.deviceManager
-    deviceManager.start()
     startDeviceCollectionView()
   }
 
@@ -84,7 +82,6 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let deviceView = UIView()
     
     let device: Device? = deviceManager.devices[indexPath.item]
-    NSLog("Adding Device view \(device!.name)")
     if device == nil {
       return deviceView
     }

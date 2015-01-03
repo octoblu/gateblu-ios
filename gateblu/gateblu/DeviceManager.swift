@@ -11,42 +11,34 @@ import WebKit
 
 
 class DeviceManager: NSObject {
-    var gatebluService : GatebluService?
+    var deviceDiscoverer:DeviceDiscoverer!
+    var devicesWebsocketServer:DevicesWebsocketServer!
     var meshblu : Meshblu?
     
-    var devices : [Device] = []
-    var views : [String: DeviceView] = Dictionary<String,DeviceView>()
+    var devices = [Device]()
+    var scanningSockets = [PSWebSocket]()
+    var serviceMap = [String:[PSWebSocket]]()
+    var connectedSockets = [String:PSWebSocket]()
  
     func disconnectAll() {
-        gatebluService!.disconnectAll()
+        deviceDiscoverer.disconnectAll()
     }
     
-    func start() {
-        self.gatebluService = GatebluService(onWake: self.wakeDeviceViews)
+    override init() {
+        super.init()
+        self.devicesWebsocketServer = DevicesWebsocketServer(onMessage: self.onMessage)
+        self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
         let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
         let controller = appDelegate.window?.rootViewController as ViewController
-        let view = controller.view as UIView
-
         startMeshblu({ (configuration : Dictionary<String, AnyObject>) in
-            var devices : AnyObject? = configuration["devices"]
-            if devices == nil {
-              devices = []
+            var deviceConfigs : AnyObject? = configuration["devices"]
+            if deviceConfigs == nil {
+              deviceConfigs = []
             }
           
-            self.devices = self.parseDevices( devices as [AnyObject]);
+            self.devices = self.parseDevices(deviceConfigs as [AnyObject]);
             var deviceResponseCount = 0
             for device in self.devices {
-                let userContentController = WKUserContentController()
-                let handler = NotificationScriptMessageHandler()
-                userContentController.addScriptMessageHandler(handler, name: "notification")
-                let configuration = WKWebViewConfiguration()
-                configuration.userContentController = userContentController
-                let rect:CGRect = CGRectMake(0,0,0,0)
-                let webView = DeviceView(frame: rect, configuration: configuration)
-                webView.setDevice(device)
-                view.addSubview(webView)
-                self.views[device.uuid] = webView
-            
                 self.meshblu!.getDevice(device.uuid, token: device.token, onSuccess: { (response : Dictionary<String, AnyObject>) in
                     device.update(response)
                     deviceResponseCount++
@@ -56,6 +48,120 @@ class DeviceManager: NSObject {
                 })
             }
         })
+    }
+    
+    func onMessage(webSocket:PSWebSocket, message:String) {
+        let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
+        let jsonResult = JSON(data: data)
+        let action = jsonResult["action"].stringValue
+        var peripheralUuid:String!
+        if (jsonResult["peripheralUuid"] != nil) {
+            peripheralUuid = jsonResult["peripheralUuid"].stringValue
+        }
+        
+        var peripheralService:PeripheralService!
+        if (peripheralUuid != nil) {
+            peripheralService = deviceDiscoverer.peripherals[peripheralUuid]
+        }
+        switch action {
+        case "startScanning":
+            if !self.scanningSockets.contains(webSocket) {
+                self.scanningSockets.append(webSocket)
+            }
+            var uuids:[String] = []
+            for uuid in jsonResult["serviceUuids"].arrayValue {
+                let uuidString = uuid.stringValue.derosenthal()
+                uuids.append(uuidString)
+                var services:[PSWebSocket]? = self.serviceMap[uuidString]
+                if (services == nil) {
+                    self.serviceMap[uuidString] = [webSocket]
+                } else {
+                    services!.append(webSocket)
+                }
+            }
+            deviceDiscoverer.scanForServices(uuids)
+            return
+        
+        case "stopScanning":
+            self.scanningSockets = self.scanningSockets.filter { $0 != webSocket }
+            if self.scanningSockets.count == 0 {
+                deviceDiscoverer.stopScanning()
+            }
+            return
+        
+        case "connect":
+            self.connectedSockets[peripheralUuid] = webSocket
+            deviceDiscoverer.connect(peripheralUuid)
+            return
+        
+        case "discoverServices":
+            var uuids = [String]()
+            for uuid in jsonResult["serviceUuids"].arrayValue {
+                let uuidString = uuid.stringValue.derosenthal()
+                uuids.append(uuidString)
+            }
+            peripheralService.discoverServices(uuids)
+            return
+            
+        case "discoverCharacteristics":
+            var uuids = [String]()
+            let serviceUuid = jsonResult["serviceUuid"].stringValue
+            for uuid in jsonResult["characteristicUuids"].arrayValue {
+                uuids.append(uuid.stringValue)
+            }
+            peripheralService.discoverCharacteristics(serviceUuid, characteristicUuids: uuids)
+            return
+            
+        case "updateRssi":
+            peripheralService.updateRssi()
+            return
+
+        case "write":
+            let serviceUuid = jsonResult["serviceUuid"].stringValue
+            let characteristicUuid = jsonResult["characteristicUuid"].stringValue
+
+            let dataStr = jsonResult["data"].stringValue
+            let ddata = dataStr.dataFromHexadecimalString()
+            peripheralService.write(serviceUuid, characteristicUuid: characteristicUuid, data: ddata!)
+            return
+            
+        case "notify":
+            let serviceUuid = jsonResult["serviceUuid"].stringValue
+            let characteristicUuid = jsonResult["characteristicUuid"].stringValue
+            peripheralService.notify(serviceUuid, characteristicUuid: characteristicUuid, notify: jsonResult["notify"].boolValue)
+            return
+        
+        default:
+            println("I can't even \(action): \(message)")
+        }
+    }
+    
+    func onEmit(peripheralUuid: String, message: String) {
+        let webSocket = self.connectedSockets[peripheralUuid]?
+        if (webSocket != nil) {
+            webSocket!.send(message)
+        }
+    }
+    
+    func onDiscovery(data: [String:AnyObject]) {
+        let message:JSON = [
+            "type": "discover",
+            "peripheralUuid": data["identifier"]!,
+            "advertisement": [
+                "localName": data["name"]!,
+                "serviceUuids": data["services"]!
+            ]
+        ]
+        for uuid in data["services"] as [String] {
+            var services = self.serviceMap[uuid] as [PSWebSocket]?
+            if (services != nil) {
+                for webSocket in services! {
+                    if self.scanningSockets.contains(webSocket) {
+                        webSocket.send(message.rawString())
+                    }
+                }
+            }
+        }
     }
   
     func startMeshblu(onConfiguration : (configuration : Dictionary<String, AnyObject>) -> ()){
@@ -80,26 +186,18 @@ class DeviceManager: NSObject {
     }
   
     func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
-        var devices = Array<Device>()
+        var devices = [Device]()
     
         for rawDevice in rawDevices {
           devices.append(Device(device: rawDevice as Dictionary<String, AnyObject>))
         }
     
-        NSLog("devices from parseDevices: \(devices)")
         return devices
     }
     
-    func wakeDeviceView(identifier: String) {
-        let webView:DeviceView? = self.views[identifier]
-        if (webView != nil) {
-            webView!.wake()
-        }
-    }
-    
-    func wakeDeviceViews() {
-        for (identifier,view) in self.views {
-            view.wakeIfNotRecentlyAwoken()
+    func wakeDevices() {
+        for device in self.devices {
+            device.wakeUp()
         }
     }
 }

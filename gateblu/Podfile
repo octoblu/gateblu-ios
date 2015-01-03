@@ -2,7 +2,7 @@
 # platform :ios, '6.0'
 
 target 'gateblu' do
-    pod 'BLWebSocketsServer'
+    pod 'PocketSocket'
     pod 'AFNetworking'
     pod 'SIOSocket'
 end

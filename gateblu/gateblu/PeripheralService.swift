@@ -9,39 +9,21 @@
 import Foundation
 import CoreBluetooth
 
-class GatebluDeviceService: NSObject, CBPeripheralDelegate {
-    var identifier:String
-    var peripheral:CBPeripheral
-    var centralManager:CBCentralManager
-    var onEmit:(data: NSData!) -> (NSData!)
-    let peripheralQueue = dispatch_queue_create("com.octoblu.gateblu.peripheral", DISPATCH_QUEUE_SERIAL)
+class PeripheralService: NSObject, CBPeripheralDelegate {
+    var peripheral:CBPeripheral!
+    var emit:((message: String) -> ())!
     
-    init(identifier:String, peripheral: CBPeripheral, centralManager: CBCentralManager, onEmit: (data: NSData!) -> (NSData!)) {
-        self.identifier = identifier
-        self.peripheral = peripheral
-        self.centralManager = centralManager
-        self.onEmit = onEmit
+    init(peripheral: CBPeripheral, onEmit: (message: String) -> ()) {
         super.init()
+        self.peripheral = peripheral
+        self.emit = onEmit
         self.peripheral.delegate = self
     }
     
-    func connect() {
-        NSLog("Connecting to: \(identifier)")
-        centralManager.connectPeripheral(peripheral, options: [
-            CBConnectPeripheralOptionNotifyOnConnectionKey: true,
-            CBConnectPeripheralOptionNotifyOnDisconnectionKey: true,
-            CBConnectPeripheralOptionNotifyOnNotificationKey: true
-        ])
-    }
-    
-    func emit(data: NSData!){
-        onEmit(data: data)
-    }
-    
-    func discoverServices(serviceUuids: Array<String>) {
-        var cbServices = Array<CBUUID>()
+    func discoverServices(serviceUuids: [String]) {
+        var cbServices = [CBUUID]()
         for uuid in serviceUuids {
-            cbServices.append(CBUUID(string: uuid.derosenthal()))
+            cbServices.append(CBUUID(string: uuid))
         }
         peripheral.discoverServices(cbServices);
     }
@@ -57,7 +39,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "serviceUuids" : services
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
     
     func updateRssi() {
@@ -72,7 +54,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "rssi" : peripheral.RSSI
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
     
     func peripheral(peripheral:CBPeripheral, didReadRSSI RSSI:NSNumber, error:NSError) {
@@ -81,7 +63,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "peripheralUuid": peripheral.identifier.UUIDString,
             "rssi" : RSSI
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
     
     func discoverCharacteristics(serviceUuid: String, characteristicUuids: Array<String>) {
@@ -132,7 +114,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "serviceUuid" : service.UUID.UUIDString,
             "characteristics": characteristics
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
     
     
@@ -182,7 +164,7 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "characteristicUuid": foundCharacteristic.UUID.UUIDString,
             "state": notify
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateNotificationStateForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
@@ -202,6 +184,6 @@ class GatebluDeviceService: NSObject, CBPeripheralDelegate {
             "data": characteristic.value.hexString(),
             "isNotification": true
         ]
-        emit(data.rawData())
+        emit(message: data.rawString()!)
     }
 }

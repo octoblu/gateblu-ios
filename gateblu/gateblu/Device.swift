@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreBluetooth
+import WebKit
 
 class Device {
     var uuid:String
@@ -15,19 +17,11 @@ class Device {
     var online:Bool
     var type:String?
     var connector:String?
-    var peripheralId:String?
-    let notSoSmartRobots : Array<String> = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
-    let soSmartDevices : Array<String> = ["blink1", "bean", "hue", "generic"]
-    
-    init(uuid: String, token: String, name: String, online : Bool, type: String, connector: String) {
-        self.uuid = uuid
-        self.token = token
-        self.name = name
-        self.online = online
-        self.type = type
-        self.connector = connector
-        setDefaults()
-    }
+    var peripheral:CBPeripheral!
+    var websocket:PSWebSocket!
+    var webViewController:DeviceViewController!
+    let notSoSmartRobots : [String] = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
+    let soSmartDevices : [String] = ["blink1", "bean", "hue", "generic"]
   
     init(device : Dictionary<String, AnyObject>) {
         self.uuid = device["uuid"] as String
@@ -38,6 +32,7 @@ class Device {
         self.type = device["type"] as String?
         self.connector = device["connector"] as String?
         setDefaults()
+        self.webViewController = DeviceViewController(self)
     }
   
     func update(device: Dictionary<String, AnyObject>){
@@ -47,6 +42,7 @@ class Device {
         self.online = online == true
         self.type = device["type"] as String?
         setDefaults()
+        self.webViewController.reload()
     }
   
     func setDefaults(){
@@ -68,5 +64,17 @@ class Device {
             var randomIndex = abs(self.type!.hash) % notSoSmartRobots.count
             return notSoSmartRobots[randomIndex];
         }
+    }
+    
+    func setPeripheral(peripheral:CBPeripheral) {
+        self.peripheral = peripheral
+    }
+    
+    func setWebsocket(websocket:PSWebSocket) {
+        self.websocket = websocket
+    }
+    
+    func wakeUp() {
+        self.webViewController.wakeIfNotRecentlyAwoken()
     }
 }
