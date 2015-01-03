@@ -77,10 +77,12 @@ class DeviceViewController: NSObject {
     }
     
     func wake() {
-        dispatch_sync(dispatch_get_main_queue(), {
-            self.view.evaluateJavaScript("function(){}()", completionHandler: nil)
-            self.lastAwoke = NSDate()
-        })
+        if (UIApplication.sharedApplication().applicationState == UIApplicationState.Background) {
+            dispatch_async(dispatch_get_main_queue(), {
+                self.view.evaluateJavaScript("function(){}()", completionHandler: nil)
+            })
+        }
+        self.lastAwoke = NSDate()
     }
     
 }

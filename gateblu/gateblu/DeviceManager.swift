@@ -96,7 +96,7 @@ class DeviceManager: NSObject {
         
         case "discoverServices":
             var uuids = [String]()
-            for uuid in jsonResult["serviceUuids"].arrayValue {
+            for uuid in jsonResult["uuids"].arrayValue {
                 let uuidString = uuid.stringValue.derosenthal()
                 uuids.append(uuidString)
             }
@@ -141,6 +141,9 @@ class DeviceManager: NSObject {
         if (webSocket != nil) {
             webSocket!.send(message)
         }
+        for device in self.devices {
+            device.wakeUp()
+        }
     }
     
     func onDiscovery(data: [String:AnyObject]) {
@@ -152,6 +155,7 @@ class DeviceManager: NSObject {
                 "serviceUuids": data["services"]!
             ]
         ]
+        println("Discovered: \(message)")
         for uuid in data["services"] as [String] {
             var services = self.serviceMap[uuid] as [PSWebSocket]?
             if (services != nil) {

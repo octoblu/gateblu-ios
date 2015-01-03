@@ -53,9 +53,9 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     }
     
     func disconnectAll() {
-        for (identifier,service) in self.peripherals as [String:PeripheralService] {
-            self.centralManager.cancelPeripheralConnection(service.peripheral)
-            self.peripherals[identifier] = nil
+        var peripherals = self.centralManager.retrieveConnectedPeripheralsWithServices(nil)
+        for peripheral in peripherals as [CBPeripheral] {
+            self.centralManager.cancelPeripheralConnection(peripheral)
         }
     }
 

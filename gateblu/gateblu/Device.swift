@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import CoreBluetooth
 import WebKit
 
 class Device {
@@ -17,8 +16,6 @@ class Device {
     var online:Bool
     var type:String?
     var connector:String?
-    var peripheral:CBPeripheral!
-    var websocket:PSWebSocket!
     var webViewController:DeviceViewController!
     let notSoSmartRobots : [String] = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
     let soSmartDevices : [String] = ["blink1", "bean", "hue", "generic"]
@@ -64,14 +61,6 @@ class Device {
             var randomIndex = abs(self.type!.hash) % notSoSmartRobots.count
             return notSoSmartRobots[randomIndex];
         }
-    }
-    
-    func setPeripheral(peripheral:CBPeripheral) {
-        self.peripheral = peripheral
-    }
-    
-    func setWebsocket(websocket:PSWebSocket) {
-        self.websocket = websocket
     }
     
     func wakeUp() {
