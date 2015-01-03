@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 extension String {
     
     func derosenthal() -> String {
@@ -62,3 +63,4 @@ extension NSData {
         return str
     }
 }
+

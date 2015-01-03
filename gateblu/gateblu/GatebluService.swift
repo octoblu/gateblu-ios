@@ -19,6 +19,7 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
     let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
     let DEVICES_STORAGE_IDENTIFIER = "GATEBLU_CONNECTED_DEVICES"
     var onWake: ((Void) -> (Void))?
+    var scanningServiceUUIDs:[String] = []
     
     init(onWake: (Void) -> (Void)) {
         super.init()
@@ -53,11 +54,10 @@ class GatebluService: NSObject, CBCentralManagerDelegate {
                 self.scanCount++
                 if self.blueToothReady {
                     NSLog("Imma scanning for ya: \(self.scanCount)")
-                    var serviceUUIDs = Array<String>()
                     for uuid in jsonResult["serviceUuids"].arrayValue {
-                        serviceUUIDs.append(uuid.stringValue)
+                        self.scanningServiceUUIDs.append(uuid.stringValue)
                     }
-                    self.discoverDevices(serviceUUIDs)
+                    self.discoverDevices(self.scanningServiceUUIDs)
                 }
                 
                 return data;
