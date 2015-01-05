@@ -16,7 +16,7 @@ class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
     
   }
   
-  func send(webSocket: PSWebSocket, message:String) {
+  func send(webSocket: PSWebSocket, message:String?) {
     webSocket.send(message)
   }
   

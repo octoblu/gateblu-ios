@@ -185,16 +185,16 @@
 		9A0C957A1A41F77200236CFC = {
 			isa = PBXGroup;
 			children = (
-				BB43DA751A57F5380097026D /* ExSwift */,
-				BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */,
 				BB6D7CAE1A42968F007B8E17 /* config.xml */,
-				BB6D7CAB1A424F50007B8E17 /* Podfile */,
 				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
+				BB43DA751A57F5380097026D /* ExSwift */,
+				6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */,
 				9A0C95851A41F77200236CFC /* gateblu */,
 				9A0C959B1A41F77200236CFC /* gatebluTests */,
-				9A0C95841A41F77200236CFC /* Products */,
+				BB6D7CAB1A424F50007B8E17 /* Podfile */,
 				455BA00AC7ADB8C113D7E52E /* Pods */,
-				6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */,
+				9A0C95841A41F77200236CFC /* Products */,
+				BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -215,20 +215,20 @@
 				BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */,
 				BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */,
 				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
-				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
 				06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */,
-				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
-				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
-				9A0C958A1A41F77200236CFC /* ViewController.swift */,
-				9A0C958C1A41F77200236CFC /* Main.storyboard */,
-				9A0C958F1A41F77200236CFC /* Images.xcassets */,
-				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
-				9A0C95861A41F77200236CFC /* Supporting Files */,
+				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
+				BB5085811A44DE1500233B1B /* Extensions.swift */,
 				BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */,
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
-				D00F5C4B1A51B89000498ADB /* Meshblu.swift */,
-				BB5085811A44DE1500233B1B /* Extensions.swift */,
 				06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */,
+				9A0C958F1A41F77200236CFC /* Images.xcassets */,
+				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
+				9A0C958C1A41F77200236CFC /* Main.storyboard */,
+				D00F5C4B1A51B89000498ADB /* Meshblu.swift */,
+				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
+				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
+				9A0C95861A41F77200236CFC /* Supporting Files */,
+				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";

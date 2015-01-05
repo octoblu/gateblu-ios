@@ -16,7 +16,12 @@
         port: 0xD00D
       });
       
-      deviceManager.getOptions(function(gatebluOptions){
+      deviceManager.getOptions(function(error, gatebluOptions){
+        if(error){
+          console.error("error in getOptions: " + error);
+          return;
+        }
+        console.log(gatebluOptions);
         new GatebluWebsocket.Gateblu(gatebluOptions, deviceManager);
       });
     </script>
