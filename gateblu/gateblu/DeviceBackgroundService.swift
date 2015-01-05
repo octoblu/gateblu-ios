@@ -28,7 +28,6 @@ class DeviceBackgroundService: NSObject {
             // Do something with the result
             
             self.endBackgroundUpdateTask(taskID)
-            
         })
     }
     

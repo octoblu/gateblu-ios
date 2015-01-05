@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */; };
+		06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */ = {isa = PBXBuildFile; fileRef = 06ED1DBE1A5B046D001A232D /* gateblu.html */; };
+		06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */; };
 		522F9D7762F5BBA9EF54F5EF /* libPods-gateblu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1981509205167E4CC4BCA124 /* libPods-gateblu.a */; };
 		9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95881A41F77200236CFC /* AppDelegate.swift */; };
 		9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C958A1A41F77200236CFC /* ViewController.swift */; };
@@ -32,7 +35,7 @@
 		BB43DA901A57F5380097026D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA831A57F5380097026D /* String.swift */; };
 		BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */; };
 		BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085791A44A1E500233B1B /* GatebluService.swift */; };
-		BB50857C1A44A25100233B1B /* DevicesWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857B1A44A25100233B1B /* DevicesWebsocketServer.swift */; };
+		BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */; };
 		BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857D1A44A71500233B1B /* PeripheralService.swift */; };
 		BB5085801A44DDF800233B1B /* DeviceViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857F1A44DDF800233B1B /* DeviceViewController.swift */; };
 		BB5085821A44DE1500233B1B /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085811A44DE1500233B1B /* Extensions.swift */; };
@@ -81,6 +84,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManagerView.swift; sourceTree = "<group>"; };
+		06ED1DBE1A5B046D001A232D /* gateblu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gateblu.html; sourceTree = "<group>"; };
+		06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluWebsocketServer.swift; sourceTree = "<group>"; };
 		1981509205167E4CC4BCA124 /* libPods-gateblu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gateblu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95831A41F77200236CFC /* gateblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gateblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95871A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -111,7 +117,7 @@
 		BB43DA831A57F5380097026D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBackgroundService.swift; sourceTree = "<group>"; };
 		BB5085791A44A1E500233B1B /* GatebluService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluService.swift; sourceTree = "<group>"; };
-		BB50857B1A44A25100233B1B /* DevicesWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevicesWebsocketServer.swift; sourceTree = "<group>"; };
+		BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NobleWebsocketServer.swift; sourceTree = "<group>"; };
 		BB50857D1A44A71500233B1B /* PeripheralService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeripheralService.swift; sourceTree = "<group>"; };
 		BB50857F1A44DDF800233B1B /* DeviceViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceViewController.swift; sourceTree = "<group>"; };
 		BB5085811A44DE1500233B1B /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -210,7 +216,8 @@
 				BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */,
 				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
-				BB50857B1A44A25100233B1B /* DevicesWebsocketServer.swift */,
+				06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */,
+				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
@@ -221,6 +228,7 @@
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
 				D00F5C4B1A51B89000498ADB /* Meshblu.swift */,
 				BB5085811A44DE1500233B1B /* Extensions.swift */,
+				06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -243,6 +251,7 @@
 				D00F5C4F1A52132700498ADB /* generic.png */,
 				D00F5C501A52132700498ADB /* hue.png */,
 				9A0C95871A41F77200236CFC /* Info.plist */,
+				06ED1DBE1A5B046D001A232D /* gateblu.html */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -380,6 +389,7 @@
 				D07CF1AE1A5351EE004D4DC9 /* robot9.png in Resources */,
 				9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */,
 				D07CF1A81A5351EE004D4DC9 /* robot3.png in Resources */,
+				06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */,
 				D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */,
 				D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */,
 				BB43DA8A1A57F5380097026D /* Info.plist in Resources */,
@@ -446,6 +456,7 @@
 			files = (
 				BB43DA8C1A57F5380097026D /* NSArray.swift in Sources */,
 				BB43DA8F1A57F5380097026D /* Sequence.swift in Sources */,
+				06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */,
 				BB43DA8E1A57F5380097026D /* Range.swift in Sources */,
 				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
 				BB5085821A44DE1500233B1B /* Extensions.swift in Sources */,
@@ -456,6 +467,7 @@
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */,
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
+				06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				BB5085801A44DDF800233B1B /* DeviceViewController.swift in Sources */,
 				BB43DA891A57F5380097026D /* Float.swift in Sources */,
@@ -464,7 +476,7 @@
 				BB43DA851A57F5380097026D /* Character.swift in Sources */,
 				BB43DA841A57F5380097026D /* Array.swift in Sources */,
 				BB43DA861A57F5380097026D /* Dictionary.swift in Sources */,
-				BB50857C1A44A25100233B1B /* DevicesWebsocketServer.swift in Sources */,
+				BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */,
 				BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */,
 				BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */,
 				BB43DA881A57F5380097026D /* ExSwift.swift in Sources */,
@@ -595,11 +607,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -611,11 +625,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

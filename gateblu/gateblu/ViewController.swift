@@ -31,6 +31,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     deviceManager = appDelegate.deviceManager
     startDeviceCollectionView()
+    deviceManager.start()
   }
 
   override func didReceiveMemoryWarning() {

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+    <script type="text/javascript">
+      console.error = function(error) { window.webkit.messageHandlers.notification.postMessage({body:error}); };
+      console.log = console.error;
+    </script>
+ 
+<!--    <script type="text/javascript" src="http://gateblu.s3.amazonaws.com/javascript/gateblu-websocket.js"></script>-->
+    <script type="text/javascript" src="http://192.168.100.53:3002/gateblu-websocket.js"></script>
+    <script type="text/javascript">
+      console.log("Starting GatebluWebsocket.DeviceManager")
+      var deviceManager = new GatebluWebsocket.DeviceManager({
+        host: 'localhost',
+        port: 0xD00D
+      });
+      
+      deviceManager.getOptions(function(gatebluOptions){
+        new GatebluWebsocket.Gateblu(gatebluOptions, deviceManager);
+      });
+    </script>
+  </head>
+  <body>
+  </body>
+</html>

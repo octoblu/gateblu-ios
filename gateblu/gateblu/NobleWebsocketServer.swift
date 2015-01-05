@@ -8,7 +8,7 @@
 
 import Foundation
 
-class DevicesWebsocketServer: NSObject, PSWebSocketServerDelegate {
+class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
     var server:PSWebSocketServer!
     var onMessage:((PSWebSocket, String) -> ())!
     
@@ -29,32 +29,32 @@ class DevicesWebsocketServer: NSObject, PSWebSocketServerDelegate {
     }
     
     func serverDidStart(server:PSWebSocketServer!) {
-        NSLog("Server starting")
+        NSLog("NobleWebsocketServer starting")
     }
     
     func serverDidStop(server:PSWebSocketServer!) {
-        NSLog("Server stopping")
+        NSLog("NobleWebsocketServer stopping")
     }
     
     func server(server:PSWebSocketServer!, acceptWebSocketWithRequest request:NSURLRequest) -> (Bool) {
-        NSLog("Server should accept request: \(request)")
+        NSLog("NobleWebsocketServer should accept request: \(request)")
         return true
     }
     
     func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didReceiveMessage message:AnyObject) {
-        NSLog("Server websocket did receive message: \(message)")
+        NSLog("NobleWebsocketServer websocket did receive message: \(message)")
         onMessage(webSocket, "\(message)")
     }
     
     func server(server:PSWebSocketServer!, webSocketDidOpen webSocket:PSWebSocket!) {
-        NSLog("Server websocket did open \(webSocket)")
+        NSLog("NobleWebsocketServer websocket did open \(webSocket)")
     }
     
     func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didCloseWithCode code:NSInteger, reason:String, wasClean:Bool) {
-        NSLog("Server websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
+        NSLog("NobleWebsocketServer websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
     }
     func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didFailWithError error:NSError) {
-        NSLog("Server websocket did fail with error: \(error)")
+        NSLog("NobleWebsocketServer websocket did fail with error: \(error)")
     }
 
  

@@ -12,7 +12,8 @@ import WebKit
 
 class DeviceManager: NSObject {
     var deviceDiscoverer:DeviceDiscoverer!
-    var devicesWebsocketServer:DevicesWebsocketServer!
+    var gatebluWebsocketServer:GatebluWebsocketServer!
+    var nobleWebsocketServer:NobleWebsocketServer!
     var deviceBackgroundService:DeviceBackgroundService!
     var meshblu : Meshblu?
     
@@ -20,39 +21,51 @@ class DeviceManager: NSObject {
     var scanningSockets = [PSWebSocket]()
     var serviceMap = [String:[PSWebSocket]]()
     var connectedSockets = [String:PSWebSocket]()
-
+    var deviceManagerView : DeviceManagerView!
+  
     override init() {
-        super.init()
-        self.devicesWebsocketServer = DevicesWebsocketServer(onMessage: self.onMessage)
-        self.deviceBackgroundService = DeviceBackgroundService()
-        self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let controller = appDelegate.window?.rootViewController as ViewController
-        startMeshblu({ (configuration : Dictionary<String, AnyObject>) in
-            var deviceConfigs : AnyObject? = configuration["devices"]
-            if deviceConfigs == nil {
-              deviceConfigs = []
-            }
-          
-            self.devices = self.parseDevices(deviceConfigs as [AnyObject]);
-            var deviceResponseCount = 0
-            for device in self.devices {
-                self.meshblu!.getDevice(device.uuid, token: device.token, onSuccess: { (response : Dictionary<String, AnyObject>) in
-                    device.update(response)
-                    deviceResponseCount++
-                    if deviceResponseCount == self.devices.count {
-                        controller.deviceCollectionView!.reloadData();
-                    }
-                })
-            }
-        })
+      super.init()
+      self.gatebluWebsocketServer = GatebluWebsocketServer(onMessage: self.onGatebluMessage)
+      self.nobleWebsocketServer = NobleWebsocketServer(onMessage: self.onNobleMessage)
+      self.deviceBackgroundService = DeviceBackgroundService()
+      self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
+      let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+      let controller = appDelegate.window?.rootViewController as ViewController
+    
+      self.deviceManagerView = DeviceManagerView()
+//        startMeshblu({ (configuration : Dictionary<String, AnyObject>) in
+//            var deviceConfigs : AnyObject? = configuration["devices"]
+//            if deviceConfigs == nil {
+//              deviceConfigs = []
+//            }
+//          
+//            self.devices = self.parseDevices(deviceConfigs as [AnyObject]);
+//            var deviceResponseCount = 0
+//            for device in self.devices {
+//                self.meshblu!.getDevice(device.uuid, token: device.token, onSuccess: { (response : Dictionary<String, AnyObject>) in
+//                    device.update(response)
+//                    deviceResponseCount++
+//                    if deviceResponseCount == self.devices.count {
+//                        controller.deviceCollectionView!.reloadData();
+//                    }
+//                })
+//            }
+//        })
+    }
+  
+    func start(){
+      self.deviceManagerView.startWebView()
     }
     
     func disconnectAll() {
         deviceDiscoverer.disconnectAll()
     }
-    
-    func onMessage(webSocket:PSWebSocket, message:String) {
+  
+    func onGatebluMessage(webSocket:PSWebSocket, message:String) {
+      NSLog("onGatebluMesssage: \(message)")
+    }
+  
+    func onNobleMessage(webSocket:PSWebSocket, message:String) {
         let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
         let jsonResult = JSON(data: data)
         let action = jsonResult["action"].stringValue
@@ -171,41 +184,41 @@ class DeviceManager: NSObject {
     }
   
     func startMeshblu(onConfiguration : (configuration : Dictionary<String, AnyObject>) -> ()){
-        let userDefaults = NSUserDefaults.standardUserDefaults()
-        let uuid : String? = userDefaults.stringForKey("uuid")
-        let token : String? = userDefaults.stringForKey("token")
+      let userDefaults = NSUserDefaults.standardUserDefaults()
+      let uuid : String? = userDefaults.stringForKey("uuid")
+      let token : String? = userDefaults.stringForKey("token")
       
-        self.meshblu = Meshblu(uuid: uuid, token: token)
-        self.meshblu!.connect()
-        if uuid == nil || token == nil {
-            self.meshblu!.register({ (uuid: String, token : String) in
-                NSLog("Registered uuid: \(uuid), token: \(token)")
-                userDefaults.setObject(uuid, forKey: "uuid")
-                userDefaults.setObject(token, forKey: "token")
-                self.meshblu!.whoami(onConfiguration)
-            })
-        }else{
-            NSLog("Already Registered")
-            self.meshblu!.whoami(onConfiguration)
-            self.meshblu!.goOnline()
-        }
+      self.meshblu = Meshblu(uuid: uuid, token: token)
+      self.meshblu!.connect()
+      if uuid == nil || token == nil {
+          self.meshblu!.register({ (uuid: String, token : String) in
+              NSLog("Registered uuid: \(uuid), token: \(token)")
+              userDefaults.setObject(uuid, forKey: "uuid")
+              userDefaults.setObject(token, forKey: "token")
+              self.meshblu!.whoami(onConfiguration)
+          })
+      }else{
+          NSLog("Already Registered")
+          self.meshblu!.whoami(onConfiguration)
+          self.meshblu!.goOnline()
+      }
     }
   
     func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
-        var devices = [Device]()
-    
-        for rawDevice in rawDevices {
-          devices.append(Device(device: rawDevice as Dictionary<String, AnyObject>))
-        }
-    
-        return devices
+      var devices = [Device]()
+  
+      for rawDevice in rawDevices {
+        devices.append(Device(device: rawDevice as Dictionary<String, AnyObject>))
+      }
+  
+      return devices
     }
     
     
     func backgroundDevices() {
-        deviceBackgroundService.doUpdate({
-            self.wakeDevices()
-        })
+      deviceBackgroundService.doUpdate({
+          self.wakeDevices()
+      })
     }
     
     func stopBackgroundDevices() {
