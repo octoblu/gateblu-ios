@@ -15,7 +15,6 @@ class DeviceManager: NSObject {
   var gatebluWebsocketServer:GatebluWebsocketServer!
   var nobleWebsocketServer:NobleWebsocketServer!
   var deviceBackgroundService:DeviceBackgroundService!
-  var meshblu : Meshblu?
   
   var devices = [Device]()
   var scanningSockets = [PSWebSocket]()
@@ -195,27 +194,6 @@ class DeviceManager: NSObject {
     self.gatebluWebsocketServer.send(webSocket, message: jsonAuth.rawString());
   }
   
-  func startMeshblu(onConfiguration : (configuration : Dictionary<String, AnyObject>) -> ()){
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    let uuid : String? = userDefaults.stringForKey("uuid")
-    let token : String? = userDefaults.stringForKey("token")
-    
-    self.meshblu = Meshblu(uuid: uuid, token: token)
-    self.meshblu!.connect()
-    if uuid == nil || token == nil {
-      self.meshblu!.register({ (uuid: String, token : String) in
-        NSLog("Registered uuid: \(uuid), token: \(token)")
-        userDefaults.setObject(uuid, forKey: "uuid")
-        userDefaults.setObject(token, forKey: "token")
-        self.meshblu!.whoami(onConfiguration)
-      })
-    }else{
-      NSLog("Already Registered")
-      self.meshblu!.whoami(onConfiguration)
-      self.meshblu!.goOnline()
-    }
-  }
-  
   func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
     var devices = [Device]()
     
@@ -225,7 +203,6 @@ class DeviceManager: NSObject {
     
     return devices
   }
-  
   
   func backgroundDevices() {
     deviceBackgroundService.doUpdate({

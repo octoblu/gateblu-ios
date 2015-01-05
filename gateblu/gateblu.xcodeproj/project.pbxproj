@@ -44,7 +44,6 @@
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
 		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
-		D00F5C4C1A51B89000498ADB /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00F5C4B1A51B89000498ADB /* Meshblu.swift */; };
 		D00F5C511A52132700498ADB /* bean.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4D1A52132700498ADB /* bean.png */; };
 		D00F5C521A52132700498ADB /* blink1.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4E1A52132700498ADB /* blink1.png */; };
 		D00F5C531A52132700498ADB /* generic.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4F1A52132700498ADB /* generic.png */; };
@@ -128,7 +127,6 @@
 		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
-		D00F5C4B1A51B89000498ADB /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
 		D00F5C4D1A52132700498ADB /* bean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bean.png; sourceTree = "<group>"; };
 		D00F5C4E1A52132700498ADB /* blink1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink1.png; sourceTree = "<group>"; };
 		D00F5C4F1A52132700498ADB /* generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = generic.png; sourceTree = "<group>"; };
@@ -224,7 +222,6 @@
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
 				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
-				D00F5C4B1A51B89000498ADB /* Meshblu.swift */,
 				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
@@ -471,7 +468,6 @@
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				BB5085801A44DDF800233B1B /* DeviceViewController.swift in Sources */,
 				BB43DA891A57F5380097026D /* Float.swift in Sources */,
-				D00F5C4C1A51B89000498ADB /* Meshblu.swift in Sources */,
 				9A0C95B21A434A9F00236CFC /* Device.swift in Sources */,
 				BB43DA851A57F5380097026D /* Character.swift in Sources */,
 				BB43DA841A57F5380097026D /* Array.swift in Sources */,
