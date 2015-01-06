@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A3E1A5B4850000F2915 /* Meshblu.swift */; };
+		065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A411A5B4CEF000F2915 /* Async.parallel.swift */; };
+		065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A421A5B4CEF000F2915 /* Async.series.swift */; };
+		065E6A471A5B4CEF000F2915 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A431A5B4CEF000F2915 /* Async.swift */; };
 		06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */; };
 		06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */ = {isa = PBXBuildFile; fileRef = 06ED1DBE1A5B046D001A232D /* gateblu.html */; };
 		06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */; };
@@ -83,6 +87,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		065E6A3E1A5B4850000F2915 /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
+		065E6A401A5B4CEF000F2915 /* Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Async.h; sourceTree = "<group>"; };
+		065E6A411A5B4CEF000F2915 /* Async.parallel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.parallel.swift; sourceTree = "<group>"; };
+		065E6A421A5B4CEF000F2915 /* Async.series.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.series.swift; sourceTree = "<group>"; };
+		065E6A431A5B4CEF000F2915 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManagerView.swift; sourceTree = "<group>"; };
 		06ED1DBE1A5B046D001A232D /* gateblu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gateblu.html; sourceTree = "<group>"; };
 		06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluWebsocketServer.swift; sourceTree = "<group>"; };
@@ -163,6 +172,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		065E6A441A5B4CEF000F2915 /* async */ = {
+			isa = PBXGroup;
+			children = (
+				065E6A401A5B4CEF000F2915 /* Async.h */,
+				065E6A411A5B4CEF000F2915 /* Async.parallel.swift */,
+				065E6A421A5B4CEF000F2915 /* Async.series.swift */,
+				065E6A431A5B4CEF000F2915 /* Async.swift */,
+			);
+			path = async;
+			sourceTree = "<group>";
+		};
 		455BA00AC7ADB8C113D7E52E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,6 +203,7 @@
 		9A0C957A1A41F77200236CFC = {
 			isa = PBXGroup;
 			children = (
+				065E6A441A5B4CEF000F2915 /* async */,
 				BB6D7CAE1A42968F007B8E17 /* config.xml */,
 				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
 				BB43DA751A57F5380097026D /* ExSwift */,
@@ -222,6 +243,7 @@
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
 				9A0C95911A41F77200236CFC /* LaunchScreen.xib */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
+				065E6A3E1A5B4850000F2915 /* Meshblu.swift */,
 				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
@@ -463,6 +485,8 @@
 				BB43DA871A57F5380097026D /* Double.swift in Sources */,
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */,
+				065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */,
+				065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */,
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
 				06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
@@ -474,8 +498,10 @@
 				BB43DA861A57F5380097026D /* Dictionary.swift in Sources */,
 				BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */,
 				BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */,
+				065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */,
 				BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */,
 				BB43DA881A57F5380097026D /* ExSwift.swift in Sources */,
+				065E6A471A5B4CEF000F2915 /* Async.swift in Sources */,
 				BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

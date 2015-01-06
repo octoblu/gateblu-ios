@@ -22,15 +22,18 @@ PODS:
     - AFNetworking/NSURLSession
   - PocketSocket (0.6.4)
   - SIOSocket (0.2.0)
+  - swift-async (0.1.0)
 
 DEPENDENCIES:
   - AFNetworking
   - PocketSocket
   - SIOSocket
+  - swift-async
 
 SPEC CHECKSUMS:
   AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   PocketSocket: 8c18f973e57fd3042d032626654658df0fa2f126
   SIOSocket: 40ebc9f014b9fec4ec595212faaf6f19cf29d1f2
+  swift-async: b58b47b3c4f116086e1d9231c1c96214b45c08b1
 
 COCOAPODS: 0.35.0

@@ -9,7 +9,6 @@
 import Foundation
 import WebKit
 
-
 class DeviceManager: NSObject {
   var deviceDiscoverer:DeviceDiscoverer!
   var gatebluWebsocketServer:GatebluWebsocketServer!
@@ -48,9 +47,14 @@ class DeviceManager: NSObject {
     let jsonResult = JSON(data: data)
     let name = jsonResult["name"].stringValue
     let id = jsonResult["id"].stringValue
+    
     switch name {
     case "getOptions":
       sendGatebluOptions(webSocket, id: id)
+      return;
+    case "refreshDevices":
+      let devices = jsonResult["data"].arrayValue
+      sendDevices(webSocket, id: id, devices: devices)
       return;
     default:
       NSLog("I don't even: \(name)")
@@ -194,6 +198,34 @@ class DeviceManager: NSObject {
     self.gatebluWebsocketServer.send(webSocket, message: jsonAuth.rawString());
   }
   
+  func sendDevices(webSocket : PSWebSocket, id : String, devices: Array<JSON>) {
+    var tasks : [((Any?, NSError?) -> ()) -> ()] = []
+    for device in devices {
+      tasks.append(Async.bind { self.deviceExists(device, $0)})
+    }
+    Async.parallel(tasks) { (results, error) in
+      let filteredResults = self.compact(results!)
+      NSLog("Results count \(filteredResults.count)")
+      
+      for result in filteredResults {
+        let resultJSON = result as JSON
+        NSLog("Got the devices \(resultJSON)")
+      }
+      
+      
+    }
+  }
+  
+  func deviceExists(device : JSON, completionHandler: (JSON?, NSError?) -> ()){
+    let uuid = device["uuid"].stringValue
+    let token = device["token"].stringValue
+    let meshblu = Meshblu(uuid: uuid, token: token)
+    meshblu.whoami({ (device: Dictionary<String, AnyObject>?) in
+      let deviceJSON = (device == nil) ? nil : JSON(device!)
+      completionHandler(deviceJSON, nil)
+    })
+  }
+  
   func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
     var devices = [Device]()
     
@@ -218,5 +250,9 @@ class DeviceManager: NSObject {
     for device in self.devices {
       device.wakeUp()
     }
+  }
+  
+  func compact(collection: [Any]) -> [Any] {
+    return collection.filter({ nil != $0 })
   }
 }
