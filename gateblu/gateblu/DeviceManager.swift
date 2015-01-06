@@ -20,6 +20,7 @@ class DeviceManager: NSObject {
   var serviceMap = [String:[PSWebSocket]]()
   var connectedSockets = [String:PSWebSocket]()
   var deviceManagerView : DeviceManagerView!
+  var onDeviceChangeListeners : [() -> ()] = []
   
   override init() {
     super.init()
@@ -180,6 +181,18 @@ class DeviceManager: NSObject {
     }
   }
   
+  func setOnDevicesChange(onDeviceChange: () -> ()) {
+    self.onDeviceChangeListeners.append(onDeviceChange)
+  }
+  
+  func setDevices(devices: [Device]){
+    self.devices = devices
+    for listener in self.onDeviceChangeListeners {
+      listener()
+    }
+  }
+  
+  
   func sendGatebluOptions(webSocket : PSWebSocket, id : String) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var uuid = userDefaults.stringForKey("uuid")
@@ -204,15 +217,9 @@ class DeviceManager: NSObject {
       tasks.append(Async.bind { self.deviceExists(device, $0)})
     }
     Async.parallel(tasks) { (results, error) in
-      let filteredResults = self.compact(results!)
-      NSLog("Results count \(filteredResults.count)")
-      
-      for result in filteredResults {
-        let resultJSON = result as JSON
-        NSLog("Got the devices \(resultJSON)")
-      }
-      
-      
+      let filteredResults = self.compact(results! as [Any])
+      let devices = Device.fromJSONArray(filteredResults)
+      self.setDevices(devices)
     }
   }
   
@@ -252,7 +259,14 @@ class DeviceManager: NSObject {
     }
   }
   
-  func compact(collection: [Any]) -> [Any] {
-    return collection.filter({ nil != $0 })
+  func compact(collection: [Any]) -> [JSON] {
+    var filteredArray : [JSON] = []
+    for item in collection {
+      let itemJSON = item as JSON
+      if let i = (itemJSON)["uuid"].string {
+        filteredArray.append(itemJSON)
+      }
+    }
+    return filteredArray
   }
 }

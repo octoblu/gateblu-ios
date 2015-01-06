@@ -32,6 +32,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     deviceManager = appDelegate.deviceManager
     startDeviceCollectionView()
     deviceManager.start()
+    deviceManager.setOnDevicesChange({() -> () in
+      self.deviceCollectionView!.reloadData()
+    })
   }
 
   override func didReceiveMemoryWarning() {
