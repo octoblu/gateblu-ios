@@ -20,18 +20,6 @@ class Device {
   let notSoSmartRobots : [String] = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
   let soSmartDevices : [String] = ["blink1", "bean", "hue", "generic"]
   
-  init(device : Dictionary<String, AnyObject>) {
-    self.uuid = device["uuid"] as String
-    self.token = device["token"] as String
-    self.name = device["name"] as String?
-    var online = device["online"] as Bool?
-    self.online = online == true
-    self.type = device["type"] as String?
-    self.connector = device["connector"] as String?
-    setDefaults()
-    self.webViewController = DeviceViewController(self)
-  }
-  
   init(uuid: String, token: String, online: Bool, name: String?, type: String?, connector: String?) {
     self.uuid = uuid
     self.token = token
@@ -39,6 +27,8 @@ class Device {
     self.type = type
     self.online = online
     self.connector = connector
+    self.setDefaults()
+    self.webViewController = DeviceViewController(self)
   }
   
   func update(device: Dictionary<String, AnyObject>){
@@ -48,7 +38,7 @@ class Device {
     self.online = online == true
     self.type = device["type"] as String?
     setDefaults()
-    self.webViewController.reload()
+    self.start()
   }
   
   func setDefaults(){
@@ -58,6 +48,10 @@ class Device {
     if self.connector == nil {
       self.connector = ""
     }
+  }
+  
+  func start() {
+    self.webViewController.reload()
   }
   
   func getImagePath() -> String {

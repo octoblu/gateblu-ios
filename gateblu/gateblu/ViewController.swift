@@ -34,6 +34,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     deviceManager.start()
     deviceManager.setOnDevicesChange({() -> () in
       self.deviceCollectionView!.reloadData()
+      
+      for device in self.deviceManager.devices {
+        device.start()
+      }
     })
   }
 

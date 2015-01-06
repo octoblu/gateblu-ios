@@ -233,16 +233,6 @@ class DeviceManager: NSObject {
     })
   }
   
-  func parseDevices(rawDevices : Array<AnyObject>) -> Array<Device> {
-    var devices = [Device]()
-    
-    for rawDevice in rawDevices {
-      devices.append(Device(device: rawDevice as Dictionary<String, AnyObject>))
-    }
-    
-    return devices
-  }
-  
   func backgroundDevices() {
     deviceBackgroundService.doUpdate({
       self.wakeDevices()
