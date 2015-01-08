@@ -54,12 +54,55 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9nq-o8-WKN">
-                                    <size key="itemSize" width="169" height="162"/>
+                                    <size key="itemSize" width="150" height="170"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
                                 </collectionViewFlowLayout>
-                                <cells/>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DeviceCell" id="WSX-R6-7fc" customClass="DeviceCell" customModule="gateblu" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="170"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W52-71-a8h">
+                                                    <rect key="frame" x="0.0" y="143" width="150" height="19"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gol-vZ-Qes">
+                                                    <rect key="frame" x="8" y="8" width="135" height="135"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="135" id="eGF-Id-1OY"/>
+                                                        <constraint firstAttribute="height" constant="135" id="r4W-8j-d5v"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="gol-vZ-Qes" firstAttribute="top" secondItem="WSX-R6-7fc" secondAttribute="topMargin" id="0VV-mc-dmg"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="gol-vZ-Qes" secondAttribute="trailing" id="9hu-Nr-xol"/>
+                                            <constraint firstItem="W52-71-a8h" firstAttribute="top" secondItem="gol-vZ-Qes" secondAttribute="bottom" id="Eau-86-Mdv"/>
+                                            <constraint firstItem="W52-71-a8h" firstAttribute="top" secondItem="gol-vZ-Qes" secondAttribute="bottom" id="Ko4-fq-2SI"/>
+                                            <constraint firstItem="W52-71-a8h" firstAttribute="leading" secondItem="WSX-R6-7fc" secondAttribute="leadingMargin" constant="-8" id="Xwu-Kr-waS"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="W52-71-a8h" secondAttribute="trailing" constant="-8" id="gvn-oD-mHD"/>
+                                            <constraint firstItem="gol-vZ-Qes" firstAttribute="leading" secondItem="WSX-R6-7fc" secondAttribute="leadingMargin" id="tAG-5f-r52"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="W52-71-a8h" secondAttribute="bottom" id="zgj-Jq-j66"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="gol-vZ-Qes" id="eNS-rV-T6w"/>
+                                            <outlet property="label" destination="W52-71-a8h" id="9Pz-B5-PXS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="PLA-6g-YLR" id="7Bu-Xa-CmF"/>
+                                    <outlet property="delegate" destination="PLA-6g-YLR" id="RIx-1y-ROj"/>
+                                </connections>
                             </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.0039215686269999999" green="0.32156862749999998" blue="0.56862745100000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

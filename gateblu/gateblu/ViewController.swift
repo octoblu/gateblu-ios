@@ -14,27 +14,23 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   @IBOutlet weak var deviceCollectionView: UICollectionView?
   @IBOutlet weak var uuidLabel: UILabel?
   @IBOutlet weak var uuidView: UIView?
-  
-  var cellSize : CGSize!
+  private let reuseIdentifier = "DeviceCell"
   
   override func viewDidLoad() {
     super.viewDidLoad()
     
     addGestures()
     startDeviceManager()
-    
+    setUuidLabel()
+  }
+  
+  func setUuidLabel() {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var uuid = userDefaults.stringForKey("uuid")
     if uuid == nil {
       uuid = ""
     }
     self.uuidLabel!.text = uuid
-    
-    
-    self.deviceCollectionView!.delegate = self
-    self.deviceCollectionView!.dataSource = self
-    self.deviceCollectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    self.cellSize = CGSize(width: 150, height: 150)
   }
   
   func startDeviceManager() {
@@ -77,50 +73,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
-    cell.backgroundColor = UIColor.clearColor()
-    let deviceView = createDeviceView(cell, indexPath: indexPath)
-    let width = NSLayoutConstraint(item: deviceView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: cell, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
-    let height = NSLayoutConstraint(item: deviceView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: cell, attribute: NSLayoutAttribute.Height, multiplier: 1, constant: 0)
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as DeviceCell
     
-    cell.addSubview(deviceView)
+    let device = self.deviceManager.devices[indexPath.item]
+    cell.label!.text = device.name
     
-    cell.addConstraint(width)
-    cell.addConstraint(height)
+    let deviceImage: UIImage! = UIImage(named: device.getImagePath())
+    
+    cell.imageView!.image = deviceImage
     
     return cell
-  }
-  
-  func createDeviceView(cellView: UICollectionViewCell, indexPath: NSIndexPath) -> UIView {
-    let height = cellSize.height
-    let width = cellSize.width
-    let deviceView = UIView()
-    
-    let device: Device? = deviceManager.devices[indexPath.item]
-    if device == nil {
-      return deviceView
-    }
-    let deviceImage: UIImage! = UIImage(named: device!.getImagePath())
-    let deviceImageView: UIImageView! = UIImageView(image: deviceImage)
-    deviceImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    deviceImageView.backgroundColor = UIColor.clearColor()
-    
-    let centerx = NSLayoutConstraint(item: deviceImageView, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: deviceView, attribute: NSLayoutAttribute.CenterX, multiplier: 1.0, constant: 0)
-    
-    deviceView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    deviceView.addSubview(deviceImageView)
-    
-    deviceView.addConstraint(centerx)
-    
-    let deviceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: self.cellSize.width, height: 20))
-    deviceLabel.text = device!.name
-    deviceLabel.textAlignment = NSTextAlignment.Center
-    deviceLabel.textColor = UIColor.darkGrayColor()
-    
-    deviceView.addSubview(deviceLabel)
-    
-    let labelTop = NSLayoutConstraint(item: deviceLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deviceImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 10)
-    deviceView.addConstraint(labelTop)
-    return deviceView
   }
 }
