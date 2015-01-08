@@ -18,7 +18,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    SVProgressHUD.showWithStatus("Loading devices...")
     addGestures()
     startDeviceManager()
     setUuidLabel()
@@ -43,6 +43,9 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
       for device in self.deviceManager.devices {
         //        device.start()
       }
+      
+      SVProgressHUD.dismiss()
+      
     })
   }
   

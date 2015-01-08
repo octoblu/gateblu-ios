@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import <PocketSocket/PSWebSocketServer.h>
 #import <SIOSocket/SIOSocket.h>
+#import "SVProgressHUD.h"
 
 #define gateblu_gateblu_Bridging_Header_h
 

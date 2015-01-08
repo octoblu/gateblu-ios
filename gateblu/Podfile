@@ -5,6 +5,7 @@ target 'gateblu' do
     pod 'PocketSocket'
     pod 'AFNetworking'
     pod 'SIOSocket'
+    pod 'SVProgressHUD'
 end
 
 target 'gatebluTests' do
