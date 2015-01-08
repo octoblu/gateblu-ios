@@ -22,6 +22,8 @@ class DeviceManager: NSObject {
   var deviceManagerView : DeviceManagerView!
   var onDeviceChangeListeners : [() -> ()] = []
   
+  var connecting = false
+  
   override init() {
     super.init()
     self.gatebluWebsocketServer = GatebluWebsocketServer(onMessage: self.onGatebluMessage)
@@ -56,6 +58,7 @@ class DeviceManager: NSObject {
     case "refreshDevices":
       let devices = jsonResult["data"].arrayValue
       sendDevices(webSocket, id: id, devices: devices)
+      self.connecting = false
       return;
     default:
       NSLog("I don't even: \(name)")
@@ -192,12 +195,13 @@ class DeviceManager: NSObject {
     }
   }
   
-  
   func sendGatebluOptions(webSocket : PSWebSocket, id : String) {
     let userDefaults = NSUserDefaults.standardUserDefaults()
     var uuid = userDefaults.stringForKey("uuid")
     var token = userDefaults.stringForKey("token")
     
+    NSLog("UUID: \(uuid) Token: \(token)")
+  
     var jsonAuth:JSON = [
       "name": "setOptions",
       "id": id

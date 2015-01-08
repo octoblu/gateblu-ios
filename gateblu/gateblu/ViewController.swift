@@ -2,34 +2,42 @@
 //  ViewController.swift
 //  gateblu
 //
-//  Created by Koshin on 12/17/14.
-//  Copyright (c) 2014 Octoblu. All rights reserved.
+//  Created by Jade Meskill on 1/7/15.
+//  Copyright (c) 2015 Octoblu. All rights reserved.
 //
 
-import UIKit
-import WebKit
+import Foundation
 
-
-class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
-  func userContentController(_userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-    NSLog("DEBUG: \(message.body)")
-  }
-}
-
-let TOP_BAR_MARGIN : CGFloat = 60
-let CELL_PADDING : CGFloat = 5
-let CELL_HEIGHT : CGFloat = 160
-let DEVICE_INFO_HEIGHT : CGFloat = 50
-
-class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIWebViewDelegate, UIGestureRecognizerDelegate {
+class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
-  var deviceCollectionView : UICollectionView!
   var deviceManager:DeviceManager!
+  @IBOutlet weak var deviceCollectionView: UICollectionView?
+  @IBOutlet weak var uuidLabel: UILabel?
+  @IBOutlet weak var uuidView: UIView?
+  
   var cellSize : CGSize!
-  var uuidLabel : UILabel!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    addGestures()
+    startDeviceManager()
+    
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    var uuid = userDefaults.stringForKey("uuid")
+    if uuid == nil {
+      uuid = ""
+    }
+    self.uuidLabel!.text = uuid
+    
+    
+    self.deviceCollectionView!.delegate = self
+    self.deviceCollectionView!.dataSource = self
+    self.deviceCollectionView!.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
+    self.cellSize = CGSize(width: 150, height: 150)
+  }
+  
+  func startDeviceManager() {
     let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
     deviceManager = appDelegate.deviceManager
     deviceManager.start()
@@ -37,60 +45,39 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
       self.deviceCollectionView!.reloadData()
       
       for device in self.deviceManager.devices {
-        device.start()
+        //        device.start()
       }
     })
-    buildOrRebuildSubviews()
-  }
-
-  override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
   }
   
-  func buildOrRebuildSubviews(){
-    for view in self.view.subviews {
-      view.removeFromSuperview()
-    }
-    self.startDeviceCollectionView()
-    
-    let deviceInfoView = createGatebluInfoView()
-    self.view.addSubview(deviceInfoView)
+  func addGestures() {
+    let doubleTapGesture = UITapGestureRecognizer(target: self, action: "copyUuid:")
+    doubleTapGesture.delegate = self
+    doubleTapGesture.numberOfTapsRequired = 2
+    doubleTapGesture.numberOfTouchesRequired = 1
+    self.uuidView!.addGestureRecognizer(doubleTapGesture)
   }
   
   func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
     NSLog("Recognizing touch")
-    if CGRectContainsPoint(self.uuidLabel.bounds, touch.locationInView(self.view)) {
+    if CGRectContainsPoint(self.uuidLabel!.bounds, touch.locationInView(self.view)) {
       return false
     }
     return true
   }
   
-  func startDeviceCollectionView(){
-    let deviceWidth = self.view.bounds.width
-    let deviceHeight = self.view.bounds.height
-    
-    let frame = CGRect(x: 0, y: TOP_BAR_MARGIN, width: deviceWidth, height: deviceHeight - TOP_BAR_MARGIN - DEVICE_INFO_HEIGHT)
-    let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-    layout.sectionInset = UIEdgeInsets(top: CELL_PADDING, left: CELL_PADDING, bottom: CELL_PADDING, right: CELL_PADDING)
-    let cellWidth : CGFloat = (frame.width / 2) - (CELL_PADDING * 2)
-    self.cellSize = CGSize(width: cellWidth, height: CELL_HEIGHT)
-    layout.itemSize = self.cellSize
-    deviceCollectionView = UICollectionView(frame: frame, collectionViewLayout: layout)
-    deviceCollectionView.delegate = self
-    deviceCollectionView.dataSource = self
-    deviceCollectionView.backgroundColor = UIColor.whiteColor()
-    deviceCollectionView.registerClass(UICollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-    
-    self.view.addSubview(deviceCollectionView)
+  func copyUuid(sender: UIView){
+    let copyUuid = self.uuidLabel!.text
+    NSLog("Copying UUID \(copyUuid)")
+    UIPasteboard.generalPasteboard().string = copyUuid
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return deviceManager.devices.count
+    return self.deviceManager.devices.count
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = deviceCollectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
+    let cell = deviceCollectionView!.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as UICollectionViewCell
     cell.backgroundColor = UIColor.clearColor()
     let deviceView = createDeviceView(cell, indexPath: indexPath)
     let width = NSLayoutConstraint(item: deviceView, attribute: NSLayoutAttribute.Width, relatedBy: NSLayoutRelation.Equal, toItem: cell, attribute: NSLayoutAttribute.Width, multiplier: 1, constant: 0)
@@ -131,46 +118,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     deviceLabel.textColor = UIColor.darkGrayColor()
     
     deviceView.addSubview(deviceLabel)
-  
+    
     let labelTop = NSLayoutConstraint(item: deviceLabel, attribute: NSLayoutAttribute.Top, relatedBy: NSLayoutRelation.Equal, toItem: deviceImageView, attribute: NSLayoutAttribute.Bottom, multiplier: 1.0, constant: 10)
     deviceView.addConstraint(labelTop)
     return deviceView
-  }
-  
-  func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-    return false
-  }
-  
-  func createGatebluInfoView() -> UIView {
-    var deviceInfoViewFrame = CGRect(x: 0, y: self.view.bounds.height - DEVICE_INFO_HEIGHT, width: self.view.bounds.width, height: DEVICE_INFO_HEIGHT)
-    var deviceInfoView = UIView(frame: deviceInfoViewFrame)
-    var uuidLabelFrame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: DEVICE_INFO_HEIGHT)
-    self.uuidLabel = UILabel(frame: uuidLabelFrame)
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    var uuid = userDefaults.stringForKey("uuid")
-    if uuid == nil {
-      uuid = ""
-    }
-    self.uuidLabel.text = uuid!
-    self.uuidLabel.textAlignment = NSTextAlignment.Center
-    self.uuidLabel.textColor = UIColor.darkGrayColor()
-    self.uuidLabel.font = UIFont(name: "Helvetica", size: 18)
-    self.uuidLabel.userInteractionEnabled = true
-    
-    let doubleTapGesture = UITapGestureRecognizer(target: self, action: "copyUuid:")
-    doubleTapGesture.delegate = self
-    doubleTapGesture.numberOfTapsRequired = 2
-    doubleTapGesture.numberOfTouchesRequired = 1
-    deviceInfoView.addGestureRecognizer(doubleTapGesture)
-
-    deviceInfoView.addSubview(self.uuidLabel)
-    
-    return deviceInfoView
-  }
-
-  func copyUuid(sender: UIView){
-    let copyUuid = self.uuidLabel.text
-    NSLog("Copying UUID \(copyUuid)")
-    UIPasteboard.generalPasteboard().string = copyUuid
   }
 }

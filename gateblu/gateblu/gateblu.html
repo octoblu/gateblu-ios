@@ -7,8 +7,8 @@
       console.log = console.error;
     </script>
  
-<!--    <script type="text/javascript" src="http://gateblu.s3.amazonaws.com/javascript/gateblu-websocket.js"></script>-->
-    <script type="text/javascript" src="http://192.168.100.53:3002/gateblu-websocket.js"></script>
+    <script type="text/javascript" src="http://gateblu.s3.amazonaws.com/javascript/gateblu-websocket.js"></script>
+<!--    <script type="text/javascript" src="http://192.168.100.53:3002/gateblu-websocket.js"></script>-->
     <script type="text/javascript">
       console.log("Starting GatebluWebsocket.DeviceManager")
       var deviceManager = new GatebluWebsocket.DeviceManager({
@@ -16,12 +16,14 @@
         port: 0xD00D
       });
       
+      console.log("Started")
+      
       deviceManager.getOptions(function(error, gatebluOptions){
         if(error){
           console.error("error in getOptions: " + error);
           return;
         }
-        console.log(gatebluOptions);
+        console.log(JSON.stringify(gatebluOptions));
         new GatebluWebsocket.Gateblu(gatebluOptions, deviceManager);
       });
     </script>

@@ -48,6 +48,7 @@
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
 		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
+		BBA5E6E61A5E02E300265B34 /* NotificationMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */; };
 		D00F5C511A52132700498ADB /* bean.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4D1A52132700498ADB /* bean.png */; };
 		D00F5C521A52132700498ADB /* blink1.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4E1A52132700498ADB /* blink1.png */; };
 		D00F5C531A52132700498ADB /* generic.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4F1A52132700498ADB /* generic.png */; };
@@ -135,6 +136,7 @@
 		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationMessageHandler.swift; sourceTree = "<group>"; };
 		C7DBA7E8F85E97F26907F853 /* Pods-gateblu.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.debug.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.debug.xcconfig"; sourceTree = "<group>"; };
 		D00F5C4D1A52132700498ADB /* bean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bean.png; sourceTree = "<group>"; };
 		D00F5C4E1A52132700498ADB /* blink1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink1.png; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
+				BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -480,6 +483,7 @@
 				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
 				BB5085821A44DE1500233B1B /* Extensions.swift in Sources */,
 				BB43DA8B1A57F5380097026D /* Int.swift in Sources */,
+				BBA5E6E61A5E02E300265B34 /* NotificationMessageHandler.swift in Sources */,
 				BB43DA901A57F5380097026D /* String.swift in Sources */,
 				BB43DA8D1A57F5380097026D /* NSDate.swift in Sources */,
 				BB43DA871A57F5380097026D /* Double.swift in Sources */,
