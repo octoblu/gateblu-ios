@@ -32,9 +32,6 @@ class DeviceManager: NSObject {
     self.nobleWebsocketServer = NobleWebsocketServer(onMessage: self.onNobleMessage)
     self.deviceBackgroundService = DeviceBackgroundService()
     self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let controller = appDelegate.window?.rootViewController as! ViewController
-    
     self.deviceManagerView = DeviceManagerView()
   }
   

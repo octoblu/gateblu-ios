@@ -95,7 +95,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
         data["services"] = uuids
         onDiscovery(data)
     }
-    
+  
     func centralManagerDidUpdateState(central: CBCentralManager!) {
         NSLog("checking state")
         switch (central.state) {

@@ -23,7 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
 
-  
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         if (deviceManager == nil) {
