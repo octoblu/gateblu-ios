@@ -13,9 +13,9 @@ import SVProgressHUD
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
   var deviceManager:DeviceManager!
-  @IBOutlet weak var deviceCollectionView: UICollectionView?
-  @IBOutlet weak var uuidLabel: UILabel?
-  @IBOutlet weak var uuidView: UIView?
+  @IBOutlet var deviceCollectionView: UICollectionView?
+  @IBOutlet var uuidLabel: UILabel?
+  @IBOutlet var uuidView: UIView?
   private let reuseIdentifier = "DeviceCell"
   
   override func viewDidLoad() {
@@ -43,7 +43,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
       self.deviceCollectionView!.reloadData()
       
       for device in self.deviceManager.devices {
-        //        device.start()
+        device.start()
       }
       
       SVProgressHUD.dismiss()

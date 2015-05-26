@@ -24,20 +24,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
-        application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
-        if (deviceManager == nil) {
-            deviceManager = DeviceManager()
+      if (deviceManager == nil) {
+        deviceManager = DeviceManager()
+      }
+      if let options = launchOptions {
+        if var centralManagerIdentifiers: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {
+          // Awake as Bluetooth Central
+          // No further logic here, will be handled by centralManager willRestoreState
+          NSLog("_--_ Did Wake Central Manager -__-")
+          return true
         }
-        if let options = launchOptions {
-          if var centralManagerIdentifiers: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {
-            // Awake as Bluetooth Central
-            // No further logic here, will be handled by centralManager willRestoreState
-            NSLog("_--_ Did Wake Central Manager -__-")
-            return true
-          }
-        }
+      }
       
-        return true
+      return true
     }
     
     func applicationWillResignActive(application: UIApplication) {
