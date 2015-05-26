@@ -1,11 +1,12 @@
 import UIKit
 import CoreBluetooth
 import WebKit
+import SwiftyJSON
 
 class DeviceManagerView: NSObject {
   var view:WKWebView!
   var lastAwoke:NSDate = NSDate()
-
+  
   override init() {
     super.init()
     let userContentController = WKUserContentController()
@@ -23,12 +24,25 @@ class DeviceManagerView: NSObject {
     let controller = window.rootViewController as! ViewController
     let parentView = controller.view as UIView
   
-    var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
-    var fileString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    self.view.loadHTMLString(fileString!, baseURL: NSURL(string: "http://app.octoblu.com"))
+    let fileString = getGatebluHTML()
+    
+    self.view.loadHTMLString(fileString, baseURL: NSURL(string: "http://app.octoblu.com"))
     println("DeviceManager webview")
   
     parentView.addSubview(self.view)
+  }
+  
+  func getGatebluHTML() -> String {
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    var meshbluJSON : String = "{\"uuid\":\""
+    meshbluJSON += appDelegate.deviceManager.uuid!
+    meshbluJSON += "\",\"token\":\""
+    meshbluJSON += appDelegate.deviceManager.token!
+    meshbluJSON += "\"}"
+    var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
+    var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
+    htmlString!.stringByReplacingOccurrencesOfString("{{meshbluJSON}}", withString: meshbluJSON)
+    return htmlString!
   }
   
   func wakeIfNotRecentlyAwoken() {

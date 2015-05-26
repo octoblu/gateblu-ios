@@ -23,6 +23,8 @@ class DeviceManager: NSObject {
   var connectedSockets = [String:PSWebSocket]()
   var deviceManagerView : DeviceManagerView!
   var onDeviceChangeListeners : [() -> ()] = []
+  var uuid: String?
+  var token: String?
   
   var connecting = false
   
@@ -32,10 +34,20 @@ class DeviceManager: NSObject {
     self.nobleWebsocketServer = NobleWebsocketServer(onMessage: self.onNobleMessage)
     self.deviceBackgroundService = DeviceBackgroundService()
     self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
-    self.deviceManagerView = DeviceManagerView()
   }
   
   func start(){
+    self.deviceManagerView = DeviceManagerView()
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    self.uuid = "1234" // userDefaults.stringForKey("uuid")
+    self.token = "1234" // userDefaults.stringForKey("token")
+    NSLog("UUID: \(uuid) Token: \(token)")
+    
+    if uuid == nil || token == nil {
+      println("Sorry bro, can't start without a uuid or token")
+      return
+    }
+    
     self.deviceManagerView.startWebView()
   }
   
@@ -51,9 +63,6 @@ class DeviceManager: NSObject {
     let id = jsonResult["id"].stringValue
     
     switch name {
-    case "getOptions":
-      sendGatebluOptions(webSocket, id: id)
-      return;
     case "refreshDevices":
       let devices = jsonResult["data"].arrayValue
       sendDevices(webSocket, id: id, devices: devices)
@@ -192,26 +201,6 @@ class DeviceManager: NSObject {
     for listener in self.onDeviceChangeListeners {
       listener()
     }
-  }
-  
-  func sendGatebluOptions(webSocket : PSWebSocket, id : String) {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    var uuid = userDefaults.stringForKey("uuid")
-    var token = userDefaults.stringForKey("token")
-    
-    NSLog("UUID: \(uuid) Token: \(token)")
-  
-    var jsonAuth:JSON = [
-      "name": "setOptions",
-      "id": id
-    ]
-    
-    if uuid != nil && token != nil {
-      jsonAuth["uuid"] = JSON(uuid!)
-      jsonAuth["token"] = JSON(token!)
-    }
-    
-    self.gatebluWebsocketServer.send(webSocket, message: jsonAuth.rawString());
   }
   
   func sendDevices(webSocket : PSWebSocket, id : String, devices: Array<JSON>) {
