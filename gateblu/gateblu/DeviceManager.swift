@@ -38,21 +38,27 @@ class DeviceManager: NSObject {
   
   func start(){
     self.deviceManagerView = DeviceManagerView()
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    self.uuid = "1234" // userDefaults.stringForKey("uuid")
-    self.token = "1234" // userDefaults.stringForKey("token")
-    NSLog("UUID: \(uuid) Token: \(token)")
-    
-    if uuid == nil || token == nil {
-      println("Sorry bro, can't start without a uuid or token")
-      return
-    }
-    
+    self.setUuidAndToken()
     self.deviceManagerView.startWebView()
   }
   
   func disconnectAll() {
     deviceDiscoverer.disconnectAll()
+  }
+  
+  func setUuidAndToken() {
+    let userDefaults = NSUserDefaults.standardUserDefaults()
+    self.uuid = userDefaults.stringForKey("uuid")
+    self.token = userDefaults.stringForKey("token")
+    NSLog("UUID: \(uuid) Token: \(token)")
+    
+    if uuid == nil || token == nil {
+      println("Sorry bro, can't start without a uuid or token")
+      self.uuid = "eaed33d7-c723-47dd-9f9a-e70fb45b55d8"
+      self.token = "588e19e90143c8ecf990c0c843f3a811a829dea4"
+      println("Just kidding, added it for you...")
+//      return
+    }
   }
   
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
@@ -63,13 +69,20 @@ class DeviceManager: NSObject {
     let id = jsonResult["id"].stringValue
     
     switch name {
-    case "refreshDevices":
-      let devices = jsonResult["data"].arrayValue
-      sendDevices(webSocket, id: id, devices: devices)
-      self.connecting = false
+    case "stopDevice":
+      println("Stopping Device")
+      return;
+    case "startDevice":
+      println("Starting Device")
+      return
+    case "removeDevice":
+      println("Removing Device")
+      return;
+    case "addDevice":
+      println("Adding Device")
       return;
     default:
-      NSLog("I don't even: \(name)")
+      NSLog("I can't even: \(name)")
       return;
     }
   }
