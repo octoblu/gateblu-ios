@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Octoblu. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
 @UIApplicationMain
@@ -22,7 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       return true
     }
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: NSDictionary!) -> Bool {
+  
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject : AnyObject]?) -> Bool {
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: false)
         if (deviceManager == nil) {
             deviceManager = DeviceManager()

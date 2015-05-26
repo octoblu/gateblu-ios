@@ -75,7 +75,7 @@ internal extension Array {
             //  to intersect in the next loop
             value.each { (item: U) -> Void in
                 if result.contains(item) {
-                    intersection.append(item as Element)
+                    intersection.append(item as! Element)
                 }
             }
 
@@ -98,7 +98,7 @@ internal extension Array {
         for array in values {
             for value in array {
                 if !result.contains(value) {
-                    result.append(value as Element)
+                    result.append(value as! Element)
                 }
             }
         }
@@ -124,6 +124,30 @@ internal extension Array {
     @availability(*, unavailable, message="use the 'last' property instead") func last () -> Element? {
         return last
     }
+    
+    /**
+    First occurrence of item, if found.
+    
+    :param: item The item to search for
+    :returns: Matched item or nil
+    */
+    func find <U: Equatable> (item: U) -> T? {
+        if let index = indexOf(item) {
+            return self[index]
+        }
+        
+        return nil
+    }
+    
+    /**
+    First item that meets the condition.
+    
+    :param: condition A function which returns a boolean if an element satisfies a given condition or not.
+    :returns: First matched item or nil
+    */
+    func find (condition: Element -> Bool) -> Element? {
+        return takeFirst(condition)
+    }
 
     /**
         Index of the first occurrence of item, if found.
@@ -133,7 +157,7 @@ internal extension Array {
     */
     func indexOf <U: Equatable> (item: U) -> Int? {
         if item is Element {
-            return find(unsafeBitCast(self, [U].self), item)
+            return Swift.find(unsafeBitCast(self, [U].self), item)
         }
 
         return nil
@@ -164,7 +188,7 @@ internal extension Array {
     func lastIndexOf <U: Equatable> (item: U) -> Int? {
         if item is Element {
             for (index, value) in enumerate(lazy(self).reverse()) {
-                if value as U == item {
+                if value as! U == item {
                     return count - 1 - index
                 }
             }
@@ -183,19 +207,8 @@ internal extension Array {
     */
     func get (index: Int) -> Element? {
 
-        //  If the index is out of bounds it's assumed relative
-        func relativeIndex (index: Int) -> Int {
-            var _index = (index % count)
-
-            if _index < 0 {
-                _index = count + _index
-            }
-
-            return _index
-        }
-
-        let _index = relativeIndex(index)
-        return _index < count ? self[_index] : nil
+        return index >= 0 && index < count ? self[index] : nil
+        
     }
 
     /**
@@ -205,7 +218,9 @@ internal extension Array {
         :returns: Subarray in range
     */
     func get (range: Range<Int>) -> Array {
+    
         return self[rangeAsArray: range]
+        
     }
 
     /**
@@ -215,20 +230,21 @@ internal extension Array {
         :param: arrays Arrays to zip
         :returns: Array of grouped elements
     */
-    func zip (arrays: [Any]...) -> [[Any?]] {
+    func zip (arrays: Any...) -> [[Any?]] {
 
         var result = [[Any?]]()
 
-        //  Gets the longest array length
-        let max = arrays.map { (array: [Any]) -> Int in
-            return array.count
+        //  Gets the longest sequence
+        let max = arrays.map { (element: Any) -> Int in
+            return reflect(element).count
         }.max() as Int
 
         for i in 0..<max {
 
             //  i-th element in self as array + every i-th element in each array in arrays
-            result.append([get(i)] + arrays.map { (array) -> Any? in
-                return array.get(i)
+            result.append([get(i)] + arrays.map { (element) -> Any? in
+                let (_, mirror) = reflect(element)[i]
+                return mirror.value
             })
 
         }
@@ -298,7 +314,7 @@ internal extension Array {
                 end = count
             }
             
-            result += [self[i..end]]
+            result += [self[i..<end]]
             
             if end != i + n {
                 break
@@ -332,7 +348,7 @@ internal extension Array {
         if n < 1    { n = 0 }    // Allow 0 if user wants [[],[],[]] for some reason.
 
         for i in stride(from: 0, to: count, by: step!) {
-            result += [self[i..(i + n)]]
+            result += [self[i..<(i + n)]]
         }
 
         return result
@@ -351,7 +367,7 @@ internal extension Array {
         for item in self {
             let value = cond(item)
 
-            if value == lastValue? {
+            if value == lastValue {
                 let index: Int = result.count - 1
                 result[index] += [item]
             } else {
@@ -411,7 +427,7 @@ internal extension Array {
     func max <U: Comparable> () -> U {
 
         return maxElement(map {
-            return $0 as U
+            return $0 as! U
         })
 
     }
@@ -424,7 +440,7 @@ internal extension Array {
     func min <U: Comparable> () -> U {
 
         return minElement(map {
-            return $0 as U
+            return $0 as! U
         })
 
     }
@@ -462,17 +478,17 @@ internal extension Array {
     func minBy <U: Comparable> (call: (Element) -> (U)) -> Element? {
 
         if let firstValue = self.first {
-            var maxElement: T = firstValue
+            var minElement: T = firstValue
             var minValue: U = call(firstValue)
             for i in 1..<self.count {
                 let element: Element = self[i]
                 let value: U = call(element)
                 if value < minValue {
-                    maxElement = element
+                    minElement = element
                     minValue = value
                 }
             }
-            return maxElement
+            return minElement
         } else {
             return nil
         }
@@ -510,7 +526,7 @@ internal extension Array {
     
         :param: call Function to call for each element
     */
-    func eachRight (call: (Element) -> ()) {
+    @availability(*, unavailable, message="use 'reverse().each' instead") func eachRight (call: (Element) -> ()) {
         reverse().each(call)
     }
 
@@ -519,7 +535,7 @@ internal extension Array {
     
         :param: call Function to call for each element
     */
-    func eachRight (call: (Int, Element) -> ()) {
+    @availability(*, unavailable, message="use 'reverse().each' instead") func eachRight (call: (Int, Element) -> ()) {
         for (index, item) in enumerate(reverse()) {
             call(count - index - 1, item)
         }
@@ -598,6 +614,7 @@ internal extension Array {
         }
 
         return take(lastTrue + 1)
+    
     }
 
     /**
@@ -625,7 +642,9 @@ internal extension Array {
         :returns: Last n elements
     */
     func tail (n: Int) -> Array {
-        return self[(count - n)..<count]
+
+        return  self[(count - n)..<count]
+        
     }
 
     /**
@@ -635,7 +654,9 @@ internal extension Array {
         :returns: Array from n to the end
     */
     func skip (n: Int) -> Array {
-        return n > count ? [] : self[n..<count]
+    
+        return n > count ? [] : self[Int(n)..<count]
+        
     }
 
     /**
@@ -669,24 +690,24 @@ internal extension Array {
         var result = [T]()
 
         for item in self {
-            if !result.contains(item as T) {
-                result.append(item as T)
+            if !result.contains(item as! T) {
+                result.append(item as! T)
             }
         }
 
         return result
     }
-
+    
     /**
         Returns the set of elements for which call(element) is unique
-		
-		:param: call The closure to use to determine uniqueness
-		:returns: The set of elements for which call(element) is unique
+    
+        :param: call The closure to use to determine uniqueness
+        :returns: The set of elements for which call(element) is unique
     */
     func uniqueBy <T: Equatable> (call: (Element) -> (T)) -> [Element] {
         var result: [Element] = []
         var uniqueItems: [T] = []
-
+        
         for item in self {
             var callResult: T = call(item)
             if !uniqueItems.contains(callResult) {
@@ -694,8 +715,51 @@ internal extension Array {
                 result.append(item)
             }
         }
-
+        
         return result
+    }
+    
+    /**
+        Returns all permutations of a given length within an array
+        
+        :param: length The length of each permutation
+        :returns: All permutations of a given length within an array
+    */
+    func permutation (length: Int) -> [[T]] {
+        var selfCopy = self
+        if length < 0 || length > self.count {
+            return []
+        } else if length == 0 {
+            return [[]]
+        } else {
+            var permutations: [[T]] = []
+            let combinations = combination(length)
+            for combination in combinations {
+                var endArray: [[T]] = []
+                var mutableCombination = combination
+                permutations += self.permutationHelper(length, array: &mutableCombination, endArray: &endArray)
+            }
+            return permutations
+        }
+    }
+
+    /**
+        Recursive helper method where all of the permutation-generating work is done
+        This is Heap's algorithm
+    */
+    private func permutationHelper(n: Int, inout array: [T], inout endArray: [[T]]) -> [[T]] {
+        if n == 1 {
+            endArray += [array]
+        }
+        for var i = 0; i < n; i++ {
+            permutationHelper(n - 1, array: &array, endArray: &endArray)
+            var j = n % 2 == 0 ? i : 0;
+            //(array[j], array[n - 1]) = (array[n - 1], array[j])
+            var temp: T = array[j]
+            array[j] = array[n - 1]
+            array[n - 1] = temp
+        }
+        return endArray
     }
 
     /**
@@ -750,10 +814,47 @@ internal extension Array {
     }
 
     /**
+        Returns all of the combinations in the array of the given length, allowing repeats
+        
+        :param: length
+        :returns: Combinations
+    */
+    func repeatedCombination (length: Int) -> [[Element]] {
+        if length < 0 {
+            return []
+        }
+        var indexes: [Int] = []
+        length.times {
+            indexes.append(0)
+        }
+        var combinations: [[Element]] = []
+        var offset = self.count - indexes.count
+        while true {
+            var combination: [Element] = []
+            for index in indexes {
+                combination.append(self[index])
+            }
+            combinations.append(combination)
+            var i = indexes.count - 1
+            while i >= 0 && indexes[i] == self.count - 1 {
+                i--
+            }
+            if i < 0 {
+                break
+            }
+            indexes[i]++
+            (i+1).upTo(indexes.count - 1) { j in
+                indexes[j] = indexes[i]
+            }
+        }
+        return combinations
+    }
+
+    /**
         Returns all of the combinations in the array of the given length
-		
-		:param: length
-		:returns: Combinations
+        
+        :param: length
+        :returns: Combinations
     */
     func combination (length: Int) -> [[Element]] {
         if length < 0 || length > self.count {
@@ -785,6 +886,33 @@ internal extension Array {
     }
 
     /**
+        Returns all of the permutations of this array of a given length, allowing repeats
+        
+        :param: length The length of each permutations
+        :returns All of the permutations of this array of a given length, allowing repeats
+    */
+    func repeatedPermutation(length: Int) -> [[T]] {
+        if length < 1 {
+            return []
+        }
+        var permutationIndexes: [[Int]] = []
+        permutationIndexes.repeatedPermutationHelper([], length: length, arrayLength: self.count, permutationIndexes: &permutationIndexes)
+        return permutationIndexes.map({ $0.map({ i in self[i] }) })
+    }
+
+    private func repeatedPermutationHelper(seed: [Int], length: Int, arrayLength: Int, inout permutationIndexes: [[Int]]) {
+        if seed.count == length {
+            permutationIndexes.append(seed)
+            return
+        }
+        for i in (0..<arrayLength) {
+            var newSeed: [Int] = seed
+            newSeed.append(i)
+            self.repeatedPermutationHelper(newSeed, length: length, arrayLength: arrayLength, permutationIndexes: &permutationIndexes)
+        }
+    }
+
+    /**
         Returns the number of elements which meet the condition
 
         :param: test Function to call for each element
@@ -801,6 +929,42 @@ internal extension Array {
         }
 
         return result
+    }
+
+    func eachIndex (call: (Int) -> ()) -> () {
+        (0..<self.count).each({ call($0) })
+    }
+
+    /**
+        Returns a transposed version of the array, where the object at array[i][j] goes to array[j][i].
+        The array must have two or more dimensions.
+        If it's a jagged array that has empty spaces between elements in the transposition, those empty spaces are "removed" and the element on the right side of the empty space gets squashed next to the element on the left.
+
+        :return: A transposed version of the array, where the object at array[i][j] goes to array[j][i]
+    */
+    func transposition (array: [[T]]) -> [[T]] { //<U: AnyObject where Element == [U]> () -> [[U]] {
+        var maxWidth: Int = array.map({ $0.count }).max()
+        var transposition = [[T]](count: maxWidth, repeatedValue: [])
+        
+        (0..<maxWidth).each { i in
+            array.eachIndex { j in
+                if array[j].count > i {
+                    transposition[i].append(array[j][i])
+                }
+            }
+        }
+        return transposition
+    }
+
+    /**
+        Replaces each element in the array with object. I.e., it keeps the length the same but makes the element at every index be object
+        
+        :param: object The object to replace each element with
+    */
+    mutating func fill (object: T) -> () {
+        (0..<self.count).each { i in
+            self[i] = object
+        }
     }
 
     /**
@@ -840,6 +1004,27 @@ internal extension Array {
     }
     
     /**
+        Creates an array with values and an accumulated result by running accumulated result
+        and each value of self through the mapFunction.
+    
+        :param: initial Initial value for accumulator
+        :param: mapFunction
+        :returns: Accumulated value and mapped array
+    */
+    func mapAccum <U, V> (initial: U, mapFunction map: (U, Element) -> (U, V)) -> (U, [V]) {
+        var mapped = [V]()
+        var acc = initial
+        
+        each { (value: Element) -> Void in
+            let (mappedAcc, mappedValue) = map(acc, value)
+            acc = mappedAcc
+            mapped.append(mappedValue)
+        }
+        
+        return (acc, mapped)
+    }
+    
+    /**
         self.reduce with initial value self.first()
     */
     func reduce (combine: (Element, Element) -> Element) -> Element? {
@@ -853,14 +1038,14 @@ internal extension Array {
     /**
         self.reduce from right to left
     */
-    func reduceRight <U> (initial: U, combine: (U, Element) -> U) -> U {
+    @availability(*, unavailable, message="use 'reverse().reduce' instead") func reduceRight <U> (initial: U, combine: (U, Element) -> U) -> U {
         return reverse().reduce(initial, combine: combine)
     }
 
     /**
         self.reduceRight with initial value self.last()
     */
-    func reduceRight (combine: (Element, Element) -> Element) -> Element? {
+    @availability(*, unavailable, message="use 'reverse().reduce' instead") func reduceRight (combine: (Element, Element) -> Element) -> Element? {
         return reverse().reduce(combine)
     }
 
@@ -889,6 +1074,23 @@ internal extension Array {
         return result
     }
 
+    /**
+        Converts the array to a dictionary with keys and values supplied via the transform function.
+    
+        :param: transform
+        :returns: A dictionary
+    */
+    func toDictionary <K, V> (transform: (Element) -> (key: K, value: V)?) -> [K: V] {
+        var result: [K: V] = [:]
+        for item in self {
+            if let entry = transform(item) {
+                result[entry.key] = entry.value
+            }
+        }
+        
+        return result
+    }
+    
     /**
         Flattens a nested Array self to an array of OutType objects.
     
@@ -930,17 +1132,109 @@ internal extension Array {
         :param: isOrderedBefore Comparison function.
         :returns: An array that is sorted according to the given function
     */
-    func sortBy (isOrderedBefore: (T, T) -> Bool) -> [T] {
+    @availability(*, unavailable, message="use 'sorted' instead") func sortBy (isOrderedBefore: (T, T) -> Bool) -> [T] {
         return sorted(isOrderedBefore)
     }
 
     /**
-        Removes the last element from self and returns it.
+        Calls the passed block for each element in the array, either n times or infinitely, if n isn't specified
+
+        :param: n the number of times to cycle through
+        :param: block the block to run for each element in each cycle
+    */
+    func cycle (n: Int? = nil, block: (T) -> ()) {
+        var cyclesRun = 0
+        while true {
+            if let n = n {
+                if cyclesRun >= n {
+                    break
+                }
+            }
+            for item in self {
+                block(item)
+            }
+            cyclesRun++
+        }
+    }
+
+    /**
+        Runs a binary search to find the smallest element for which the block evaluates to true
+        The block should return true for all items in the array above a certain point and false for all items below a certain point
+        If that point is beyond the furthest item in the array, it returns nil
+
+        See http://ruby-doc.org/core-2.2.0/Array.html#method-i-bsearch regarding find-minimum mode for more
+
+        :param: block the block to run each time
+        :returns: the min element, or nil if there are no items for which the block returns true
+    */
+    func bSearch (block: (T) -> (Bool)) -> T? {
+        if count == 0 {
+            return nil
+        }
+
+        var low = 0
+        var high = count - 1
+        while low <= high {
+            var mid = low + (high - low) / 2
+            if block(self[mid]) {
+                if mid == 0 || !block(self[mid - 1]) {
+                    return self[mid]
+                } else {
+                    high = mid
+                }
+            } else {
+                low = mid + 1
+            }
+        }
+
+        return nil
+    }
+
+    /**
+        Runs a binary search to find some element for which the block returns 0.
+        The block should return a negative number if the current value is before the target in the array, 0 if it's the target, and a positive number if it's after the target
+        The Spaceship operator is a perfect fit for this operation, e.g. if you want to find the object with a specific date and name property, you could keep the array sorted by date first, then name, and use this call:
+        let match = bSearch {  [targetDate, targetName] <=> [$0.date, $0.name] }
+
+        See http://ruby-doc.org/core-2.2.0/Array.html#method-i-bsearch regarding find-any mode for more
     
+        :param: block the block to run each time
+        :returns: an item (there could be multiple matches) for which the block returns true
+    */
+    func bSearch (block: (T) -> (Int)) -> T? {
+        let match = bSearch { item in
+            block(item) >= 0
+        }
+        if let match = match {
+            return block(match) == 0 ? match : nil
+        } else {
+            return nil
+        }
+    }
+
+    /**
+        Sorts the array by the value returned from the block, in ascending order
+
+        :param: block the block to use to sort by
+        :returns: an array sorted by that block, in ascending order
+    */
+    func sortUsing <U:Comparable> (block: ((T) -> U)) -> [T] {
+        return self.sorted({ block($0.0) < block($0.1) })
+    }
+
+    /**
+        Removes the last element from self and returns it.
+
         :returns: The removed element
     */
-    mutating func pop () -> Element {
+    mutating func pop () -> Element? {
+        
+        if self.isEmpty {
+            return nil
+        }
+    
         return removeLast()
+        
     }
 
     /**
@@ -957,8 +1251,14 @@ internal extension Array {
     
         :returns: The removed element
     */
-    mutating func shift () -> Element {
+    mutating func shift () -> Element? {
+        
+        if self.isEmpty {
+            return nil
+        }
+        
         return removeAtIndex(0)
+
     }
 
     /**
@@ -992,7 +1292,7 @@ internal extension Array {
 
         anotherSelf.each {
             (index: Int, current: Element) in
-            if current as U != element {
+            if (current as! U) != element {
                 self.append(current)
             }
         }
@@ -1004,7 +1304,7 @@ internal extension Array {
         :param: range
         :returns: Array of values
     */
-    static func range <U: ForwardIndexType> (range: Range<U>) -> [U] {
+    @availability(*, unavailable, message="use the '[U](range)' constructor") static func range <U: ForwardIndexType> (range: Range<U>) -> [U] {
         return [U](range)
     }
 
@@ -1023,7 +1323,7 @@ internal extension Array {
             return []
         }
             
-        return Array(self[Range(start: start, end: end)] as Slice<T>)
+        return Array(self[Range(start: start, end: end)] as ArraySlice<T>)
     }
 
     /**
@@ -1064,28 +1364,28 @@ internal extension Array {
 /**
     Remove an element from the array
 */
-public func - <T: Equatable> (first: Array<T>, second: T) -> Array<T> {
+public func - <T: Equatable> (first: [T], second: T) -> [T] {
     return first - [second]
 }
 
 /**
     Difference operator
 */
-public func - <T: Equatable> (first: Array<T>, second: Array<T>) -> Array<T> {
+public func - <T: Equatable> (first: [T], second: [T]) -> [T] {
     return first.difference(second)
 }
 
 /**
     Intersection operator
 */
-public func & <T: Equatable> (first: Array<T>, second: Array<T>) -> Array<T> {
+public func & <T: Equatable> (first: [T], second: [T]) -> [T] {
     return first.intersection(second)
 }
 
 /**
     Union operator
 */
-public func | <T: Equatable> (first: Array<T>, second: Array<T>) -> Array<T> {
+public func | <T: Equatable> (first: [T], second: [T]) -> [T] {
     return first.union(second)
 }
 /**
@@ -1095,14 +1395,16 @@ public func | <T: Equatable> (first: Array<T>, second: Array<T>) -> Array<T> {
     :param: n How many times the array must be repeated
     :returns: Array of repeated values
 */
-public func * <ItemType> (array: Array<ItemType>, n: Int) -> Array<ItemType> {
-    var result = Array<ItemType>()
+public func * <ItemType> (array: [ItemType], n: Int) -> [ItemType] {
 
-    n.times {
+    var result = [ItemType]()
+
+    (0..<n).times {
         result += array
     }
 
     return result
+
 }
 
 /**
@@ -1112,6 +1414,6 @@ public func * <ItemType> (array: Array<ItemType>, n: Int) -> Array<ItemType> {
     :param: separator Separator to join the array elements
     :returns: Joined string
 */
-public func * (array: Array<String>, separator: String) -> String {
+public func * (array: [String], separator: String) -> String {
     return array.implode(separator)!
 }

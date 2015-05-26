@@ -18,8 +18,8 @@ class DeviceManagerView: NSObject {
   }
 
   func startWebView() {
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-    let controller = appDelegate.window?.rootViewController as ViewController
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let controller = appDelegate.window?.rootViewController as! ViewController
     let parentView = controller.view as UIView
   
     var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!

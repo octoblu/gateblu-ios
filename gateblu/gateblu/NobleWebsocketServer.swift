@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import PocketSocket
 
 class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
     var server:PSWebSocketServer!

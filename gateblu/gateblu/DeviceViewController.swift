@@ -30,13 +30,13 @@ class DeviceViewController: NSObject {
     }
     
     func reload() {
-        self.view.loadHTMLString(self.getJavascript(), baseURL: NSURL(string: "http://app.octoblu.com"))
+        self.view.loadHTMLString(self.getJavascript() as String, baseURL: NSURL(string: "http://app.octoblu.com"))
     }
     
     func startWebView() {
         reload()
-        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-        let controller = appDelegate.window?.rootViewController as ViewController
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let controller = appDelegate.window?.rootViewController as! ViewController
         let parentView = controller.view as UIView
         parentView.addSubview(self.view)
     }

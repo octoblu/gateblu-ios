@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import UIKit
+import SVProgressHUD
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
@@ -34,7 +36,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func startDeviceManager() {
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
     deviceManager = appDelegate.deviceManager
     deviceManager.start()
     deviceManager.setOnDevicesChange({() -> () in
@@ -76,7 +78,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as DeviceCell
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! DeviceCell
     
     let device = self.deviceManager.devices[indexPath.item]
     cell.label!.text = device.name

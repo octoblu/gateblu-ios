@@ -8,6 +8,8 @@
 
 import Foundation
 import WebKit
+import PocketSocket
+import SwiftyJSON
 
 class DeviceManager: NSObject {
   var deviceDiscoverer:DeviceDiscoverer!
@@ -30,8 +32,8 @@ class DeviceManager: NSObject {
     self.nobleWebsocketServer = NobleWebsocketServer(onMessage: self.onNobleMessage)
     self.deviceBackgroundService = DeviceBackgroundService()
     self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
-    let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
-    let controller = appDelegate.window?.rootViewController as ViewController
+    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let controller = appDelegate.window?.rootViewController as! ViewController
     
     self.deviceManagerView = DeviceManagerView()
   }
@@ -81,7 +83,7 @@ class DeviceManager: NSObject {
     }
     switch action {
     case "startScanning":
-      if !self.scanningSockets.contains(webSocket) {
+      if !contains(self.scanningSockets, webSocket) {
         self.scanningSockets.append(webSocket)
       }
       var uuids:[String] = []
@@ -153,7 +155,7 @@ class DeviceManager: NSObject {
   }
   
   func onEmit(peripheralUuid: String, message: String) {
-    let webSocket = self.connectedSockets[peripheralUuid]?
+    let webSocket = self.connectedSockets[peripheralUuid]
     if (webSocket != nil) {
       webSocket!.send(message)
     }
@@ -172,11 +174,11 @@ class DeviceManager: NSObject {
       ]
     ]
     println("Discovered: \(message)")
-    for uuid in data["services"] as [String] {
+    for uuid in data["services"] as! [String] {
       var services = self.serviceMap[uuid] as [PSWebSocket]?
       if (services != nil) {
         for webSocket in services! {
-          if self.scanningSockets.contains(webSocket) {
+          if contains(self.scanningSockets, webSocket) {
             webSocket.send(message.rawString())
           }
         }
@@ -188,7 +190,7 @@ class DeviceManager: NSObject {
     self.onDeviceChangeListeners.append(onDeviceChange)
   }
   
-  func setDevices(devices: [Device]){
+  func setTheDevices(devices:[Device]){
     self.devices = devices
     for listener in self.onDeviceChangeListeners {
       listener()
@@ -218,12 +220,12 @@ class DeviceManager: NSObject {
   func sendDevices(webSocket : PSWebSocket, id : String, devices: Array<JSON>) {
     var tasks : [((Any?, NSError?) -> ()) -> ()] = []
     for device in devices {
-      tasks.append(Async.bind { self.deviceExists(device, $0)})
+      tasks.append(Async.bind { self.deviceExists(device, completionHandler: $0)})
     }
     Async.parallel(tasks) { (results, error) in
       let filteredResults = self.compact(results! as [Any])
       let devices = Device.fromJSONArray(filteredResults)
-      self.setDevices(devices)
+      self.setTheDevices(devices)
     }
   }
   
@@ -256,7 +258,7 @@ class DeviceManager: NSObject {
   func compact(collection: [Any]) -> [JSON] {
     var filteredArray : [JSON] = []
     for item in collection {
-      let itemJSON = item as JSON
+      let itemJSON = item as! JSON
       if let i = (itemJSON)["uuid"].string {
         filteredArray.append(itemJSON)
       }

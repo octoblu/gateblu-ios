@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DeviceBackgroundService: NSObject {
     var backgroundTimeout = 0

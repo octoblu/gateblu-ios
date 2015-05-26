@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		060ACBDD1B14F41C00ABF932 /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 060ACBDC1B14F41C00ABF932 /* 256x256spiral.png */; };
 		065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A3E1A5B4850000F2915 /* Meshblu.swift */; };
 		065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A411A5B4CEF000F2915 /* Async.parallel.swift */; };
 		065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A421A5B4CEF000F2915 /* Async.series.swift */; };
@@ -14,28 +15,14 @@
 		06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */; };
 		06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */ = {isa = PBXBuildFile; fileRef = 06ED1DBE1A5B046D001A232D /* gateblu.html */; };
 		06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */; };
-		522F9D7762F5BBA9EF54F5EF /* libPods-gateblu.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1981509205167E4CC4BCA124 /* libPods-gateblu.a */; };
 		9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95881A41F77200236CFC /* AppDelegate.swift */; };
 		9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C958A1A41F77200236CFC /* ViewController.swift */; };
 		9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C958C1A41F77200236CFC /* Main.storyboard */; };
 		9A0C95901A41F77200236CFC /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C958F1A41F77200236CFC /* Images.xcassets */; };
 		9A0C959F1A41F77200236CFC /* gatebluTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C959E1A41F77200236CFC /* gatebluTests.swift */; };
-		9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A0C95AA1A420A1900236CFC /* 256x256spiral.png */; };
 		9A0C95B21A434A9F00236CFC /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0C95B11A434A9F00236CFC /* Device.swift */; };
+		A6FDCB77682EEB4976470078 /* Pods_gateblu.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C683C51BE408123D923EF26 /* Pods_gateblu.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */; };
-		BB43DA841A57F5380097026D /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA761A57F5380097026D /* Array.swift */; };
-		BB43DA851A57F5380097026D /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA771A57F5380097026D /* Character.swift */; };
-		BB43DA861A57F5380097026D /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA781A57F5380097026D /* Dictionary.swift */; };
-		BB43DA871A57F5380097026D /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA791A57F5380097026D /* Double.swift */; };
-		BB43DA881A57F5380097026D /* ExSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA7B1A57F5380097026D /* ExSwift.swift */; };
-		BB43DA891A57F5380097026D /* Float.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA7C1A57F5380097026D /* Float.swift */; };
-		BB43DA8A1A57F5380097026D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB43DA7D1A57F5380097026D /* Info.plist */; };
-		BB43DA8B1A57F5380097026D /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA7E1A57F5380097026D /* Int.swift */; };
-		BB43DA8C1A57F5380097026D /* NSArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA7F1A57F5380097026D /* NSArray.swift */; };
-		BB43DA8D1A57F5380097026D /* NSDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA801A57F5380097026D /* NSDate.swift */; };
-		BB43DA8E1A57F5380097026D /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA811A57F5380097026D /* Range.swift */; };
-		BB43DA8F1A57F5380097026D /* Sequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA821A57F5380097026D /* Sequence.swift */; };
-		BB43DA901A57F5380097026D /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA831A57F5380097026D /* String.swift */; };
 		BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */; };
 		BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5085791A44A1E500233B1B /* GatebluService.swift */; };
 		BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */; };
@@ -46,7 +33,6 @@
 		BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */; };
 		BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAB1A424F50007B8E17 /* Podfile */; };
 		BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = BB6D7CAE1A42968F007B8E17 /* config.xml */; };
-		BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */; };
 		BBA5E6E61A5E02E300265B34 /* NotificationMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */; };
 		BBA5E6E81A5E2C2300265B34 /* DeviceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBA5E6E71A5E2C2300265B34 /* DeviceCell.swift */; };
 		BBA5E6EB1A5E414900265B34 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = BBA5E6E91A5E414900265B34 /* LaunchScreen.xib */; };
@@ -89,6 +75,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		060ACBDC1B14F41C00ABF932 /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 256x256spiral.png; sourceTree = "<group>"; };
 		065E6A3E1A5B4850000F2915 /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
 		065E6A401A5B4CEF000F2915 /* Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Async.h; sourceTree = "<group>"; };
 		065E6A411A5B4CEF000F2915 /* Async.parallel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.parallel.swift; sourceTree = "<group>"; };
@@ -97,7 +84,7 @@
 		06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManagerView.swift; sourceTree = "<group>"; };
 		06ED1DBE1A5B046D001A232D /* gateblu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gateblu.html; sourceTree = "<group>"; };
 		06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluWebsocketServer.swift; sourceTree = "<group>"; };
-		1981509205167E4CC4BCA124 /* libPods-gateblu.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-gateblu.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C683C51BE408123D923EF26 /* Pods_gateblu.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_gateblu.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95831A41F77200236CFC /* gateblu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gateblu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C95871A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C95881A41F77200236CFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,23 +94,8 @@
 		9A0C95981A41F77200236CFC /* gatebluTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = gatebluTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A0C959D1A41F77200236CFC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A0C959E1A41F77200236CFC /* gatebluTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = gatebluTests.swift; sourceTree = "<group>"; };
-		9A0C95AA1A420A1900236CFC /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = 256x256spiral.png; path = ../../octoblu/public/assets/images/256x256spiral.png; sourceTree = SOURCE_ROOT; };
 		9A0C95B11A434A9F00236CFC /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceDiscoverer.swift; sourceTree = "<group>"; };
-		BB43DA761A57F5380097026D /* Array.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
-		BB43DA771A57F5380097026D /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
-		BB43DA781A57F5380097026D /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
-		BB43DA791A57F5380097026D /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
-		BB43DA7A1A57F5380097026D /* ExSwift.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExSwift.h; sourceTree = "<group>"; };
-		BB43DA7B1A57F5380097026D /* ExSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExSwift.swift; sourceTree = "<group>"; };
-		BB43DA7C1A57F5380097026D /* Float.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Float.swift; sourceTree = "<group>"; };
-		BB43DA7D1A57F5380097026D /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		BB43DA7E1A57F5380097026D /* Int.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
-		BB43DA7F1A57F5380097026D /* NSArray.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSArray.swift; sourceTree = "<group>"; };
-		BB43DA801A57F5380097026D /* NSDate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSDate.swift; sourceTree = "<group>"; };
-		BB43DA811A57F5380097026D /* Range.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
-		BB43DA821A57F5380097026D /* Sequence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sequence.swift; sourceTree = "<group>"; };
-		BB43DA831A57F5380097026D /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceBackgroundService.swift; sourceTree = "<group>"; };
 		BB5085791A44A1E500233B1B /* GatebluService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluService.swift; sourceTree = "<group>"; };
 		BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NobleWebsocketServer.swift; sourceTree = "<group>"; };
@@ -133,9 +105,7 @@
 		BB5A29E11A48905D00BC648D /* DeviceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManager.swift; sourceTree = "<group>"; };
 		BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BB6D7CAB1A424F50007B8E17 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "gateblu-Bridging-Header.h"; sourceTree = "<group>"; };
 		BB6D7CAE1A42968F007B8E17 /* config.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationMessageHandler.swift; sourceTree = "<group>"; };
 		BBA5E6E71A5E2C2300265B34 /* DeviceCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceCell.swift; sourceTree = "<group>"; };
 		BBA5E6EA1A5E414900265B34 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -162,7 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */,
-				522F9D7762F5BBA9EF54F5EF /* libPods-gateblu.a in Frameworks */,
+				A6FDCB77682EEB4976470078 /* Pods_gateblu.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -199,7 +169,7 @@
 		6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1981509205167E4CC4BCA124 /* libPods-gateblu.a */,
+				3C683C51BE408123D923EF26 /* Pods_gateblu.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -210,14 +180,12 @@
 				065E6A441A5B4CEF000F2915 /* async */,
 				BB6D7CAE1A42968F007B8E17 /* config.xml */,
 				BB6D7CA91A424986007B8E17 /* CoreBluetooth.framework */,
-				BB43DA751A57F5380097026D /* ExSwift */,
 				6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */,
 				9A0C95851A41F77200236CFC /* gateblu */,
 				9A0C959B1A41F77200236CFC /* gatebluTests */,
 				BB6D7CAB1A424F50007B8E17 /* Podfile */,
 				455BA00AC7ADB8C113D7E52E /* Pods */,
 				9A0C95841A41F77200236CFC /* Products */,
-				BB6D7D191A42B649007B8E17 /* SwiftyJSON.swift */,
 			);
 			sourceTree = "<group>";
 		};
@@ -242,7 +210,6 @@
 				06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
 				BB5085811A44DE1500233B1B /* Extensions.swift */,
-				BB6D7CAD1A42512E007B8E17 /* gateblu-Bridging-Header.h */,
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
 				06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */,
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
@@ -261,6 +228,7 @@
 		9A0C95861A41F77200236CFC /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				060ACBDC1B14F41C00ABF932 /* 256x256spiral.png */,
 				D07CF19D1A5351EE004D4DC9 /* robot1.png */,
 				D07CF19E1A5351EE004D4DC9 /* robot2.png */,
 				D07CF19F1A5351EE004D4DC9 /* robot3.png */,
@@ -270,7 +238,6 @@
 				D07CF1A31A5351EE004D4DC9 /* robot7.png */,
 				D07CF1A41A5351EE004D4DC9 /* robot8.png */,
 				D07CF1A51A5351EE004D4DC9 /* robot9.png */,
-				9A0C95AA1A420A1900236CFC /* 256x256spiral.png */,
 				D00F5C4D1A52132700498ADB /* bean.png */,
 				D00F5C4E1A52132700498ADB /* blink1.png */,
 				D00F5C4F1A52132700498ADB /* generic.png */,
@@ -298,27 +265,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		BB43DA751A57F5380097026D /* ExSwift */ = {
-			isa = PBXGroup;
-			children = (
-				BB43DA761A57F5380097026D /* Array.swift */,
-				BB43DA771A57F5380097026D /* Character.swift */,
-				BB43DA781A57F5380097026D /* Dictionary.swift */,
-				BB43DA791A57F5380097026D /* Double.swift */,
-				BB43DA7A1A57F5380097026D /* ExSwift.h */,
-				BB43DA7B1A57F5380097026D /* ExSwift.swift */,
-				BB43DA7C1A57F5380097026D /* Float.swift */,
-				BB43DA7D1A57F5380097026D /* Info.plist */,
-				BB43DA7E1A57F5380097026D /* Int.swift */,
-				BB43DA7F1A57F5380097026D /* NSArray.swift */,
-				BB43DA801A57F5380097026D /* NSDate.swift */,
-				BB43DA811A57F5380097026D /* Range.swift */,
-				BB43DA821A57F5380097026D /* Sequence.swift */,
-				BB43DA831A57F5380097026D /* String.swift */,
-			);
-			path = ExSwift;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -332,6 +278,7 @@
 				9A0C95811A41F77200236CFC /* Resources */,
 				2BBEED015D3FE6B4D9EE52E0 /* Copy Pods Resources */,
 				BB5A29F51A48C07E00BC648D /* Embed Frameworks */,
+				F89C5A2DE0A2DE7970BEE870 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -409,15 +356,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D00F5C541A52132700498ADB /* hue.png in Resources */,
+				060ACBDD1B14F41C00ABF932 /* 256x256spiral.png in Resources */,
 				BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */,
 				9A0C958E1A41F77200236CFC /* Main.storyboard in Resources */,
 				D07CF1AE1A5351EE004D4DC9 /* robot9.png in Resources */,
-				9A0C95AB1A420A1900236CFC /* 256x256spiral.png in Resources */,
 				D07CF1A81A5351EE004D4DC9 /* robot3.png in Resources */,
 				06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */,
 				D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */,
 				D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */,
-				BB43DA8A1A57F5380097026D /* Info.plist in Resources */,
 				BBA5E6EB1A5E414900265B34 /* LaunchScreen.xib in Resources */,
 				D07CF1AA1A5351EE004D4DC9 /* robot5.png in Resources */,
 				BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */,
@@ -472,6 +418,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		F89C5A2DE0A2DE7970BEE870 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-gateblu/Pods-gateblu-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -479,17 +440,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BB43DA8C1A57F5380097026D /* NSArray.swift in Sources */,
-				BB43DA8F1A57F5380097026D /* Sequence.swift in Sources */,
 				06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */,
-				BB43DA8E1A57F5380097026D /* Range.swift in Sources */,
-				BB6D7D1A1A42B649007B8E17 /* SwiftyJSON.swift in Sources */,
 				BB5085821A44DE1500233B1B /* Extensions.swift in Sources */,
-				BB43DA8B1A57F5380097026D /* Int.swift in Sources */,
 				BBA5E6E61A5E02E300265B34 /* NotificationMessageHandler.swift in Sources */,
-				BB43DA901A57F5380097026D /* String.swift in Sources */,
-				BB43DA8D1A57F5380097026D /* NSDate.swift in Sources */,
-				BB43DA871A57F5380097026D /* Double.swift in Sources */,
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */,
 				065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */,
@@ -498,17 +451,12 @@
 				06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */,
 				9A0C95891A41F77200236CFC /* AppDelegate.swift in Sources */,
 				BB5085801A44DDF800233B1B /* DeviceViewController.swift in Sources */,
-				BB43DA891A57F5380097026D /* Float.swift in Sources */,
 				9A0C95B21A434A9F00236CFC /* Device.swift in Sources */,
-				BB43DA851A57F5380097026D /* Character.swift in Sources */,
-				BB43DA841A57F5380097026D /* Array.swift in Sources */,
-				BB43DA861A57F5380097026D /* Dictionary.swift in Sources */,
 				BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */,
 				BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */,
 				BBA5E6E81A5E2C2300265B34 /* DeviceCell.swift in Sources */,
 				065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */,
 				BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */,
-				BB43DA881A57F5380097026D /* ExSwift.swift in Sources */,
 				065E6A471A5B4CEF000F2915 /* Async.swift in Sources */,
 				BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */,
 			);
@@ -640,11 +588,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -658,11 +605,10 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = gateblu/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "gateblu/gateblu-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

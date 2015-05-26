@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import SwiftyJSON
 
 class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     var blueToothReady = false
@@ -54,7 +55,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     
     func disconnectAll() {
         var peripherals = self.centralManager.retrieveConnectedPeripheralsWithServices(nil)
-        for peripheral in peripherals as [CBPeripheral] {
+        for peripheral in peripherals as! [CBPeripheral] {
             self.centralManager.cancelPeripheralConnection(peripheral)
         }
     }
@@ -62,7 +63,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     // Protocol
     
     func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
-        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as [CBPeripheral]! {
+        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as! [CBPeripheral]! {
             NSLog("willRestoreState")
         }
     }
@@ -84,7 +85,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
         self.peripherals[peripheral.identifier.UUIDString] = PeripheralService(peripheral: peripheral, onEmit: peripheralEmit)
         
         var uuids = [String]()
-        for cbuuid in advertisementData["kCBAdvDataServiceUUIDs"] as [CBUUID] {
+        for cbuuid in advertisementData["kCBAdvDataServiceUUIDs"] as! [CBUUID] {
             uuids.append(cbuuid.UUIDString)
         }
         

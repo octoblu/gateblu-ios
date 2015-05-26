@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import SwiftyJSON
 
 class PeripheralService: NSObject, CBPeripheralDelegate {
     var peripheral:CBPeripheral!
@@ -31,7 +32,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func peripheral(peripheral: CBPeripheral!, didDiscoverServices error: NSError!) {
         var services = Array<String>()
         for service in peripheral.services {
-            let s = service as CBService
+            let s = service as! CBService
             services.append(s.UUID.UUIDString)
         }
         let data:JSON = [
@@ -68,7 +69,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     
     func discoverCharacteristics(serviceUuid: String, characteristicUuids: Array<String>) {
         var foundService:CBService!
-        for service in peripheral.services as Array<CBService> {
+        for service in peripheral.services as! Array<CBService> {
             if service.UUID.UUIDString == serviceUuid.derosenthal() {
                 foundService = service
             }
@@ -88,7 +89,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var characteristics = Array<AnyObject>()
         
         for characteristic in service.characteristics {
-            let c = characteristic as CBCharacteristic
+            let c = characteristic as! CBCharacteristic
             var properties = Array<String>()
             
             var descriptors = c.descriptors
@@ -97,7 +98,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
             }
             
             for descriptor in descriptors {
-                let d = descriptor as CBDescriptor
+                let d = descriptor as! CBDescriptor
                 properties.append(d.description)
             }
             
@@ -121,7 +122,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func write(serviceUuid: String, characteristicUuid: String, data: NSData) {
         var foundService:CBService!
         for service in peripheral.services {
-            let s = service as CBService
+            let s = service as! CBService
             if s.UUID.UUIDString == serviceUuid.derosenthal() {
                 foundService = s
             }
@@ -129,7 +130,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
-            let c = characteristic as CBCharacteristic
+            let c = characteristic as! CBCharacteristic
             if c.UUID.UUIDString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }
@@ -141,7 +142,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func notify(serviceUuid: String, characteristicUuid: String, notify: Bool) {
         var foundService:CBService!
         for service in peripheral.services {
-            let s = service as CBService
+            let s = service as! CBService
             if s.UUID.UUIDString == serviceUuid.derosenthal() {
                 foundService = s
             }
@@ -149,7 +150,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
-            let c = characteristic as CBCharacteristic
+            let c = characteristic as! CBCharacteristic
             if c.UUID.UUIDString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }

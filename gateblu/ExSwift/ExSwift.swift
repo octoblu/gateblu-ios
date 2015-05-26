@@ -11,6 +11,7 @@ import Foundation
 infix operator =~ {}
 infix operator |~ {}
 infix operator .. {}
+infix operator <=> {}
 
 public typealias Ex = ExSwift
 
@@ -58,7 +59,7 @@ public class ExSwift {
         
         let f = ExSwift.after(n, function: callAfter)
         
-        return { f([nil])? }
+        return { f([nil]) }
     }
     
     /**
@@ -142,6 +143,28 @@ public class ExSwift {
     /**
         Creates a wrapper for function that caches the result of function's invocations.
         
+        :param: function Function with one parameter to cache
+        :returns: Wrapper function
+    */
+    public class func cached <P: Hashable, R> (function: P -> R) -> (P -> R) {
+        var cache = [P:R]()
+        
+        return { (param: P) -> R in
+            let key = param
+            
+            if let cachedValue = cache[key] {
+                return cachedValue
+            } else {
+                let value = function(param)
+                cache[key] = value
+                return value
+            }
+        }
+    }
+    
+    /**
+        Creates a wrapper for function that caches the result of function's invocations.
+        
         :param: function Function to cache
         :param: hash Parameters based hashing function that computes the key used to store each result in the cache
         :returns: Wrapper function
@@ -153,7 +176,6 @@ public class ExSwift {
         var cache = [P:R]()
         
         return { (params: P...) -> R in
-            
             let adaptedFunction = unsafeBitCast(function, Function.self)
             let adaptedHash = unsafeBitCast(hash, Hash.self)
             
@@ -161,11 +183,11 @@ public class ExSwift {
             
             if let cachedValue = cache[key] {
                 return cachedValue
+            } else {
+                let value = adaptedFunction(params)
+                cache[key] = value
+                return value
             }
-            
-            cache[key] = adaptedFunction(params)
-            
-            return cache[key]!
         }
     }
     
@@ -201,6 +223,16 @@ public class ExSwift {
         
     }
     
+}
+
+func <=> <T: Comparable>(lhs: T, rhs: T) -> Int {
+    if lhs < rhs {
+        return -1
+    } else if lhs > rhs {
+        return 1
+    } else {
+        return 0
+    }
 }
 
 /**

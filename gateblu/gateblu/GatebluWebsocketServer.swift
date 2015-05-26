@@ -1,4 +1,5 @@
 import Foundation
+import PocketSocket
 
 class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
   var server:PSWebSocketServer!
@@ -9,7 +10,7 @@ class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
     self.onMessage = onMessage
     self.server = PSWebSocketServer(host: nil, port: 0xd00d)
     self.server.delegate = self
-    self.server.start()
+//    self.server.start()
   }
   
   func pushToAll(data:NSData!) {

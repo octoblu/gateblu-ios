@@ -8,6 +8,7 @@
 
 import Foundation
 import WebKit
+import SwiftyJSON
 
 class Device {
   var uuid:String
@@ -32,11 +33,11 @@ class Device {
   }
   
   func update(device: Dictionary<String, AnyObject>){
-    self.uuid = device["uuid"] as String
-    self.name = device["name"] as String?
-    var online = device["online"] as Bool?
+    self.uuid = device["uuid"] as! String
+    self.name = device["name"] as! String?
+    var online = device["online"] as! Bool?
     self.online = online == true
-    self.type = device["type"] as String?
+    self.type = device["type"] as! String?
     setDefaults()
     self.start()
   }

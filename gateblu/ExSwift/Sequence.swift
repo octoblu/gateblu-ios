@@ -15,11 +15,11 @@ internal extension SequenceOf {
     
         :returns: First element of the sequence if present
     */
-    func first () -> T? {
+    var first: T? {
         var generator =  self.generate()
         return generator.next()
     }
-    
+
     /**
         Checks if call returns true for any element of self.
     
@@ -147,7 +147,7 @@ internal extension SequenceOf {
     func contains<T:Equatable> (item: T) -> Bool {
         var generator =  self.generate()
         while let nextItem = generator.next() {
-            if nextItem as T == item {
+            if nextItem as! T == item {
                 return true
             }
         }
@@ -174,18 +174,18 @@ internal extension SequenceOf {
         return SequenceOf(TakeWhileSequence(self, condition))
     }
 
-	/**
-		Returns each element of the sequence in an array
+    /**
+        Returns each element of the sequence in an array
 	
-		:returns: Each element of the sequence in an array
-	*/
-	func toArray () -> [T] {
-		var result: [T] = []
-		for item in self {
-			result.append(item)
+        :returns: Each element of the sequence in an array
+    */
+    func toArray () -> [T] {
+        var result: [T] = []
+        for item in self {
+            result.append(item)
         }
-		return result
-	}
+        return result
+    }
 }
 
 /**

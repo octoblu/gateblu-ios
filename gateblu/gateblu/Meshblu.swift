@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import SIOSocket
+import AFNetworking
 
 class Meshblu {
   
@@ -34,7 +36,7 @@ class Meshblu {
 //      identityMessage["socketid"] = self.socket.
       socket.emit("identity", args: [identityMessage])
       
-      self.socket.on("identify", self.identify);
+      self.socket.on("identify", callback: self.identify);
     }
   }
   
@@ -74,9 +76,9 @@ class Meshblu {
         NSLog("Registration response invalid")
         return
       }
-      let responseDict = response as Dictionary<String, AnyObject>
-      self.uuid = responseDict["uuid"] as String!
-      self.token = responseDict["token"] as String!
+      let responseDict = response as! Dictionary<String, AnyObject>
+      self.uuid = responseDict["uuid"] as! String!
+      self.token = responseDict["token"] as! String!
       onSuccess(uuid: self.uuid!, token: self.token!)
     })
   }
@@ -89,8 +91,8 @@ class Meshblu {
         onSuccess(device: nil)
         return
       }
-      let responseDict = response as Dictionary<String, AnyObject>
-      let deviceArray = responseDict["devices"] as Array<AnyObject>
+      let responseDict = response as! Dictionary<String, AnyObject>
+      let deviceArray = responseDict["devices"] as! Array<AnyObject>
       onSuccess(device: deviceArray[0] as? Dictionary<String, AnyObject>)
     })
   }
@@ -102,9 +104,9 @@ class Meshblu {
         NSLog("Get Device? response invalid")
         return
       }
-      let responseDict = response as Dictionary<String, AnyObject>
-      let deviceArray = responseDict["devices"] as Array<AnyObject>
-      onSuccess(device: deviceArray[0] as Dictionary<String, AnyObject>)
+      let responseDict = response as! Dictionary<String, AnyObject>
+      let deviceArray = responseDict["devices"] as! Array<AnyObject>
+      onSuccess(device: deviceArray[0] as! Dictionary<String, AnyObject>)
     })
   }
 

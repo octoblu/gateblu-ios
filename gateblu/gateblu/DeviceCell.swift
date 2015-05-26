@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class DeviceCell: UICollectionViewCell {
   @IBOutlet weak var label: UILabel?

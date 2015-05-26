@@ -41,22 +41,6 @@ internal extension Range {
         }
     }
 
-    /**
-        Range of Int with random bounds between from and to (inclusive).
-        
-        :param: from Lower bound
-        :param: to Upper bound
-        :returns: Random range
-    */
-    static func random (from: Int, to: Int) -> Range<Int> {
-        
-        let lowerBound = Int.random(min: from, max: to)
-        let upperBound = Int.random(min: lowerBound, max: to)
-        
-        return lowerBound...upperBound
-
-    }
-
 	/**
 		Returns each element of the range in an array
 	
@@ -69,6 +53,21 @@ internal extension Range {
         }
         return result
     }
+
+    /**
+        Range of Int with random bounds between from and to (inclusive).
+    
+        :param: from Lower bound
+        :param: to Upper bound
+        :returns: Random range
+    */
+    static func random (from: Int, to: Int) -> Range<Int> {
+        let lowerBound = Int.random(min: from, max: to)
+        let upperBound = Int.random(min: lowerBound, max: to)
+        
+        return lowerBound...upperBound
+    }
+
 }
 
 /**
@@ -79,11 +78,3 @@ public func == <U: ForwardIndexType> (first: Range<U>, second: Range<U>) -> Bool
     return first.startIndex == second.startIndex &&
            first.endIndex == second.endIndex
 }
-
-/**
-*  DP2 style open range operator
-*/
-public func .. <U : Comparable> (first: U, second: U) -> HalfOpenInterval<U> {
-    return first..<second
-}
-
