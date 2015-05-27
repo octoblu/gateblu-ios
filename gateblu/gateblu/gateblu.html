@@ -3,16 +3,24 @@
   <head>
     <title></title>
     <script type="text/javascript">
-      console.error = function(error) { window.webkit.messageHandlers.notification.postMessage({body:error}); };
+      console.error = function(error) {
+        window.webkit.messageHandlers.notification.postMessage({ body: error });
+      };
       console.log = console.error;
+      window.onerror = function (errorMsg, url, lineNumber) {
+        console.log("Error occured: " + errorMsg + " on line number: " + lineNumber + " in " + url); //or any message
+        return false;
+      };
     </script>
- 
-    <script type="text/javascript" src="https://cdn.octoblu.com/js/latest/gateblu-websocket.js"></script>
+    
+    <script type="text/javascript" src="http://cdn.octoblu.com/js/gateblu-websocket/latest/gateblu-websocket.js"></script>
+<!--    <script type="text/javascript" src="http://localhost:3444/gateblu-websocket.js"></script>-->
     <script type="text/javascript">
-      (function(){
-        var meshbluJSON = {{meshbluJSON}}
-        GatebluWebsocket(meshbluJSON)
-      })()
+      (function() {
+        var meshbluJSON = {{meshbluJSON}};
+        var gatebluWebsocket = new GatebluWebsocket(meshbluJSON);
+        gatebluWebsocket.run();
+      })();
     </script>
   </head>
   <body>

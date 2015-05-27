@@ -48,27 +48,26 @@ class DeviceManager: NSObject {
   
   func setUuidAndToken() {
     let userDefaults = NSUserDefaults.standardUserDefaults()
-    self.uuid = userDefaults.stringForKey("uuid")
-    self.token = userDefaults.stringForKey("token")
-    NSLog("UUID: \(uuid) Token: \(token)")
+    self.uuid = nil // userDefaults.stringForKey("uuid")
+    self.token = nil // userDefaults.stringForKey("token")
     
     if uuid == nil || token == nil {
       println("Sorry bro, can't start without a uuid or token")
       self.uuid = "eaed33d7-c723-47dd-9f9a-e70fb45b55d8"
       self.token = "588e19e90143c8ecf990c0c843f3a811a829dea4"
       println("Just kidding, added it for you...")
-//      return
     }
+    NSLog("UUID: \(uuid!) Token: \(token!)")
   }
   
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
     NSLog("onGatebluMesssage: \(message)")
     let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
     let jsonResult = JSON(data: data)
-    let name = jsonResult["name"].stringValue
+    let action = jsonResult["action"].stringValue
     let id = jsonResult["id"].stringValue
     
-    switch name {
+    switch action {
     case "stopDevice":
       println("Stopping Device")
       return;
@@ -82,7 +81,7 @@ class DeviceManager: NSObject {
       println("Adding Device")
       return;
     default:
-      NSLog("I can't even: \(name)")
+      NSLog("I can't even: \(action)")
       return;
     }
   }

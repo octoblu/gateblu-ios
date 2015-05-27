@@ -26,7 +26,7 @@ class DeviceManagerView: NSObject {
   
     let fileString = getGatebluHTML()
     
-    self.view.loadHTMLString(fileString, baseURL: NSURL(string: "http://app.octoblu.com"))
+    self.view.loadHTMLString(fileString, baseURL: nil)
     println("DeviceManager webview")
   
     parentView.addSubview(self.view)
@@ -34,14 +34,14 @@ class DeviceManagerView: NSObject {
   
   func getGatebluHTML() -> String {
     let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    var meshbluJSON : String = "{\"uuid\":\""
+    var meshbluJSON : String = "{uuid:\""
     meshbluJSON += appDelegate.deviceManager.uuid!
-    meshbluJSON += "\",\"token\":\""
+    meshbluJSON += "\",token:\""
     meshbluJSON += appDelegate.deviceManager.token!
     meshbluJSON += "\"}"
     var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
     var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    htmlString!.stringByReplacingOccurrencesOfString("{{meshbluJSON}}", withString: meshbluJSON)
+    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{meshbluJSON}}", withString: meshbluJSON, options: nil, range: nil)
     return htmlString!
   }
   
