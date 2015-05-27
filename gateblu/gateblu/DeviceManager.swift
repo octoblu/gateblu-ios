@@ -30,13 +30,16 @@ class DeviceManager: NSObject {
   
   override init() {
     super.init()
-    self.gatebluWebsocketServer = GatebluWebsocketServer(onMessage: self.onGatebluMessage)
     self.nobleWebsocketServer = NobleWebsocketServer(onMessage: self.onNobleMessage)
     self.deviceBackgroundService = DeviceBackgroundService()
     self.deviceDiscoverer = DeviceDiscoverer(onDiscovery: self.onDiscovery, onEmit: self.onEmit)
   }
   
   func start(){
+    self.gatebluWebsocketServer = GatebluWebsocketServer(onMessage: self.onGatebluMessage, onStart: self.startGateblu)
+  }
+  
+  func startGateblu(){
     self.deviceManagerView = DeviceManagerView()
     self.setUuidAndToken()
     self.deviceManagerView.startWebView()

@@ -18,6 +18,7 @@
     <script type="text/javascript">
       (function() {
         var meshbluJSON = {{meshbluJSON}};
+        console.log('meshbluJSON: ' + JSON.stringify(meshbluJSON));
         var gatebluWebsocket = new GatebluWebsocket(meshbluJSON);
         gatebluWebsocket.run();
       })();

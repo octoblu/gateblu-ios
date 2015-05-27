@@ -4,10 +4,12 @@ import PocketSocket
 class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
   var server:PSWebSocketServer!
   var onMessage:((PSWebSocket, String) -> ())!
+  var onStart: () -> ()
   
-  init(onMessage: (PSWebSocket, String) -> ()) {
-    super.init()
+  init(onMessage: (PSWebSocket, String) -> (), onStart: () -> ()) {
+    self.onStart = onStart
     self.onMessage = onMessage
+    super.init()
     self.server = PSWebSocketServer(host: nil, port: 0xd00d)
     self.server.delegate = self
     self.server.start()
@@ -23,6 +25,7 @@ class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
   
   func serverDidStart(server:PSWebSocketServer!) {
     NSLog("GatebluWebsocketServer starting")
+    onStart()
   }
   
   func serverDidStop(server:PSWebSocketServer!) {
