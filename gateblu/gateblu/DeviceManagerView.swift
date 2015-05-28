@@ -6,6 +6,7 @@ import SwiftyJSON
 class DeviceManagerView: NSObject {
   var view:WKWebView!
   var lastAwoke:NSDate = NSDate()
+  let controllerManager = ControllerManager()
   
   override init() {
     super.init()
@@ -19,9 +20,7 @@ class DeviceManagerView: NSObject {
   }
 
   func startWebView() {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    let window = appDelegate.window!
-    let controller = window.rootViewController as! ViewController
+    let controller = controllerManager.getViewController()
     let parentView = controller.view as UIView
   
     let fileString = getGatebluHTML()
@@ -33,11 +32,11 @@ class DeviceManagerView: NSObject {
   }
   
   func getGatebluHTML() -> String {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+    let deviceManager = controllerManager.getDeviceManager()
     var meshbluJSON : String = "{uuid:\""
-    meshbluJSON += appDelegate.deviceManager.uuid!
+    meshbluJSON += deviceManager.uuid!
     meshbluJSON += "\",token:\""
-    meshbluJSON += appDelegate.deviceManager.token!
+    meshbluJSON += deviceManager.token!
     meshbluJSON += "\"}"
     var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
     var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)

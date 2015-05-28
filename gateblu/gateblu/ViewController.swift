@@ -12,13 +12,15 @@ import SVProgressHUD
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
-  var deviceManager:DeviceManager!
+  var controllerManager = ControllerManager()
+  var deviceManager : DeviceManager!
   @IBOutlet var deviceCollectionView: UICollectionView?
   @IBOutlet var uuidLabel: UILabel?
   @IBOutlet var uuidView: UIView?
   private let reuseIdentifier = "DeviceCell"
   
   override func viewDidLoad() {
+    self.deviceManager = controllerManager.getDeviceManager()
     super.viewDidLoad()
     SVProgressHUD.showWithStatus("Loading devices...")
     addGestures()
@@ -36,13 +38,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func startDeviceManager() {
-    let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-    deviceManager = appDelegate.deviceManager
+    let deviceManager = controllerManager.getDeviceManager()
     deviceManager.start()
-    deviceManager.setOnDevicesChange({() -> () in
+    deviceManager.onDeviceChange({() -> () in
       self.deviceCollectionView!.reloadData()
       
-      for device in self.deviceManager.devices {
+      for device in deviceManager.devices {
         device.start()
       }
       
@@ -74,13 +75,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    return self.deviceManager.devices.count
+    return deviceManager.devices.count
   }
   
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as! DeviceCell
     
-    let device = self.deviceManager.devices[indexPath.item]
+    let device = deviceManager.devices[indexPath.item]
     cell.label!.text = device.name
     
     let deviceImage: UIImage! = UIImage(named: device.getImagePath())
