@@ -33,14 +33,10 @@ class DeviceManagerView: NSObject {
   
   func getGatebluHTML() -> String {
     let deviceManager = controllerManager.getDeviceManager()
-    var meshbluJSON : String = "{uuid:\""
-    meshbluJSON += deviceManager.uuid!
-    meshbluJSON += "\",token:\""
-    meshbluJSON += deviceManager.token!
-    meshbluJSON += "\"}"
     var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
     var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{meshbluJSON}}", withString: meshbluJSON, options: nil, range: nil)
+    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{uuid}}", withString: deviceManager.uuid!, options: nil, range: nil)
+    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{token}}", withString: deviceManager.token!, options: nil, range: nil)
     return htmlString!
   }
   

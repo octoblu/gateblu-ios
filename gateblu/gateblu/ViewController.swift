@@ -40,15 +40,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   func startDeviceManager() {
     let deviceManager = controllerManager.getDeviceManager()
     deviceManager.start()
-    deviceManager.onDeviceChange({() -> () in
+    println("started device manager")
+    deviceManager.setOnDevicesChange({() -> () in
       self.deviceCollectionView!.reloadData()
-      
+  
+      println("About to start devices...")
       for device in deviceManager.devices {
         device.start()
       }
-      
       SVProgressHUD.dismiss()
-      
     })
   }
   
@@ -61,7 +61,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldReceiveTouch touch: UITouch) -> Bool {
-    NSLog("Recognizing touch")
+    println("Recognizing touch")
     if CGRectContainsPoint(self.uuidLabel!.bounds, touch.locationInView(self.view)) {
       return false
     }
@@ -70,7 +70,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   
   func copyUuid(sender: UIView){
     let copyUuid = self.uuidLabel!.text
-    NSLog("Copying UUID \(copyUuid)")
+    println("Copying UUID \(copyUuid)")
     UIPasteboard.generalPasteboard().string = copyUuid
   }
   

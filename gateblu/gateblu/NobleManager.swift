@@ -19,7 +19,6 @@ class NobleManager: NSObject {
   var scanningSockets = [PSWebSocket]()
   var serviceMap = [String:[PSWebSocket]]()
   var connectedSockets = [String:PSWebSocket]()
-  var onDeviceChangeListeners : [() -> ()] = []
   
   override init() {
     super.init()
@@ -160,7 +159,4 @@ class NobleManager: NSObject {
     }
   }
   
-  func setOnDevicesChange(onDeviceChange: () -> ()) {
-    self.onDeviceChangeListeners.append(onDeviceChange)
-  }
 }

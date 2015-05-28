@@ -15,6 +15,7 @@ class DeviceManager: NSObject {
   var gatebluWebsocketServer:GatebluWebsocketServer!
   var nobleManager:NobleManager!
   var deviceBackgroundService:DeviceBackgroundService!
+  var deviceChange: (() -> ())?
   
   var devices = [Device]()
   var deviceManagerView : DeviceManagerView!
@@ -44,8 +45,8 @@ class DeviceManager: NSObject {
     nobleManager.disconnectAll()
   }
   
-  func onDeviceChange(onDeviceChange: () -> ()) {
-    nobleManager.onDeviceChangeListeners.append(onDeviceChange)
+  func setOnDevicesChange(deviceChange: () -> ()) {
+    self.deviceChange = deviceChange
   }
   
   func setUuidAndToken_test(){
@@ -63,32 +64,96 @@ class DeviceManager: NSObject {
       return
     }
     
-    NSLog("UUID: \(uuid!) Token: \(token!)")
+    println("UUID: \(uuid!) Token: \(token!)")
   }
   
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
-    NSLog("onGatebluMesssage: \(message)")
+    println("onGatebluMesssage: \(message)")
     let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
     let jsonResult = JSON(data: data)
     let action = jsonResult["action"].stringValue
     let id = jsonResult["id"].stringValue
+    let dataResult = jsonResult["data"]
+    var responseMessage = ["id": id]
     
     switch action {
     case "stopDevice":
-      println("Stopping Device")
-      return;
+      println("[Stopping Device]")
+      self.findAndStopDevice(dataResult)
     case "startDevice":
-      println("Starting Device")
-      return
+      println("[Starting Device]")
+      self.findAndStartDevice(dataResult)
     case "removeDevice":
-      println("Removing Device")
-      return;
+      println("[Removing Device]")
+      self.removeDevice(dataResult)
     case "addDevice":
-      println("Adding Device")
-      return;
+      println("[Adding Device]")
+      let device = Device(json: dataResult)
+      self.addDevice(device)
     default:
-      NSLog("I can't even: \(action)")
-      return;
+      println("I can't even: \(action)")
+    }
+    let jsonResponse = JSON(responseMessage)
+    gatebluWebsocketServer.send(webSocket, message: jsonResponse.rawString())
+  }
+  
+  func addDevice(device: Device){
+    self.devices.append(device)
+    startDevice(device)
+    updateDevices()
+  }
+  
+  func findAndStartDevice(json: JSON){
+    let uuidToStart = json["uuid"].stringValue
+    var found = false
+    for device in devices {
+      if device.uuid == uuidToStart  {
+        found = true
+        startDevice(device)
+      }
+    }
+    if found == false {
+      let device = Device(json: json)
+      addDevice(device)
+    }
+    updateDevices()
+  }
+  
+  func findAndStopDevice(json: JSON) {
+    let uuidToStop = json["uuid"].stringValue
+    for device in devices {
+      if device.uuid == uuidToStop {
+        stopDevice(device)
+      }
+    }
+    updateDevices()
+  }
+  
+  func startDevice(device: Device){
+    println("Starting Device \(device.name)")
+    device.wakeUp()
+  }
+  
+  func removeDevice(json:JSON) {
+    let uuidToRempve = json["uuid"].stringValue
+    for var index = 0; index < devices.count; ++index {
+      let device = devices[index]
+      if device.uuid == uuidToRempve  {
+        self.devices.removeAtIndex(index)
+      }
+    }
+    updateDevices()
+  }
+  
+  func stopDevice(device: Device){
+    device.stop()
+    updateDevices()
+  }
+  
+  func updateDevices(){
+    if self.deviceChange != nil {
+      self.deviceChange!()
+      return
     }
   }
   

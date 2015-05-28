@@ -13,15 +13,13 @@
       };
     </script>
     
-    <script type="text/javascript" src="http://cdn.octoblu.com/js/gateblu-websocket/latest/gateblu-websocket.js"></script>
-<!--    <script type="text/javascript" src="http://localhost:3444/gateblu-websocket.js"></script>-->
+    <script type="text/javascript" src="http://cdn.octoblu.com/js/{{connector}}/latest/{{connector}}.js"></script>
     <script type="text/javascript">
       (function() {
-         var gatebluWebsocket = new GatebluWebsocket({
-           uuid: "{{uuid}}",
-           token: "{{token}}"
-         });
-         gatebluWebsocket.run();
+       window.connector = new Connector({
+        uuid:"{{uuid}}",
+        token:"{{token}}"
+       });
       })();
     </script>
   </head>

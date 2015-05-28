@@ -32,33 +32,33 @@ class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
   }
   
   func serverDidStart(server:PSWebSocketServer!) {
-    NSLog("NobleWebsocketServer starting")
+    println("NobleWebsocketServer starting")
     onStart()
   }
   
   func serverDidStop(server:PSWebSocketServer!) {
-    NSLog("NobleWebsocketServer stopping")
+    println("NobleWebsocketServer stopping")
   }
   
   func server(server:PSWebSocketServer!, acceptWebSocketWithRequest request:NSURLRequest) -> (Bool) {
-    NSLog("NobleWebsocketServer should accept request: \(request)")
+    println("NobleWebsocketServer should accept request: \(request)")
     return true
   }
   
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didReceiveMessage message:AnyObject) {
-    NSLog("NobleWebsocketServer websocket did receive message: \(message)")
+    println("NobleWebsocketServer websocket did receive message: \(message)")
     onMessage(webSocket, "\(message)")
   }
   
   func server(server:PSWebSocketServer!, webSocketDidOpen webSocket:PSWebSocket!) {
-    NSLog("NobleWebsocketServer websocket did open \(webSocket)")
+    println("NobleWebsocketServer websocket did open \(webSocket)")
   }
   
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didCloseWithCode code:NSInteger, reason:String, wasClean:Bool) {
-    NSLog("NobleWebsocketServer websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
+    println("NobleWebsocketServer websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
   }
 
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didFailWithError error:NSError) {
-    NSLog("NobleWebsocketServer websocket did fail with error: \(error)")
+    println("NobleWebsocketServer websocket did fail with error: \(error)")
   }
 }

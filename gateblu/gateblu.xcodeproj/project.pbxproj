@@ -14,6 +14,7 @@
 		065E6A471A5B4CEF000F2915 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A431A5B4CEF000F2915 /* Async.swift */; };
 		06A6F7B71B177650004036A0 /* NobleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A6F7B61B177650004036A0 /* NobleManager.swift */; };
 		06A6F7B91B1779AE004036A0 /* ControllerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A6F7B81B1779AE004036A0 /* ControllerManager.swift */; };
+		06A6F7BB1B178898004036A0 /* connector.html in Resources */ = {isa = PBXBuildFile; fileRef = 06A6F7BA1B178898004036A0 /* connector.html */; };
 		06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */; };
 		06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */ = {isa = PBXBuildFile; fileRef = 06ED1DBE1A5B046D001A232D /* gateblu.html */; };
 		06ED1DC11A5B0FEE001A232D /* GatebluWebsocketServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */; };
@@ -85,6 +86,7 @@
 		065E6A431A5B4CEF000F2915 /* Async.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.swift; sourceTree = "<group>"; };
 		06A6F7B61B177650004036A0 /* NobleManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NobleManager.swift; sourceTree = "<group>"; };
 		06A6F7B81B1779AE004036A0 /* ControllerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ControllerManager.swift; sourceTree = "<group>"; };
+		06A6F7BA1B178898004036A0 /* connector.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = connector.html; sourceTree = "<group>"; };
 		06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeviceManagerView.swift; sourceTree = "<group>"; };
 		06ED1DBE1A5B046D001A232D /* gateblu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = gateblu.html; sourceTree = "<group>"; };
 		06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluWebsocketServer.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 				D00F5C501A52132700498ADB /* hue.png */,
 				9A0C95871A41F77200236CFC /* Info.plist */,
 				06ED1DBE1A5B046D001A232D /* gateblu.html */,
+				06A6F7BA1B178898004036A0 /* connector.html */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				06A6F7BB1B178898004036A0 /* connector.html in Resources */,
 				D00F5C541A52132700498ADB /* hue.png in Resources */,
 				060ACBDD1B14F41C00ABF932 /* 256x256spiral.png in Resources */,
 				BB6D7CAC1A424F50007B8E17 /* Podfile in Resources */,

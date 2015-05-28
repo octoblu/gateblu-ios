@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if var centralManagerIdentifiers: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {
           // Awake as Bluetooth Central
           // No further logic here, will be handled by centralManager willRestoreState
-          NSLog("_--_ Did Wake Central Manager -__-")
+          println("_--_ Did Wake Central Manager -__-")
           return true
         }
       }
@@ -48,7 +48,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-      NSLog("THE GATEBLU HAS BEGAN BACKGROUND ACTIVITY")
+      println("THE GATEBLU HAS BEGAN BACKGROUND ACTIVITY")
     }
 
     func applicationWillEnterForeground(application: UIApplication) {

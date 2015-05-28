@@ -44,12 +44,12 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     }
     
     func updateRssi() {
-        NSLog("Reading RSSI")
+        println("Reading RSSI")
         peripheral.readRSSI()
     }
     
     func peripheralDidUpdateRSSI(peripheral: CBPeripheral!, error: NSError!) {
-        NSLog("Error: \(error)")
+        println("Error: \(error)")
         let data:JSON = [
             "type": "rssiUpdate",
             "peripheralUuid": peripheral.identifier.UUIDString,
@@ -155,7 +155,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
                 foundCharacteristic = c
             }
         }
-        NSLog("notified \(notify)")
+        println("notified \(notify)")
         peripheral.setNotifyValue(notify, forCharacteristic: foundCharacteristic)
         
         var data:JSON = [
@@ -173,10 +173,10 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
-        NSLog("Peripheral UUID \(peripheral.identifier.UUIDString)")
-        NSLog("Service UUID: \(characteristic.service.UUID.UUIDString)")
-        NSLog("Characteristic UUID: \(characteristic.UUID.UUIDString)")
-        NSLog("Charactistic HexString \(characteristic.value.hexString())")
+        println("Peripheral UUID \(peripheral.identifier.UUIDString)")
+        println("Service UUID: \(characteristic.service.UUID.UUIDString)")
+        println("Characteristic UUID: \(characteristic.UUID.UUIDString)")
+        println("Charactistic HexString \(characteristic.value.hexString())")
         var data:JSON = [
             "type": "read",
             "peripheralUuid": peripheral.identifier.UUIDString,

@@ -30,7 +30,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
         for uuid in uuids {
             cbuuids.append(CBUUID(string: uuid))
         }
-        NSLog("Scanning for services, \(uuids)")
+        println("Scanning for services, \(uuids)")
         
         self.centralManager.scanForPeripheralsWithServices(cbuuids, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
 
@@ -97,26 +97,26 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     }
   
     func centralManagerDidUpdateState(central: CBCentralManager!) {
-        NSLog("checking state")
+        println("checking state")
         switch (central.state) {
         case .PoweredOff:
-            NSLog("CoreBluetooth BLE hardware is powered off")
+            println("CoreBluetooth BLE hardware is powered off")
             
         case .PoweredOn:
-            NSLog("CoreBluetooth BLE hardware is powered on and ready")
+            println("CoreBluetooth BLE hardware is powered on and ready")
             blueToothReady = true;
             
         case .Resetting:
-            NSLog("CoreBluetooth BLE hardware is resetting")
+            println("CoreBluetooth BLE hardware is resetting")
             
         case .Unauthorized:
-            NSLog("CoreBluetooth BLE state is unauthorized")
+            println("CoreBluetooth BLE state is unauthorized")
             
         case .Unknown:
-            NSLog("CoreBluetooth BLE state is unknown");
+            println("CoreBluetooth BLE state is unknown");
             
         case .Unsupported:
-            NSLog("CoreBluetooth BLE hardware is unsupported on this platform");
+            println("CoreBluetooth BLE hardware is unsupported on this platform");
             
         }
     }

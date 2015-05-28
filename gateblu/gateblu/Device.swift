@@ -32,6 +32,17 @@ class Device {
     self.webViewController = DeviceViewController(self)
   }
   
+  init(json: JSON) {
+    self.uuid = json["uuid"].stringValue
+    self.token = json["token"].stringValue
+    self.online = json["online"].boolValue
+    self.name = json["name"].string
+    self.type = json["type"].string
+    self.connector = json["connector"].string
+    self.setDefaults()
+    self.webViewController = DeviceViewController(self)
+  }
+  
   func update(device: Dictionary<String, AnyObject>){
     self.uuid = device["uuid"] as! String
     self.name = device["name"] as! String?
@@ -53,6 +64,11 @@ class Device {
   
   func start() {
     self.webViewController.reload()
+  }
+  
+  func stop() {
+    let view = self.webViewController.view
+    view.removeFromSuperview()
   }
   
   func getImagePath() -> String {

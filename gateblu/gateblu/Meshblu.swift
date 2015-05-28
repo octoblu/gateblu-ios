@@ -25,7 +25,7 @@ class Meshblu {
   }
   
   func connect() {
-    NSLog("connecting to \(MESHBLU_URL):\(MESHBLU_PORT)")
+    println("connecting to \(MESHBLU_URL):\(MESHBLU_PORT)")
     SIOSocket.socketWithHost("\(MESHBLU_URL):\(MESHBLU_PORT)") { (socket: SIOSocket!) in
       NSLog("Socket Connected")
       self.socket = socket
@@ -41,7 +41,7 @@ class Meshblu {
   }
   
   func identify(message : [AnyObject]!) {
-    NSLog("Message \(message)")
+    println("Message \(message)")
   }
 
   func goOnline(){
@@ -51,7 +51,7 @@ class Meshblu {
       "token" : self.token!
     ]
     self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
-      NSLog("Houston going online")
+      println("Houston going online")
     })
   }
   
@@ -62,7 +62,7 @@ class Meshblu {
       "token" : self.token!
     ]
     self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
-      NSLog("Houston going offline")
+      println("Houston going offline")
     })
   }
   
@@ -73,7 +73,7 @@ class Meshblu {
     parameters["online"] = "true"
     self.makeRequest("POST", path: "/devices", parameters: parameters, onResponse: { (response : AnyObject?) in
       if response == nil {
-        NSLog("Registration response invalid")
+        println("Registration response invalid")
         return
       }
       let responseDict = response as! Dictionary<String, AnyObject>
@@ -84,10 +84,10 @@ class Meshblu {
   }
 
   func whoami(onSuccess : (device: Dictionary<String, AnyObject>?) -> ()){
-    NSLog("Requesting device object from God")
+    println("Requesting device object from God")
     self.makeRequest("GET", path: "/devices/\(self.uuid!)", parameters: [], onResponse: { (response : AnyObject?) in
       if response == nil {
-        NSLog("WHOAMI? response invalid")
+        println("WHOAMI? response invalid")
         onSuccess(device: nil)
         return
       }
@@ -101,7 +101,7 @@ class Meshblu {
     let parameters = ["uuid": uuid, "token": token]
     self.makeRequest("GET", path: "/devices/\(uuid)", parameters: parameters, onResponse: { (response : AnyObject?) in
       if response == nil {
-        NSLog("Get Device? response invalid")
+        println("Get Device? response invalid")
         return
       }
       let responseDict = response as! Dictionary<String, AnyObject>
@@ -126,7 +126,7 @@ class Meshblu {
       (operation :AFHTTPRequestOperation!, error :NSError!) -> Void in
       
       onResponse(nil);
-      NSLog("requestFailure: \(error)")
+      println("requestFailure: \(error)")
     }
     
     // Set Headers
@@ -140,7 +140,7 @@ class Meshblu {
     case "PUT":
       manager.PUT(url, parameters: parameters, success: requestSuccess, failure: requestFailure)
     default:
-      NSLog("No Type Specified")
+      println("No Type Specified")
     }
   }
 }
