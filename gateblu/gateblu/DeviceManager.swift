@@ -99,7 +99,6 @@ class DeviceManager: NSObject {
   
   func addDevice(device: Device){
     self.devices.append(device)
-    startDevice(device)
     updateDevices()
   }
   
