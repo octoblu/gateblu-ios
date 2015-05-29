@@ -83,6 +83,13 @@ class Device {
     }
   }
   
+  func getRemoteImageUrl() -> NSURL {
+    let parsedType = split(self.type!) {$0 == ":"}
+    let folder = parsedType[0]
+    let file = parsedType[1]
+    return NSURL(fileURLWithPath: "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg")!
+  }
+  
   func wakeUp() {
     self.webViewController.wakeIfNotRecentlyAwoken()
   }

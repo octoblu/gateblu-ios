@@ -12,5 +12,4 @@ import UIKit
 class DeviceCell: UICollectionViewCell {
   @IBOutlet weak var label: UILabel?
   @IBOutlet weak var imageView: UIImageView?
-  
 }

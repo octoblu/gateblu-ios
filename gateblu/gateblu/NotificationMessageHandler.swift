@@ -10,7 +10,16 @@ import Foundation
 import WebKit
 
 class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
+
   func userContentController(_userContentController: WKUserContentController, didReceiveScriptMessage message: WKScriptMessage) {
-    NSLog("DEBUG: \(message.body)")
+    let action: String? = message.body
+    if action == nil {
+      println("No Action for Webkit Debug \(message.body)")
+      return
+    }
+    switch action! {
+      case "debug":
+        println("DEBUG: \(message.body)")
+    }
   }
 }
