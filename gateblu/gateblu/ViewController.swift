@@ -23,10 +23,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   override func viewDidLoad() {
     self.deviceManager = controllerManager.getDeviceManager()
     super.viewDidLoad()
-    SVProgressHUD.showWithStatus("Loading devices...")
-    addGestures()
-    startDeviceManager()
-    setUuidLabel()
+    self.addGestures()
+    self.startDeviceManager()
+    self.setUuidLabel()
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    SVProgressHUD.showWithStatus("Starting Gateblu...")
   }
   
   func setUuidLabel() {

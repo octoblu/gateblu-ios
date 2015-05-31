@@ -10,6 +10,7 @@ import Foundation
 import WebKit
 import PocketSocket
 import SwiftyJSON
+import SVProgressHUD
 
 class DeviceManager: NSObject {
   var gatebluWebsocketServer:GatebluWebsocketServer!
@@ -90,6 +91,8 @@ class DeviceManager: NSObject {
       println("[Adding Device]")
       let device = Device(json: dataResult)
       self.addDevice(device)
+    case "ready":
+      println("[Gateblu Ready]")
     default:
       println("I can't even: \(action)")
     }

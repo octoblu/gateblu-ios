@@ -52,6 +52,7 @@
 		D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A31A5351EE004D4DC9 /* robot7.png */; };
 		D07CF1AD1A5351EE004D4DC9 /* robot8.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A41A5351EE004D4DC9 /* robot8.png */; };
 		D07CF1AE1A5351EE004D4DC9 /* robot9.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A51A5351EE004D4DC9 /* robot9.png */; };
+		D0A1B1E41B1BBC87008B0C6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A1B1E31B1BBC87008B0C6E /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +130,7 @@
 		D07CF1A31A5351EE004D4DC9 /* robot7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot7.png; sourceTree = "<group>"; };
 		D07CF1A41A5351EE004D4DC9 /* robot8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot8.png; sourceTree = "<group>"; };
 		D07CF1A51A5351EE004D4DC9 /* robot9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot9.png; sourceTree = "<group>"; };
+		D0A1B1E31B1BBC87008B0C6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -137,6 +139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0A1B1E41B1BBC87008B0C6E /* QuartzCore.framework in Frameworks */,
 				BB6D7CAA1A424986007B8E17 /* CoreBluetooth.framework in Frameworks */,
 				A6FDCB77682EEB4976470078 /* Pods_gateblu.framework in Frameworks */,
 			);
@@ -175,6 +178,7 @@
 		6EDAC5D914BD8BE65B5BBCA2 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D0A1B1E31B1BBC87008B0C6E /* QuartzCore.framework */,
 				3C683C51BE408123D923EF26 /* Pods_gateblu.framework */,
 			);
 			name = Frameworks;

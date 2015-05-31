@@ -32,7 +32,7 @@ PODS:
   - SIOSocket (0.2.0)
   - SVGKit (2.x):
     - CocoaLumberjack (~> 2.x)
-  - SVProgressHUD (1.1.2)
+  - SVProgressHUD (HEAD based on 1.1.3)
   - SwiftyJSON (2.2.0)
 
 DEPENDENCIES:
@@ -40,7 +40,7 @@ DEPENDENCIES:
   - PocketSocket
   - SIOSocket
   - SVGKit (from `https://github.com/SVGKit/SVGKit.git`, commit `f265c28ec104165c75faaa394bf0694ee160156f`)
-  - SVProgressHUD
+  - SVProgressHUD (HEAD)
   - SwiftyJSON
 
 EXTERNAL SOURCES:
@@ -59,7 +59,7 @@ SPEC CHECKSUMS:
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
   SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
   SVGKit: cf06ac3067c4d5e927e5f93ba6a7e4d7171a7502
-  SVProgressHUD: 3afb875b9eb23acd1bed9b82495695c68621a8b2
+  SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 
 COCOAPODS: 0.37.2

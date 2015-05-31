@@ -7,7 +7,7 @@ target 'gateblu' do
     pod 'PocketSocket'
     pod 'AFNetworking'
     pod 'SIOSocket'
-    pod 'SVProgressHUD'
+    pod 'SVProgressHUD', :head
     pod 'SwiftyJSON'
     pod 'SVGKit', :git => 'https://github.com/SVGKit/SVGKit.git', :commit => 'f265c28ec104165c75faaa394bf0694ee160156f'
 end
