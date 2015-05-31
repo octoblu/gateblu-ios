@@ -89,7 +89,6 @@ class Device {
     let file = parsedType[1]
     let urlString = "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg"
   
-    println("URL String \(urlString)")
     return NSURL(fileURLWithPath: urlString)!
   }
   

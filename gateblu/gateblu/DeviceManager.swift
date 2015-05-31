@@ -132,7 +132,9 @@ class DeviceManager: NSObject {
   }
   
   func startDevice(device: Device){
-    println("Starting Device \(device.name)")
+    if let name = device.name {
+      println("Starting Device \(name)...")
+    }
     device.wakeUp()
   }
   

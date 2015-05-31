@@ -47,11 +47,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     println("started device manager")
     deviceManager.setOnDevicesChange({() -> () in
       self.deviceCollectionView!.reloadData()
-  
-      println("About to start devices...")
-      for device in deviceManager.devices {
-        device.start()
-      }
+      println("Devices changed!")
       SVProgressHUD.dismiss()
     })
   }
