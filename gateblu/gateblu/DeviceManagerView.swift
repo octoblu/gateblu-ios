@@ -12,7 +12,7 @@ class DeviceManagerView: NSObject {
     super.init()
     let userContentController = WKUserContentController()
     let handler = NotificationScriptMessageHandler()
-    userContentController.addScriptMessageHandler(handler, name: "notification")
+    userContentController.addScriptMessageHandler(handler, name: "managerNotification")
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
     let rect:CGRect = CGRectMake(0,0,0,0)

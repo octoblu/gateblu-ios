@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+import SVGKit
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
@@ -84,7 +85,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     let device = deviceManager.devices[indexPath.item]
     cell.label!.text = device.name
     
-    let deviceImage: UIImage! = UIImage(named: device.getImagePath())
+//    let deviceImage = SVGKImage(contentsOfURL: device.getRemoteImageUrl())
+    let deviceImage = UIImage(named: device.getImagePath())
     
     cell.imageView!.image = deviceImage
     

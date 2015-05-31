@@ -94,7 +94,7 @@
                                             <constraint firstAttribute="bottomMargin" secondItem="W52-71-a8h" secondAttribute="bottom" id="zgj-Jq-j66"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="imageView" destination="gol-vZ-Qes" id="eNS-rV-T6w"/>
+                                            <outlet property="imageView" destination="gol-vZ-Qes" id="xmk-RX-Aqm"/>
                                             <outlet property="label" destination="W52-71-a8h" id="9Pz-B5-PXS"/>
                                         </connections>
                                     </collectionViewCell>
@@ -123,8 +123,8 @@
                     </view>
                     <connections>
                         <outlet property="deviceCollectionView" destination="ahp-Om-pIu" id="olJ-Oa-LUq"/>
-                        <outlet property="uuidLabel" destination="trX-e3-dz6" id="HQY-nW-WS7"/>
-                        <outlet property="uuidView" destination="kIt-Pj-txS" id="lMU-lo-yLy"/>
+                        <outlet property="uuidLabel" destination="trX-e3-dz6" id="eYB-Co-w6a"/>
+                        <outlet property="uuidView" destination="kIt-Pj-txS" id="hAa-MC-Gqf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k46-D6-QxP" userLabel="First Responder" sceneMemberID="firstResponder"/>

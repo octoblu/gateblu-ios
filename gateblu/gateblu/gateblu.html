@@ -4,7 +4,7 @@
     <title></title>
     <script type="text/javascript">
       console.error = function(error) {
-        window.webkit.messageHandlers.notification.postMessage({ body: error });
+        window.webkit.messageHandlers.managerNotification.postMessage({ body: error });
       };
       console.log = console.error;
       window.onerror = function (errorMsg, url, lineNumber) {

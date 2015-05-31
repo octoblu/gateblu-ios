@@ -87,7 +87,10 @@ class Device {
     let parsedType = split(self.type!) {$0 == ":"}
     let folder = parsedType[0]
     let file = parsedType[1]
-    return NSURL(fileURLWithPath: "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg")!
+    let urlString = "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg"
+  
+    println("URL String \(urlString)")
+    return NSURL(fileURLWithPath: urlString)!
   }
   
   func wakeUp() {
