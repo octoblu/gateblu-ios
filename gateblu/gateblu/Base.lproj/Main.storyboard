@@ -23,10 +23,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kIt-Pj-txS" userLabel="DeviceInfoView">
                                 <rect key="frame" x="0.0" y="550" width="600" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trX-e3-dz6">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trX-e3-dz6">
                                         <rect key="frame" x="0.0" y="14" width="600" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -68,16 +68,17 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W52-71-a8h">
-                                                    <rect key="frame" x="0.0" y="143" width="150" height="19"/>
+                                                    <rect key="frame" x="0.0" y="133" width="150" height="29"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gol-vZ-Qes">
-                                                    <rect key="frame" x="8" y="8" width="135" height="135"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gol-vZ-Qes">
+                                                    <rect key="frame" x="13" y="13" width="125" height="125"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="135" id="eGF-Id-1OY"/>
-                                                        <constraint firstAttribute="height" constant="135" id="r4W-8j-d5v"/>
+                                                        <constraint firstAttribute="width" constant="125" id="eGF-Id-1OY"/>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="125" id="qJ4-XW-dJu"/>
+                                                        <constraint firstAttribute="height" constant="125" id="r4W-8j-d5v"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -121,6 +122,7 @@
                             <constraint firstItem="kIt-Pj-txS" firstAttribute="top" secondItem="ahp-Om-pIu" secondAttribute="bottom" id="ma1-8p-h9L"/>
                         </constraints>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="deviceCollectionView" destination="ahp-Om-pIu" id="olJ-Oa-LUq"/>
                         <outlet property="uuidLabel" destination="trX-e3-dz6" id="eYB-Co-w6a"/>

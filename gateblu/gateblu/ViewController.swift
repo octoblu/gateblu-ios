@@ -23,22 +23,18 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   override func viewDidLoad() {
     self.deviceManager = controllerManager.getDeviceManager()
     super.viewDidLoad()
-    self.addGestures()
     self.startDeviceManager()
-    self.setUuidLabel()
   }
   
   override func viewDidAppear(animated: Bool) {
     SVProgressHUD.showWithStatus("Starting Gateblu...")
+    self.addGestures()
+    super.viewDidAppear(animated)
   }
   
   func setUuidLabel() {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    var uuid = userDefaults.stringForKey("uuid")
-    if uuid == nil {
-      uuid = ""
-    }
-    self.uuidLabel!.text = uuid
+    let deviceManager = controllerManager.getDeviceManager()
+    self.uuidLabel!.text = deviceManager.uuid
   }
   
   func startDeviceManager() {
@@ -46,6 +42,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     deviceManager.start()
     println("started device manager")
     deviceManager.setOnDevicesChange({() -> () in
+      self.setUuidLabel()
       self.deviceCollectionView!.reloadData()
       println("Devices changed!")
       SVProgressHUD.dismiss()
@@ -91,4 +88,5 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     
     return cell
   }
+  
 }
