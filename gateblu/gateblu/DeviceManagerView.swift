@@ -33,11 +33,12 @@ class DeviceManagerView: NSObject {
   
   func getGatebluHTML() -> String {
     let deviceManager = controllerManager.getDeviceManager()
-    var htmlFilePath = NSBundle.mainBundle().pathForResource("gateblu", ofType:"html")!
-    var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{uuid}}", withString: deviceManager.uuid!, options: nil, range: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{token}}", withString: deviceManager.token!, options: nil, range: nil)
-    return htmlString!
+    let values = [
+      "uuid": deviceManager.uuid!,
+      "token": deviceManager.token!
+    ]
+    let html = Template.getTemplateFromBundle("gateblu", replaceValues: values)
+    return html
   }
   
   func wakeIfNotRecentlyAwoken() {

@@ -45,15 +45,12 @@ class DeviceViewController: NSObject {
   }
 
   func getJavascript() -> String {
-    let uuid = device.uuid
-    let token = device.token
-    let connector = device.connector!
-    var htmlFilePath = NSBundle.mainBundle().pathForResource("connector", ofType:"html")!
-    var htmlString = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{uuid}}", withString: uuid, options: nil, range: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{token}}", withString: token, options: nil, range: nil)
-    htmlString = htmlString!.stringByReplacingOccurrencesOfString("{{connector}}", withString: connector, options: nil, range: nil)
-    return htmlString!
+    let values = [
+      "connector": device.connector!,
+      "uuid": device.uuid,
+      "token": device.token
+    ]
+    return Template.getTemplateFromBundle("connector", replaceValues: values)
   }
   
   func wakeIfNotRecentlyAwoken() {

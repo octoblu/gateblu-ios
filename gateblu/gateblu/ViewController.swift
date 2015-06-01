@@ -9,7 +9,6 @@
 import Foundation
 import UIKit
 import SVProgressHUD
-import SVGKit
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
   
@@ -81,10 +80,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     let device = deviceManager.devices[indexPath.item]
     cell.label!.text = device.name
     
-//    let deviceImage = SVGKImage(contentsOfURL: device.getRemoteImageUrl())
-    let deviceImage = UIImage(named: device.getImagePath())
-    
-    cell.imageView!.image = deviceImage
+    let values = [
+      "imageUrl": device.getRemoteImageUrl()
+    ]
+    let html = Template.getTemplateFromBundle("device", replaceValues: values)
+    cell.webView!.loadHTMLString(html, baseURL: NSURL(fileURLWithPath:"http://app.octoblu.com"))
+    cell.webView!.scrollView.scrollEnabled = false
+    cell.webView!.scrollView.bounces = false
     
     return cell
   }

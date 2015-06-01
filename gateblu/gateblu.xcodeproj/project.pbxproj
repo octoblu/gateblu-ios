@@ -43,6 +43,8 @@
 		D00F5C521A52132700498ADB /* blink1.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4E1A52132700498ADB /* blink1.png */; };
 		D00F5C531A52132700498ADB /* generic.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C4F1A52132700498ADB /* generic.png */; };
 		D00F5C541A52132700498ADB /* hue.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C501A52132700498ADB /* hue.png */; };
+		D03B39131B1CF57500F8DC04 /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = D03B39121B1CF57500F8DC04 /* device.html */; };
+		D03B39151B1CF5DD00F8DC04 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03B39141B1CF5DD00F8DC04 /* Template.swift */; };
 		D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19D1A5351EE004D4DC9 /* robot1.png */; };
 		D07CF1A71A5351EE004D4DC9 /* robot2.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19E1A5351EE004D4DC9 /* robot2.png */; };
 		D07CF1A81A5351EE004D4DC9 /* robot3.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19F1A5351EE004D4DC9 /* robot3.png */; };
@@ -121,6 +123,8 @@
 		D00F5C4E1A52132700498ADB /* blink1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blink1.png; sourceTree = "<group>"; };
 		D00F5C4F1A52132700498ADB /* generic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = generic.png; sourceTree = "<group>"; };
 		D00F5C501A52132700498ADB /* hue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hue.png; sourceTree = "<group>"; };
+		D03B39121B1CF57500F8DC04 /* device.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = device.html; sourceTree = "<group>"; };
+		D03B39141B1CF5DD00F8DC04 /* Template.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Template.swift; sourceTree = "<group>"; };
 		D07CF19D1A5351EE004D4DC9 /* robot1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot1.png; sourceTree = "<group>"; };
 		D07CF19E1A5351EE004D4DC9 /* robot2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot2.png; sourceTree = "<group>"; };
 		D07CF19F1A5351EE004D4DC9 /* robot3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot3.png; sourceTree = "<group>"; };
@@ -233,6 +237,7 @@
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
+				D03B39141B1CF5DD00F8DC04 /* Template.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -253,6 +258,7 @@
 				D00F5C4D1A52132700498ADB /* bean.png */,
 				D00F5C4E1A52132700498ADB /* blink1.png */,
 				D00F5C4F1A52132700498ADB /* generic.png */,
+				D03B39121B1CF57500F8DC04 /* device.html */,
 				D00F5C501A52132700498ADB /* hue.png */,
 				9A0C95871A41F77200236CFC /* Info.plist */,
 				06ED1DBE1A5B046D001A232D /* gateblu.html */,
@@ -376,6 +382,7 @@
 				D07CF1AE1A5351EE004D4DC9 /* robot9.png in Resources */,
 				D07CF1A81A5351EE004D4DC9 /* robot3.png in Resources */,
 				06ED1DBF1A5B046D001A232D /* gateblu.html in Resources */,
+				D03B39131B1CF57500F8DC04 /* device.html in Resources */,
 				D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */,
 				D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */,
 				BBA5E6EB1A5E414900265B34 /* LaunchScreen.xib in Resources */,
@@ -461,6 +468,7 @@
 				9A0C958B1A41F77200236CFC /* ViewController.swift in Sources */,
 				BB5A29E21A48905D00BC648D /* DeviceManager.swift in Sources */,
 				065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */,
+				D03B39151B1CF5DD00F8DC04 /* Template.swift in Sources */,
 				065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */,
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
 				06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */,

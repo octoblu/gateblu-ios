@@ -83,13 +83,13 @@ class Device {
     }
   }
   
-  func getRemoteImageUrl() -> NSURL {
+  func getRemoteImageUrl() -> String {
     let parsedType = split(self.type!) {$0 == ":"}
     let folder = parsedType[0]
     let file = parsedType[1]
     let urlString = "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg"
   
-    return NSURL(fileURLWithPath: urlString)!
+    return urlString
   }
   
   func wakeUp() {
