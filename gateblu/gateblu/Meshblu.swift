@@ -28,7 +28,7 @@ class Meshblu {
 
   func register(onSuccess: (uuid: String, token: String) -> ()){
     var parameters = Dictionary<String, AnyObject>()
-    parameters["type"] = "device:gateblu:ios"
+    parameters["type"] = "device:gateblu"
     parameters["devices"] = []
     parameters["online"] = "true"
     self.makeRequest("POST", path: "/devices", parameters: parameters, onResponse: { (response : AnyObject?) in

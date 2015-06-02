@@ -49,4 +49,11 @@ class AuthController : NSObject {
     userDefaults.setObject(uuid, forKey: "uuid")
     userDefaults.setObject(token, forKey: "token")
   }
+  
+  func reset(){
+    self.uuid = nil
+    self.token = nil
+    userDefaults.removeObjectForKey("uuid")
+    userDefaults.removeObjectForKey("token")
+  }
 }

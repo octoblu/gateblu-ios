@@ -15,12 +15,31 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   
   var controllerManager = ControllerManager()
   var deviceManager : DeviceManager!
+  private let reuseIdentifier = "DeviceCell"
+  var loading = true
+  
   @IBOutlet var deviceCollectionView: UICollectionView?
   @IBOutlet var uuidLabel: UILabel?
   @IBOutlet var uuidView: UIView?
-  private let reuseIdentifier = "DeviceCell"
+  @IBAction func resetGateblu(sender: UIButton){
+    var alert = UIAlertController(title: "Reset Gateblu", message: "Are you sure you want to reset this gateblu?", preferredStyle: UIAlertControllerStyle.Alert)
+    let alertAction = UIAlertAction(title: "Reset", style: UIAlertActionStyle.Destructive, handler: { action in
+      switch action.style{
+      case .Default:
+        println("default")
+      case .Cancel:
+        println("cancel")
+      case .Destructive:
+        println("reset gateblu")
+        self.resetGatebluNow()
+      }
+    })
+    alert.addAction(alertAction)
+    let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
+    alert.addAction(cancelAction)
+    self.presentViewController(alert, animated: true, completion: nil)
+  }
   
-  var loading = true
   
   override func viewDidLoad() {
     self.deviceManager = controllerManager.getDeviceManager()
@@ -39,6 +58,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   func setUuidLabel() {
     let authController = controllerManager.getAuthController()
     self.uuidLabel!.text = authController.uuid
+  }
+  
+  func resetGatebluNow(){
+    self.deviceManager.murder()
+    let authController = ControllerManager().getAuthController()
+    authController.reset()
   }
   
   func startDeviceManager() {

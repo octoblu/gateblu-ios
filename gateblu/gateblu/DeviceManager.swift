@@ -178,6 +178,13 @@ class DeviceManager: NSObject {
     }
   }
   
+  func murder(){
+    for device in devices {
+      device.stop()
+    }
+    self.devices = []
+  }
+  
   func compact(collection: [Any]) -> [JSON] {
     var filteredArray : [JSON] = []
     for item in collection {
