@@ -54,6 +54,7 @@
 		D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A31A5351EE004D4DC9 /* robot7.png */; };
 		D07CF1AD1A5351EE004D4DC9 /* robot8.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A41A5351EE004D4DC9 /* robot8.png */; };
 		D07CF1AE1A5351EE004D4DC9 /* robot9.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF1A51A5351EE004D4DC9 /* robot9.png */; };
+		D0A02D201B1E485A0033BFCA /* AuthController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A02D1F1B1E485A0033BFCA /* AuthController.swift */; };
 		D0A1B1E41B1BBC87008B0C6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A1B1E31B1BBC87008B0C6E /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +135,7 @@
 		D07CF1A31A5351EE004D4DC9 /* robot7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot7.png; sourceTree = "<group>"; };
 		D07CF1A41A5351EE004D4DC9 /* robot8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot8.png; sourceTree = "<group>"; };
 		D07CF1A51A5351EE004D4DC9 /* robot9.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = robot9.png; sourceTree = "<group>"; };
+		D0A02D1F1B1E485A0033BFCA /* AuthController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthController.swift; sourceTree = "<group>"; };
 		D0A1B1E31B1BBC87008B0C6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		EA4B79A928A66A4D1937BE1D /* Pods-gateblu.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gateblu.release.xcconfig"; path = "Pods/Target Support Files/Pods-gateblu/Pods-gateblu.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -216,12 +218,13 @@
 			isa = PBXGroup;
 			children = (
 				9A0C95881A41F77200236CFC /* AppDelegate.swift */,
+				D0A02D1F1B1E485A0033BFCA /* AuthController.swift */,
+				06A6F7B81B1779AE004036A0 /* ControllerManager.swift */,
 				9A0C95B11A434A9F00236CFC /* Device.swift */,
 				BB43DA911A587EFB0097026D /* DeviceBackgroundService.swift */,
 				BBA5E6E71A5E2C2300265B34 /* DeviceCell.swift */,
 				BB43DA731A57CDD00097026D /* DeviceDiscoverer.swift */,
 				BB5A29E11A48905D00BC648D /* DeviceManager.swift */,
-				06A6F7B61B177650004036A0 /* NobleManager.swift */,
 				06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
 				BB5085811A44DE1500233B1B /* Extensions.swift */,
@@ -231,13 +234,13 @@
 				BBA5E6E91A5E414900265B34 /* LaunchScreen.xib */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
 				065E6A3E1A5B4850000F2915 /* Meshblu.swift */,
+				06A6F7B61B177650004036A0 /* NobleManager.swift */,
 				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
-				06A6F7B81B1779AE004036A0 /* ControllerManager.swift */,
 				BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */,
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
-				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 				D03B39141B1CF5DD00F8DC04 /* Template.swift */,
+				9A0C958A1A41F77200236CFC /* ViewController.swift */,
 			);
 			path = gateblu;
 			sourceTree = "<group>";
@@ -470,6 +473,7 @@
 				065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */,
 				D03B39151B1CF5DD00F8DC04 /* Template.swift in Sources */,
 				065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */,
+				D0A02D201B1E485A0033BFCA /* AuthController.swift in Sources */,
 				BB50857A1A44A1E500233B1B /* GatebluService.swift in Sources */,
 				06ED1DBD1A5B02AD001A232D /* DeviceManagerView.swift in Sources */,
 				06A6F7B71B177650004036A0 /* NobleManager.swift in Sources */,

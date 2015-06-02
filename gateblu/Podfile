@@ -6,9 +6,9 @@ use_frameworks!
 target 'gateblu' do
     pod 'PocketSocket'
     pod 'AFNetworking'
-    pod 'SIOSocket'
     pod 'SVProgressHUD', :head
     pod 'SwiftyJSON'
+    pod 'DZNEmptyDataSet'
 end
 
 target 'gatebluTests' do

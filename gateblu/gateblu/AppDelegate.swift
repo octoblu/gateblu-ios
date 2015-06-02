@@ -13,6 +13,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
   var deviceManager:DeviceManager!
+  var authController: AuthController!
 
   func application(application: UIApplication, shouldSaveApplicationState coder: NSCoder) -> Bool {
     return true
@@ -26,6 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIApplication.sharedApplication().statusBarStyle = .LightContent
     if (deviceManager == nil) {
       deviceManager = DeviceManager()
+    }
+    if authController == nil {
+      authController = AuthController()
     }
     if let options = launchOptions {
       if var centralManagerIdentifiers: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {

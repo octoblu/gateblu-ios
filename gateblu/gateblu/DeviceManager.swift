@@ -20,8 +20,6 @@ class DeviceManager: NSObject {
   
   var devices = [Device]()
   var deviceManagerView : DeviceManagerView!
-  var uuid: String?
-  var token: String?
   
   var connecting = false
   
@@ -37,8 +35,18 @@ class DeviceManager: NSObject {
   }
   
   func startGateblu(){
+    let authController = ControllerManager().getAuthController()
+    if !authController.isAuthenticated() {
+      authController.register(startDeviceManagerView)
+      return
+    }
+    authController.setFromDefaults()
+    startDeviceManagerView()
+  }
+  
+  func startDeviceManagerView(){
+    println("Starting Device Manager View")
     self.deviceManagerView = DeviceManagerView()
-    self.setUuidAndToken_test()
     self.deviceManagerView.startWebView()
   }
   
@@ -48,24 +56,6 @@ class DeviceManager: NSObject {
   
   func setOnDevicesChange(deviceChange: () -> ()) {
     self.deviceChange = deviceChange
-  }
-  
-  func setUuidAndToken_test(){
-    self.uuid = "eaed33d7-c723-47dd-9f9a-e70fb45b55d8"
-    self.token = "588e19e90143c8ecf990c0c843f3a811a829dea4"
-  }
-  
-  func setUuidAndToken() {
-    let userDefaults = NSUserDefaults.standardUserDefaults()
-    self.uuid = userDefaults.stringForKey("uuid")
-    self.token = userDefaults.stringForKey("token")
-    
-    if uuid == nil || token == nil {
-      println("No UUID and/or Token")
-      return
-    }
-    
-    println("UUID: \(uuid!) Token: \(token!)")
   }
   
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
@@ -93,6 +83,7 @@ class DeviceManager: NSObject {
       self.addDevice(device)
     case "ready":
       println("[Gateblu Ready]")
+      updateDevices()
     default:
       println("I can't even: \(action)")
     }

@@ -7,14 +7,12 @@
 //
 
 import Foundation
-import SIOSocket
 import AFNetworking
 
 class Meshblu {
   
   let MESHBLU_URL = "https://meshblu.octoblu.com"
   let MESHBLU_PORT = 443
-  var socket : SIOSocket!
   var uuid : String? = "uuid"
   var token : String? = "token"
   
@@ -24,48 +22,10 @@ class Meshblu {
     self.token = token
   }
   
-  func connect() {
-    println("connecting to \(MESHBLU_URL):\(MESHBLU_PORT)")
-    SIOSocket.socketWithHost("\(MESHBLU_URL):\(MESHBLU_PORT)") { (socket: SIOSocket!) in
-      NSLog("Socket Connected")
-      self.socket = socket
-      
-      var identityMessage = Dictionary<String, AnyObject>()
-      identityMessage["uuid"] = self.uuid
-      identityMessage["token"] = self.token
-//      identityMessage["socketid"] = self.socket.
-      socket.emit("identity", args: [identityMessage])
-      
-      self.socket.on("identify", callback: self.identify);
-    }
-  }
-  
   func identify(message : [AnyObject]!) {
     println("Message \(message)")
   }
 
-  func goOnline(){
-    let parameters = [
-      "online" : "true",
-      "uuid" : self.uuid!,
-      "token" : self.token!
-    ]
-    self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
-      println("Houston going online")
-    })
-  }
-  
-  func goOffline(){
-    let parameters = [
-      "online" : "false",
-      "uuid" : self.uuid!,
-      "token" : self.token!
-    ]
-    self.makeRequest("PUT", path: "/devices/\(self.uuid!)", parameters: parameters, onResponse: { (response: AnyObject?) in
-      println("Houston going offline")
-    })
-  }
-  
   func register(onSuccess: (uuid: String, token: String) -> ()){
     var parameters = Dictionary<String, AnyObject>()
     parameters["type"] = "device:gateblu:ios"
@@ -84,7 +44,7 @@ class Meshblu {
   }
 
   func whoami(onSuccess : (device: Dictionary<String, AnyObject>?) -> ()){
-    println("Requesting device object from God")
+    println("Meshblu WHOAMI")
     self.makeRequest("GET", path: "/devices/\(self.uuid!)", parameters: [], onResponse: { (response : AnyObject?) in
       if response == nil {
         println("WHOAMI? response invalid")
@@ -110,7 +70,6 @@ class Meshblu {
     })
   }
 
-  
   func makeRequest(type: String, path : String, parameters : AnyObject, onResponse: (AnyObject?) -> ()){
     let manager :AFHTTPRequestOperationManager = AFHTTPRequestOperationManager()
     let url :String = self.MESHBLU_URL + path
@@ -130,8 +89,8 @@ class Meshblu {
     }
     
     // Set Headers
-    manager.requestSerializer.setValue(self.uuid, forHTTPHeaderField: "skynet_auth_uuid")
-    manager.requestSerializer.setValue(self.token, forHTTPHeaderField: "skynet_auth_token")
+    manager.requestSerializer.setValue(self.uuid, forHTTPHeaderField: "meshblu_auth_uuid")
+    manager.requestSerializer.setValue(self.token, forHTTPHeaderField: "meshblu_auth_token")
     switch type {
     case "GET":
       manager.GET(url, parameters: parameters, success: requestSuccess, failure: requestFailure)

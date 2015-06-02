@@ -28,4 +28,8 @@ class ControllerManager: NSObject {
     return appDelegate.deviceManager!
   }
   
+  func getAuthController() -> AuthController {
+    return appDelegate.authController!
+  }
+  
 }

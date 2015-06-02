@@ -96,17 +96,4 @@ class Device {
     self.webViewController.wakeIfNotRecentlyAwoken()
   }
   
-  class func fromJSONArray(devicesJSON: [JSON]) -> [Device] {
-    return devicesJSON.map({ self.fromJSON($0) })
-  }
-  
-  class func fromJSON(deviceJSON: JSON) -> Device {
-    return Device(
-      uuid: deviceJSON["uuid"].stringValue,
-      token: deviceJSON["token"].stringValue,
-      online: deviceJSON["online"].boolValue,
-      name: deviceJSON["name"].string,
-      type: deviceJSON["type"].string,
-      connector: deviceJSON["connector"].string)
-  }
 }

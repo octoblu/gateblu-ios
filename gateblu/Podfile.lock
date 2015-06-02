@@ -20,22 +20,22 @@ PODS:
   - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - DZNEmptyDataSet (1.5.2)
   - PocketSocket (0.6.4)
-  - SIOSocket (0.2.0)
   - SVProgressHUD (HEAD based on 1.1.3)
   - SwiftyJSON (2.2.0)
 
 DEPENDENCIES:
   - AFNetworking
+  - DZNEmptyDataSet
   - PocketSocket
-  - SIOSocket
   - SVProgressHUD (HEAD)
   - SwiftyJSON
 
 SPEC CHECKSUMS:
   AFNetworking: 96ac9bf3eda33582701cb1fcc5b896aa1e20311e
+  DZNEmptyDataSet: 741da409081a4bf707c949c964623a6ad1799772
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
-  SIOSocket: 2facc0bd02ae72d98c223634a46dd8ebdf9be321
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyJSON: 0b3e6c07af17ff745e77e8e9984097b55c956e5c
 

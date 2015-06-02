@@ -32,10 +32,10 @@ class DeviceManagerView: NSObject {
   }
   
   func getGatebluHTML() -> String {
-    let deviceManager = controllerManager.getDeviceManager()
+    let authController = controllerManager.getAuthController()
     let values = [
-      "uuid": deviceManager.uuid!,
-      "token": deviceManager.token!
+      "uuid": authController.uuid!,
+      "token": authController.token!
     ]
     let html = Template.getTemplateFromBundle("gateblu", replaceValues: values)
     return html

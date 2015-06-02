@@ -9,8 +9,9 @@
 import Foundation
 import UIKit
 import SVProgressHUD
+import DZNEmptyDataSet
 
-class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, DZNEmptyDataSetSource, DZNEmptyDataSetDelegate {
   
   var controllerManager = ControllerManager()
   var deviceManager : DeviceManager!
@@ -19,9 +20,13 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   @IBOutlet var uuidView: UIView?
   private let reuseIdentifier = "DeviceCell"
   
+  var loading = true
+  
   override func viewDidLoad() {
     self.deviceManager = controllerManager.getDeviceManager()
     super.viewDidLoad()
+    self.deviceCollectionView!.emptyDataSetSource = self
+    self.deviceCollectionView!.emptyDataSetDelegate = self
     self.startDeviceManager()
   }
   
@@ -32,8 +37,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func setUuidLabel() {
-    let deviceManager = controllerManager.getDeviceManager()
-    self.uuidLabel!.text = deviceManager.uuid
+    let authController = controllerManager.getAuthController()
+    self.uuidLabel!.text = authController.uuid
   }
   
   func startDeviceManager() {
@@ -41,6 +46,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     deviceManager.start()
     println("started device manager")
     deviceManager.setOnDevicesChange({() -> () in
+      self.loading = false
       self.setUuidLabel()
       self.deviceCollectionView!.reloadData()
       println("Devices changed!")
@@ -91,4 +97,17 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
     return cell
   }
   
+  
+  func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
+    return NSAttributedString(string: "No Devices")
+  }
+  
+  func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
+    let robotNumber = arc4random_uniform(9) + 1;
+    return UIImage(named: "robot\(robotNumber).png")
+  }
+  
+  func emptyDataSetShouldDisplay(scrollView: UIScrollView!) -> Bool {
+    return !loading
+  }
 }

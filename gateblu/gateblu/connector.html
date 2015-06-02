@@ -21,10 +21,18 @@
          token:"{{token}}"
        });
        
-       if(connector && typeof connector.on === 'function' ){
+       if(!connector){
+         return;
+       }
+       
+       if(typeof connector.on === 'function' ){
          connector.on("config", function(device){
             window.webkit.messageHandlers.deviceConfig.postMessage({ body: device });
          });
+       }
+       
+       if(typeof connector.run === 'function'){
+          connector.run()
        }
 
        window.connector = connector;
