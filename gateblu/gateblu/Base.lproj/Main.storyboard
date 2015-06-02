@@ -26,7 +26,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="..." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="trX-e3-dz6">
                                         <rect key="frame" x="0.0" y="14" width="600" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -54,7 +54,7 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="486"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="9nq-o8-WKN">
-                                    <size key="itemSize" width="150" height="170"/>
+                                    <size key="itemSize" width="125" height="145"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="10" minY="10" maxX="10" maxY="10"/>
@@ -64,22 +64,27 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="150" height="170"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="145"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W52-71-a8h">
-                                                    <rect key="frame" x="0.0" y="133" width="150" height="29"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <rect key="frame" x="0.0" y="124" width="125" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <webView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-en-Gk2">
-                                                    <rect key="frame" x="8" y="8" width="135" height="125"/>
+                                                <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KJa-en-Gk2">
+                                                    <rect key="frame" x="8" y="8" width="110" height="108"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="125" id="4Pe-jB-mHm"/>
-                                                        <constraint firstAttribute="width" constant="125" id="9ug-u8-9pY"/>
+                                                        <constraint firstAttribute="height" constant="108" id="4Pe-jB-mHm"/>
+                                                        <constraint firstAttribute="width" constant="108" id="9ug-u8-9pY"/>
                                                     </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="9ug-u8-9pY"/>
+                                                        </mask>
+                                                    </variation>
                                                 </webView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -90,8 +95,8 @@
                                             <constraint firstItem="W52-71-a8h" firstAttribute="leading" secondItem="WSX-R6-7fc" secondAttribute="leadingMargin" constant="-8" id="Xwu-Kr-waS"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="W52-71-a8h" secondAttribute="trailing" constant="-8" id="gvn-oD-mHD"/>
                                             <constraint firstItem="KJa-en-Gk2" firstAttribute="top" secondItem="WSX-R6-7fc" secondAttribute="topMargin" id="jXJ-D5-ecE"/>
-                                            <constraint firstItem="W52-71-a8h" firstAttribute="top" secondItem="KJa-en-Gk2" secondAttribute="bottom" id="nEs-IY-Uxu"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="W52-71-a8h" secondAttribute="bottom" id="zgj-Jq-j66"/>
+                                            <constraint firstItem="W52-71-a8h" firstAttribute="top" secondItem="KJa-en-Gk2" secondAttribute="bottom" constant="8" id="nEs-IY-Uxu"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="W52-71-a8h" secondAttribute="bottom" constant="-8" id="zgj-Jq-j66"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="label" destination="W52-71-a8h" id="9Pz-B5-PXS"/>
