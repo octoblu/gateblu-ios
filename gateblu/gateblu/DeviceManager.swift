@@ -152,6 +152,15 @@ class DeviceManager: NSObject {
     }
   }
   
+  func updateDeviceNameByUuid(uuid: String, name: String?){
+    for device in self.devices {
+      if device.uuid == uuid {
+        device.setName(name)
+      }
+    }
+    self.updateDevices()
+  }
+  
   func deviceExists(device : JSON, completionHandler: (JSON?, NSError?) -> ()){
     let uuid = device["uuid"].stringValue
     let token = device["token"].stringValue

@@ -27,7 +27,7 @@
        
        if(typeof connector.on === 'function' ){
          connector.on("config", function(device){
-            window.webkit.messageHandlers.deviceConfig.postMessage({ body: device });
+            window.webkit.messageHandlers.deviceConfig.postMessage({ device: device });
          });
        }
        

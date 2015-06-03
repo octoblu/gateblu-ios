@@ -53,6 +53,14 @@ class Device {
     self.start()
   }
   
+  func setName(name:String?){
+    if name == nil || name == "" {
+      self.name = "Unkown Name"
+    }else{
+      self.name = name
+    }
+  }
+  
   func setDefaults(){
     if self.name == nil {
       self.name = self.connector

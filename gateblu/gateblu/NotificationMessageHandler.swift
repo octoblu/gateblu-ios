@@ -16,6 +16,10 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
     switch name {
       case "deviceConfig":
         println("ONCONFIG: \(message.body)")
+        let responseObject = message.body as! Dictionary<String, AnyObject>
+        if let device: AnyObject = responseObject["device"] {
+          self.updateDeviceName(device as! Dictionary<String, AnyObject>)
+        }
       case "managerConfig":
         println("MANAGER_DEBUG: \(message.body)")
       case "connectorNotification":
@@ -23,5 +27,12 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
       default:
         println("SOME_DEBUG: \(message.body)")
     }
+  }
+  
+  func updateDeviceName(deviceDictionary: Dictionary<String, AnyObject>){
+    let deviceManager = ControllerManager().getDeviceManager()
+    let uuid = deviceDictionary["uuid"] as! String
+    let name = deviceDictionary["name"] as! String?
+    deviceManager.updateDeviceNameByUuid(uuid, name: name)
   }
 }
