@@ -27,6 +27,7 @@ class AuthController : NSObject {
   
   func setFromDefaults() {
     self.setUuidAndToken(userDefaults.stringForKey("uuid")!, token: userDefaults.stringForKey("token")!)
+    println("UUID \(uuid) & Token \(token)")
   }
   
   func register(onSuccess: () -> ()){
