@@ -24,15 +24,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   @IBAction func resetGateblu(sender: UIButton){
     var alert = UIAlertController(title: "Reset Gateblu", message: "Are you sure you want to reset this gateblu?", preferredStyle: UIAlertControllerStyle.Alert)
     let alertAction = UIAlertAction(title: "Reset", style: UIAlertActionStyle.Destructive, handler: { action in
-      switch action.style{
-      case .Default:
-        println("default")
-      case .Cancel:
-        println("cancel")
-      case .Destructive:
-        println("reset gateblu")
-        self.resetGatebluNow()
-      }
+      println("reset gateblu")
+      self.resetGatebluNow()
     })
     alert.addAction(alertAction)
     let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil)
@@ -61,9 +54,15 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, UICollectio
   }
   
   func resetGatebluNow(){
+    SVProgressHUD.showWithStatus("Resetting...")
+    self.loading = true
+    self.deviceCollectionView!.reloadData()
     self.deviceManager.murder()
     let authController = ControllerManager().getAuthController()
     authController.reset()
+    authController.register({
+      self.startDeviceManager()
+    })
   }
   
   func startDeviceManager() {
