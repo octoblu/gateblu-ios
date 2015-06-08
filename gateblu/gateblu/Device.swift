@@ -17,17 +17,19 @@ class Device {
   var online:Bool
   var type:String?
   var connector:String?
+  var logo:String?
   var webViewController:DeviceViewController!
   let notSoSmartRobots : [String] = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
   let soSmartDevices : [String] = ["blink1", "bean", "hue", "generic"]
   
-  init(uuid: String, token: String, online: Bool, name: String?, type: String?, connector: String?) {
+  init(uuid: String, token: String, online: Bool, name: String?, type: String?, connector: String?, logo: String?) {
     self.uuid = uuid
     self.token = token
     self.name = name
     self.type = type
     self.online = online
     self.connector = connector
+    self.logo = logo
     self.setDefaults()
     self.webViewController = DeviceViewController(self)
   }
@@ -39,6 +41,7 @@ class Device {
     self.name = json["name"].string
     self.type = json["type"].string
     self.connector = json["connector"].string
+    self.logo = json["logo"].string
     self.setDefaults()
     self.webViewController = DeviceViewController(self)
   }
@@ -68,6 +71,9 @@ class Device {
     if self.connector == nil {
       self.connector = ""
     }
+    if self.logo == nil {
+      self.logo = getRemoteImageUrl()
+    }
   }
   
   func start() {
@@ -92,6 +98,9 @@ class Device {
   }
   
   func getRemoteImageUrl() -> String {
+    if self.logo != nil {
+      return self.logo!
+    }
     let parsedType = split(self.type!) {$0 == ":"}
     let folder = parsedType[0]
     let file = parsedType[1]

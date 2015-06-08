@@ -33,6 +33,9 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
     let deviceManager = ControllerManager().getDeviceManager()
     let uuid = deviceDictionary["uuid"] as! String
     let name = deviceDictionary["name"] as! String?
-    deviceManager.updateDeviceNameByUuid(uuid, name: name)
+    let type = deviceDictionary["type"] as! String?
+    let logo = deviceDictionary["logo"] as! String?
+    let online = deviceDictionary["online"] as! Bool
+    deviceManager.updateDeviceByUuid(uuid, name: name, logo: logo, type: type, online: online)
   }
 }

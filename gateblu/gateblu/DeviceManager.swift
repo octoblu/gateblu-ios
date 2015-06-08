@@ -152,10 +152,13 @@ class DeviceManager: NSObject {
     }
   }
   
-  func updateDeviceNameByUuid(uuid: String, name: String?){
+  func updateDeviceByUuid(uuid: String, name: String?, logo: String?, type: String?, online: Bool){
     for device in self.devices {
       if device.uuid == uuid {
         device.setName(name)
+        device.logo = logo
+        device.online = online
+        device.type = type
       }
     }
     self.updateDevices()
