@@ -4,6 +4,14 @@
     <title></title>
   </head>
   <body style="background-color: white;">
-    <img src="{{imageUrl}}" style="width:100%; height: 100%;">
+    <img id="image-url" style="width:100%; height: 100%;">
+    <script>
+      (function(global){
+       global.updateImage = function(imageUrl){
+          console.log('updating logo', imageUrl);
+          document.getElementById('image-url').src = imageUrl;
+       };
+      })(window);
+    </script>
   </body>
 </html>

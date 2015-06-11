@@ -219,7 +219,6 @@
 		9A0C95851A41F77200236CFC /* gateblu */ = {
 			isa = PBXGroup;
 			children = (
-				D045A1B71B1FB42700C93452 /* gateblu-info.plist */,
 				9A0C95881A41F77200236CFC /* AppDelegate.swift */,
 				D0A02D1F1B1E485A0033BFCA /* AuthController.swift */,
 				06A6F7B81B1779AE004036A0 /* ControllerManager.swift */,
@@ -231,6 +230,7 @@
 				06ED1DBC1A5B02AD001A232D /* DeviceManagerView.swift */,
 				BB50857F1A44DDF800233B1B /* DeviceViewController.swift */,
 				BB5085811A44DE1500233B1B /* Extensions.swift */,
+				D045A1B71B1FB42700C93452 /* gateblu-info.plist */,
 				BB5085791A44A1E500233B1B /* GatebluService.swift */,
 				06ED1DC01A5B0FEE001A232D /* GatebluWebsocketServer.swift */,
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,

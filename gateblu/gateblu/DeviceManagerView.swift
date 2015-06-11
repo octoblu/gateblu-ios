@@ -22,13 +22,17 @@ class DeviceManagerView: NSObject {
   func startWebView() {
     let controller = controllerManager.getViewController()
     let parentView = controller.view as UIView
-  
+    
     let fileString = getGatebluHTML()
     
     self.view.loadHTMLString(fileString, baseURL: NSURL(fileURLWithPath:"http://app.octoblu.com"))
     println("DeviceManager webview")
   
     parentView.addSubview(self.view)
+  }
+  
+  func stopWebView(){
+    self.view.removeFromSuperview()
   }
   
   func getGatebluHTML() -> String {

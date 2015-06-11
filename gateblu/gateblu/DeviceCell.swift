@@ -9,7 +9,18 @@
 import Foundation
 import UIKit
 
-class DeviceCell: UICollectionViewCell {
+class DeviceCell: UICollectionViewCell, UIWebViewDelegate {
   @IBOutlet weak var label: UILabel?
   @IBOutlet weak var webView: UIWebView?
+  var device: Device?
+
+  func webViewDidFinishLoad(webView: UIWebView) {
+    let imageUrl = device?.getRemoteImageUrl()
+    if imageUrl == nil {
+      return;
+    }
+    println("loading image now \(imageUrl!)");
+    self.webView!.stringByEvaluatingJavaScriptFromString("window.updateImage('\(imageUrl!)')");
+  }
+  
 }

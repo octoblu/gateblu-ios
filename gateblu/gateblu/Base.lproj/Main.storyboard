@@ -74,6 +74,9 @@
                                                             <exclude reference="9ug-u8-9pY"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="WSX-R6-7fc" id="UqT-hM-gsY"/>
+                                                    </connections>
                                                 </webView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -107,10 +110,16 @@
                                 </textAttributes>
                                 <items>
                                     <navigationItem title="Gateblu" id="tRB-6R-t9O">
-                                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="Ztc-rz-btf">
+                                        <barButtonItem key="leftBarButtonItem" systemItem="pause" id="uGQ-bf-gED">
                                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <connections>
-                                                <action selector="resetGateblu:" destination="k46-D6-QxP" id="Pkn-cy-B8h"/>
+                                                <action selector="startOrStopGateblu:" destination="k46-D6-QxP" id="z9G-4V-Qfb"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="action" id="75J-PN-0jN">
+                                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <connections>
+                                                <action selector="createActionMenu:" destination="k46-D6-QxP" id="6wk-n0-Jeq"/>
                                             </connections>
                                         </barButtonItem>
                                     </navigationItem>
@@ -136,6 +145,8 @@
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="deviceCollectionView" destination="ahp-Om-pIu" id="olJ-Oa-LUq"/>
+                        <outlet property="navigationBar" destination="BGS-OD-81a" id="kBa-VO-9c9"/>
+                        <outlet property="stopAndStart" destination="uGQ-bf-gED" id="iKh-Tn-3ge"/>
                         <outlet property="uuidLabel" destination="trX-e3-dz6" id="eYB-Co-w6a"/>
                         <outlet property="uuidView" destination="kIt-Pj-txS" id="hAa-MC-Gqf"/>
                     </connections>

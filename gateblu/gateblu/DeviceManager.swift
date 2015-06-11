@@ -20,7 +20,7 @@ class DeviceManager: NSObject {
   
   var devices = [Device]()
   var deviceManagerView : DeviceManagerView!
-  
+  var stopped = false
   var connecting = false
   
   override init() {
@@ -35,6 +35,7 @@ class DeviceManager: NSObject {
   }
   
   func startGateblu(){
+    self.stopped = false;
     let authController = ControllerManager().getAuthController()
     if !authController.isAuthenticated() {
       authController.register(startDeviceManagerView)
@@ -42,6 +43,15 @@ class DeviceManager: NSObject {
     }
     authController.setFromDefaults()
     startDeviceManagerView()
+  }
+  
+  func stopGateblu(){
+    self.stopped = true
+    self.murder()
+    self.deviceManagerView.stopWebView()
+    if self.deviceChange != nil {
+      self.deviceChange!()
+    }
   }
   
   func startDeviceManagerView(){
