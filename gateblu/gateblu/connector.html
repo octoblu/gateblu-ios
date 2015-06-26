@@ -8,7 +8,7 @@
       };
       console.log = console.error;
       window.onerror = function (errorMsg, url, lineNumber) {
-        console.log("Error occured: " + errorMsg + " on line number: " + lineNumber + " in " + url); //or any message
+        console.log("Error occured: " + JSON.stringify(arguments)); //or any message
         return false;
       };
     </script>
@@ -32,7 +32,10 @@
        }
        
        if(typeof connector.run === 'function'){
+       setTimeout(function(){
+         debugger;
           connector.run()
+        }, 50000)
        }
 
        window.connector = connector;

@@ -71,7 +71,7 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
     func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
         let data:JSON = [
             "type": "connect",
-            "peripheralUuid": peripheral.identifier.UUIDString
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString
         ]
         self.emit(peripheral.identifier.UUIDString, data.rawString()!)
     }
@@ -80,17 +80,17 @@ class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
         println("Discovered \(peripheral.identifier)")
         var peripheralEmit = {
             (message:String) in
-            self.emit(peripheral.identifier.UUIDString, message)
+            self.emit(peripheral.identifier.UUIDString.lowercaseString, message)
         }
-        self.peripherals[peripheral.identifier.UUIDString] = PeripheralService(peripheral: peripheral, onEmit: peripheralEmit)
+        self.peripherals[peripheral.identifier.UUIDString.lowercaseString] = PeripheralService(peripheral: peripheral, onEmit: peripheralEmit)
         
         var uuids = [String]()
         for cbuuid in advertisementData["kCBAdvDataServiceUUIDs"] as! [CBUUID] {
-            uuids.append(cbuuid.UUIDString)
+            uuids.append(cbuuid.UUIDString.lowercaseString)
         }
         
         var data = [String:AnyObject]()
-        data["identifier"] = peripheral.identifier.UUIDString
+        data["identifier"] = peripheral.identifier.UUIDString.lowercaseString
         data["name"] = peripheral.name
         data["services"] = uuids
         onDiscovery(data)

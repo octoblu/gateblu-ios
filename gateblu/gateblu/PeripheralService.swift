@@ -33,11 +33,11 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var services = Array<String>()
         for service in peripheral.services {
             let s = service as! CBService
-            services.append(s.UUID.UUIDString)
+            services.append(s.UUID.UUIDString.lowercaseString)
         }
         let data:JSON = [
             "type": "servicesDiscover",
-            "peripheralUuid": peripheral.identifier.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
             "serviceUuids" : services
         ]
         emit(message: data.rawString()!)
@@ -52,7 +52,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         println("Error: \(error)")
         let data:JSON = [
             "type": "rssiUpdate",
-            "peripheralUuid": peripheral.identifier.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
             "rssi" : peripheral.RSSI
         ]
         emit(message: data.rawString()!)
@@ -61,7 +61,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func peripheral(peripheral:CBPeripheral, didReadRSSI RSSI:NSNumber, error:NSError) {
         let data:JSON = [
             "type": "rssiUpdate",
-            "peripheralUuid": peripheral.identifier.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
             "rssi" : RSSI
         ]
         emit(message: data.rawString()!)
@@ -70,7 +70,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func discoverCharacteristics(serviceUuid: String, characteristicUuids: Array<String>) {
         var foundService:CBService!
         for service in peripheral.services as! Array<CBService> {
-            if service.UUID.UUIDString == serviceUuid.derosenthal() {
+            if service.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
                 foundService = service
             }
         }
@@ -103,7 +103,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
             }
             
             let ddata = [
-                "uuid":c.UUID.UUIDString,
+                "uuid":c.UUID.UUIDString.lowercaseString,
                 "properties": properties
             ]
             characteristics.append(ddata);
@@ -111,8 +111,8 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         
         var data:JSON = [
             "type": "characteristicsDiscover",
-            "peripheralUuid": peripheral.identifier.UUIDString,
-            "serviceUuid" : service.UUID.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
+            "serviceUuid" : service.UUID.UUIDString.lowercaseString,
             "characteristics": characteristics
         ]
         emit(message: data.rawString()!)
@@ -123,7 +123,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as! CBService
-            if s.UUID.UUIDString == serviceUuid.derosenthal() {
+            if s.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
                 foundService = s
             }
         }
@@ -131,7 +131,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as! CBCharacteristic
-            if c.UUID.UUIDString == characteristicUuid.derosenthal() {
+            if c.UUID.UUIDString.lowercaseString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }
         }
@@ -143,7 +143,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as! CBService
-            if s.UUID.UUIDString == serviceUuid.derosenthal() {
+            if s.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
                 foundService = s
             }
         }
@@ -151,7 +151,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as! CBCharacteristic
-            if c.UUID.UUIDString == characteristicUuid.derosenthal() {
+            if c.UUID.UUIDString.lowercaseString == characteristicUuid.derosenthal() {
                 foundCharacteristic = c
             }
         }
@@ -160,9 +160,9 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         
         var data:JSON = [
             "type": "notify",
-            "peripheralUuid": peripheral.identifier.UUIDString,
-            "serviceUuid": foundService.UUID.UUIDString,
-            "characteristicUuid": foundCharacteristic.UUID.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
+            "serviceUuid": foundService.UUID.UUIDString.lowercaseString,
+            "characteristicUuid": foundCharacteristic.UUID.UUIDString.lowercaseString,
             "state": notify
         ]
         emit(message: data.rawString()!)
@@ -173,15 +173,15 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral!, didUpdateValueForCharacteristic characteristic: CBCharacteristic!, error: NSError!) {
-        println("Peripheral UUID \(peripheral.identifier.UUIDString)")
-        println("Service UUID: \(characteristic.service.UUID.UUIDString)")
-        println("Characteristic UUID: \(characteristic.UUID.UUIDString)")
+        println("Peripheral UUID \(peripheral.identifier.UUIDString.lowercaseString)")
+        println("Service UUID: \(characteristic.service.UUID.UUIDString.lowercaseString)")
+        println("Characteristic UUID: \(characteristic.UUID.UUIDString.lowercaseString)")
         println("Charactistic HexString \(characteristic.value.hexString())")
         var data:JSON = [
             "type": "read",
-            "peripheralUuid": peripheral.identifier.UUIDString,
-            "serviceUuid": characteristic.service.UUID.UUIDString,
-            "characteristicUuid": characteristic.UUID.UUIDString,
+            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString,
+            "serviceUuid": characteristic.service.UUID.UUIDString.lowercaseString,
+            "characteristicUuid": characteristic.UUID.UUIDString.lowercaseString,
             "data": characteristic.value.hexString(),
             "isNotification": true
         ]

@@ -8,6 +8,7 @@
 
 import Foundation
 import PocketSocket
+import SwiftyJSON
 
 class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
   var server:PSWebSocketServer!
@@ -52,6 +53,12 @@ class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
   
   func server(server:PSWebSocketServer!, webSocketDidOpen webSocket:PSWebSocket!) {
     println("NobleWebsocketServer websocket did open \(webSocket)")
+    println("SENDING STATE!!!!!!! AHHHH!!!")
+    let data:JSON = [
+      "type": "stateChange",
+      "state": "poweredOn"
+    ]
+    webSocket.send(data.rawString()!)
   }
   
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didCloseWithCode code:NSInteger, reason:String, wasClean:Bool) {

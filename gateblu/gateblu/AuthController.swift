@@ -27,6 +27,7 @@ class AuthController : NSObject {
   
   func setFromDefaults() {
     self.setUuidAndToken(userDefaults.stringForKey("uuid")!, token: userDefaults.stringForKey("token")!)
+//    self.setUuidAndToken_test()
     println("UUID \(uuid) & Token \(token)")
   }
   
@@ -40,8 +41,8 @@ class AuthController : NSObject {
   }
   
   func setUuidAndToken_test(){
-    self.uuid = "eaed33d7-c723-47dd-9f9a-e70fb45b55d8"
-    self.token = "588e19e90143c8ecf990c0c843f3a811a829dea4"
+    self.uuid = "930e0016-76d6-4282-9ede-b555c8e74c02"
+    self.token = "30c718cb326a636f28869081fb15c85c9d994bfb"
   }
   
   func setUuidAndToken(uuid: String, token: String) {
