@@ -53,7 +53,6 @@ class NobleWebsocketServer: NSObject, PSWebSocketServerDelegate {
   
   func server(server:PSWebSocketServer!, webSocketDidOpen webSocket:PSWebSocket!) {
     println("NobleWebsocketServer websocket did open \(webSocket)")
-    println("SENDING STATE!!!!!!! AHHHH!!!")
     let data:JSON = [
       "type": "stateChange",
       "state": "poweredOn"

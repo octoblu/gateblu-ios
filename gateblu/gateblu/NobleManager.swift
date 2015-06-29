@@ -45,14 +45,14 @@ class NobleManager: NSObject {
     let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
     let jsonResult = JSON(data: data)
     let action = jsonResult["action"].stringValue
-    var peripheralUuid:String!
+    var peripheralUuid:String?
     if (jsonResult["peripheralUuid"] != nil) {
-      peripheralUuid = jsonResult["peripheralUuid"].stringValue
+      peripheralUuid = jsonResult["peripheralUuid"].stringValue.lowercaseString
     }
     
     var peripheralService:PeripheralService!
     if (peripheralUuid != nil) {
-      peripheralService = deviceDiscoverer.peripherals[peripheralUuid]
+      peripheralService = deviceDiscoverer.peripherals[peripheralUuid!]
     }
     switch action {
     case "startScanning":
@@ -81,8 +81,8 @@ class NobleManager: NSObject {
       return
       
     case "connect":
-      self.connectedSockets[peripheralUuid] = webSocket
-      deviceDiscoverer.connect(peripheralUuid)
+      self.connectedSockets[peripheralUuid!] = webSocket
+      deviceDiscoverer.connect(peripheralUuid!)
       return
       
     case "discoverServices":
@@ -98,7 +98,8 @@ class NobleManager: NSObject {
       var uuids = [String]()
       let serviceUuid = jsonResult["serviceUuid"].stringValue
       for uuid in jsonResult["characteristicUuids"].arrayValue {
-        uuids.append(uuid.stringValue)
+        let uuidString = uuid.stringValue.lowercaseString
+        uuids.append(uuidString)
       }
       peripheralService.discoverCharacteristics(serviceUuid, characteristicUuids: uuids)
       return
@@ -108,8 +109,8 @@ class NobleManager: NSObject {
       return
       
     case "write":
-      let serviceUuid = jsonResult["serviceUuid"].stringValue
-      let characteristicUuid = jsonResult["characteristicUuid"].stringValue
+      let serviceUuid = jsonResult["serviceUuid"].stringValue.lowercaseString
+      let characteristicUuid = jsonResult["characteristicUuid"].stringValue.lowercaseString
       
       let dataStr = jsonResult["data"].stringValue
       let ddata = dataStr.dataFromHexadecimalString()
@@ -118,7 +119,7 @@ class NobleManager: NSObject {
       
     case "notify":
       let serviceUuid = jsonResult["serviceUuid"].stringValue
-      let characteristicUuid = jsonResult["characteristicUuid"].stringValue
+      let characteristicUuid = jsonResult["characteristicUuid"].stringValue.lowercaseString
       peripheralService.notify(serviceUuid, characteristicUuid: characteristicUuid, notify: jsonResult["notify"].boolValue)
       return
       

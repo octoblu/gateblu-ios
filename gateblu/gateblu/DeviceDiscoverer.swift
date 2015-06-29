@@ -11,113 +11,117 @@ import CoreBluetooth
 import SwiftyJSON
 
 class DeviceDiscoverer: NSObject, CBCentralManagerDelegate {
-    var blueToothReady = false
-    var centralManager:CBCentralManager!
-    let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
-    var onDiscovery:(([String:AnyObject]) -> ())!
-    var peripherals = [String:PeripheralService]()
-    var emit:((String,String) -> ())!
+  var blueToothReady = false
+  var centralManager:CBCentralManager!
+  let centralQueue = dispatch_queue_create("com.octoblu.gateblu.main", DISPATCH_QUEUE_SERIAL)
+  var onDiscovery:(([String:AnyObject]) -> ())!
+  var peripherals = [String:PeripheralService]()
+  var emit:((String,String) -> ())!
 
-    init(onDiscovery:([String:AnyObject]) -> (), onEmit:(String,String) -> ()) {
-        super.init()
-        self.onDiscovery = onDiscovery
-        self.emit = onEmit
-        self.centralManager = CBCentralManager(delegate: self, queue: self.centralQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
-    }
-    
-    func scanForServices(uuids:[String]) {
-        var cbuuids:[CBUUID] = []
-        for uuid in uuids {
-            cbuuids.append(CBUUID(string: uuid))
-        }
-        println("Scanning for services, \(uuids)")
-        
-        self.centralManager.scanForPeripheralsWithServices(cbuuids, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
-
-    }
-    
-    func stopScanning() {
-        self.centralManager.stopScan()
-    }
-    
-    func connect(uuid:String) {
-        let service:PeripheralService? = self.peripherals[uuid]
-        if (service == nil) {
-            return
-        }
-
-        self.centralManager!.connectPeripheral(service!.peripheral, options: [
-            CBConnectPeripheralOptionNotifyOnConnectionKey: true,
-            CBConnectPeripheralOptionNotifyOnDisconnectionKey: true,
-            CBConnectPeripheralOptionNotifyOnNotificationKey: true
-        ])
-    }
-    
-    func disconnectAll() {
-        var peripherals = self.centralManager.retrieveConnectedPeripheralsWithServices(nil)
-        for peripheral in peripherals as! [CBPeripheral] {
-            self.centralManager.cancelPeripheralConnection(peripheral)
-        }
-    }
-
-    // Protocol
-    
-    func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
-        if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as! [CBPeripheral]! {
-            NSLog("willRestoreState")
-        }
-    }
-    
-    func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
-        let data:JSON = [
-            "type": "connect",
-            "peripheralUuid": peripheral.identifier.UUIDString.lowercaseString
-        ]
-        self.emit(peripheral.identifier.UUIDString, data.rawString()!)
-    }
-    
-    func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
-        println("Discovered \(peripheral.identifier)")
-        var peripheralEmit = {
-            (message:String) in
-            self.emit(peripheral.identifier.UUIDString.lowercaseString, message)
-        }
-        self.peripherals[peripheral.identifier.UUIDString.lowercaseString] = PeripheralService(peripheral: peripheral, onEmit: peripheralEmit)
-        
-        var uuids = [String]()
-        for cbuuid in advertisementData["kCBAdvDataServiceUUIDs"] as! [CBUUID] {
-            uuids.append(cbuuid.UUIDString.lowercaseString)
-        }
-        
-        var data = [String:AnyObject]()
-        data["identifier"] = peripheral.identifier.UUIDString.lowercaseString
-        data["name"] = peripheral.name
-        data["services"] = uuids
-        onDiscovery(data)
-    }
+  init(onDiscovery:([String:AnyObject]) -> (), onEmit:(String,String) -> ()) {
+    super.init()
+    self.onDiscovery = onDiscovery
+    self.emit = onEmit
+    self.centralManager = CBCentralManager(delegate: self, queue: self.centralQueue, options: [CBCentralManagerOptionRestoreIdentifierKey: "Gateblu"])
+  }
   
-    func centralManagerDidUpdateState(central: CBCentralManager!) {
-        println("checking state")
-        switch (central.state) {
-        case .PoweredOff:
-            println("CoreBluetooth BLE hardware is powered off")
-            
-        case .PoweredOn:
-            println("CoreBluetooth BLE hardware is powered on and ready")
-            blueToothReady = true;
-            
-        case .Resetting:
-            println("CoreBluetooth BLE hardware is resetting")
-            
-        case .Unauthorized:
-            println("CoreBluetooth BLE state is unauthorized")
-            
-        case .Unknown:
-            println("CoreBluetooth BLE state is unknown");
-            
-        case .Unsupported:
-            println("CoreBluetooth BLE hardware is unsupported on this platform");
-            
-        }
+  func scanForServices(uuids:[String]) {
+    var cbuuids:[CBUUID] = []
+    for uuid in uuids {
+      let upperUuid = uuid.uppercaseString
+      cbuuids.append(CBUUID(string: upperUuid))
     }
+    println("Scanning for services, \(uuids)")
+    
+    self.centralManager.scanForPeripheralsWithServices(cbuuids, options: [CBCentralManagerScanOptionAllowDuplicatesKey: false])
+  }
+  
+  func stopScanning() {
+    self.centralManager.stopScan()
+  }
+  
+  func connect(uuid:String) {
+    let service:PeripheralService? = self.peripherals[uuid]
+    if (service == nil) {
+      return
+    }
+
+    self.centralManager!.connectPeripheral(service!.peripheral, options: [
+      CBConnectPeripheralOptionNotifyOnConnectionKey: true,
+      CBConnectPeripheralOptionNotifyOnDisconnectionKey: true,
+      CBConnectPeripheralOptionNotifyOnNotificationKey: true
+    ])
+  }
+  
+  func disconnectAll() {
+    var peripherals = self.centralManager.retrieveConnectedPeripheralsWithServices(nil)
+    for peripheral in peripherals as! [CBPeripheral] {
+      self.centralManager.cancelPeripheralConnection(peripheral)
+    }
+  }
+
+  // Protocol
+  
+  func centralManager(central: CBCentralManager!, willRestoreState dict: [NSObject : AnyObject]!) {
+    if let peripherals:[CBPeripheral] = dict[CBCentralManagerRestoredStatePeripheralsKey] as! [CBPeripheral]! {
+      NSLog("willRestoreState")
+    }
+  }
+  
+  func centralManager(central: CBCentralManager!, didConnectPeripheral peripheral: CBPeripheral!) {
+    let peripheralUuid = peripheral.identifier.UUIDString.lowercaseString
+    let data:JSON = [
+      "type": "connect",
+      "peripheralUuid": peripheralUuid
+    ]
+    let dataString = data.rawString()!
+    println("Connect Response \(dataString)")
+    self.emit(peripheralUuid, dataString)
+  }
+  
+  func centralManager(central: CBCentralManager!, didDiscoverPeripheral peripheral: CBPeripheral!, advertisementData: [NSObject : AnyObject]!, RSSI: NSNumber!) {
+    let peripheralUuid = peripheral.identifier.UUIDString.lowercaseString
+    println("Discovered \(peripheralUuid)")
+    var peripheralEmit = {
+        (message:String) in
+      self.emit(peripheralUuid, message)
+    }
+    self.peripherals[peripheralUuid] = PeripheralService(peripheral: peripheral, onEmit: peripheralEmit)
+    
+    var uuids = [String]()
+    for cbuuid in advertisementData["kCBAdvDataServiceUUIDs"] as! [CBUUID] {
+      uuids.append(cbuuid.UUIDString.lowercaseString)
+    }
+    
+    var data = [String:AnyObject]()
+    data["identifier"] = peripheralUuid
+    data["name"] = peripheral.name
+    data["services"] = uuids
+    onDiscovery(data)
+  }
+
+  func centralManagerDidUpdateState(central: CBCentralManager!) {
+    println("checking state")
+    switch (central.state) {
+    case .PoweredOff:
+      println("CoreBluetooth BLE hardware is powered off")
+        
+    case .PoweredOn:
+      println("CoreBluetooth BLE hardware is powered on and ready")
+      blueToothReady = true;
+        
+    case .Resetting:
+      println("CoreBluetooth BLE hardware is resetting")
+        
+    case .Unauthorized:
+      println("CoreBluetooth BLE state is unauthorized")
+        
+    case .Unknown:
+      println("CoreBluetooth BLE state is unknown");
+        
+    case .Unsupported:
+      println("CoreBluetooth BLE hardware is unsupported on this platform");
+        
+    }
+  }
 }
