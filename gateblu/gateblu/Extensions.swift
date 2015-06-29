@@ -10,14 +10,14 @@ import Foundation
 
 extension String {
     
-    func derosenthal() -> String {
-        let regex = NSRegularExpression(pattern: "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", options: nil, error: nil)
-        var muuid = NSMutableString(string: self)
-        if count(self) <= 36 {
-            regex?.replaceMatchesInString(muuid, options: nil, range: NSMakeRange(0, count(self)), withTemplate: "$1-$2-$3-$4-$5")
-        }
-        return NSString(string: muuid).uppercaseString;
-    }
+//    func derosenthal() -> String {
+//        let regex = NSRegularExpression(pattern: "(\\w{8})(\\w{4})(\\w{4})(\\w{4})(\\w{12})", options: nil, error: nil)
+//        var muuid = NSMutableString(string: self)
+//        if count(self) <= 36 {
+//            regex?.replaceMatchesInString(muuid, options: nil, range: NSMakeRange(0, count(self)), withTemplate: "$1-$2-$3-$4-$5")
+//        }
+//        return NSString(string: muuid).uppercaseString;
+//    }
     
     /// Create NSData from hexadecimal string representation
     ///

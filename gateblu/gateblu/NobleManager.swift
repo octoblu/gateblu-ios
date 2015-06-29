@@ -61,7 +61,7 @@ class NobleManager: NSObject {
       }
       var uuids:[String] = []
       for uuid in jsonResult["serviceUuids"].arrayValue {
-        let uuidString = uuid.stringValue.derosenthal().lowercaseString
+        let uuidString = uuid.stringValue.lowercaseString
         uuids.append(uuidString)
         var services:[PSWebSocket]? = self.serviceMap[uuidString]
         if (services == nil) {
@@ -88,7 +88,7 @@ class NobleManager: NSObject {
     case "discoverServices":
       var uuids = [String]()
       for uuid in jsonResult["uuids"].arrayValue {
-        let uuidString = uuid.stringValue.derosenthal().lowercaseString
+        let uuidString = uuid.stringValue.lowercaseString
         uuids.append(uuidString)
       }
       peripheralService.discoverServices(uuids)

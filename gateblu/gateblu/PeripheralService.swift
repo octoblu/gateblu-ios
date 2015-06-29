@@ -70,14 +70,15 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
     func discoverCharacteristics(serviceUuid: String, characteristicUuids: Array<String>) {
         var foundService:CBService!
         for service in peripheral.services as! Array<CBService> {
-            if service.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
+            if service.UUID.UUIDString.lowercaseString == serviceUuid {
                 foundService = service
             }
         }
         
         var cbUuids = Array<CBUUID>()
         for uuid in characteristicUuids {
-            cbUuids.append(CBUUID(string: uuid.derosenthal()))
+            let upUuid = uuid.uppercaseString
+            cbUuids.append(CBUUID(string: upUuid))
         }
         if foundService != nil {
             peripheral.discoverCharacteristics(cbUuids, forService: foundService)
@@ -123,7 +124,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as! CBService
-            if s.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
+            if s.UUID.UUIDString.lowercaseString == serviceUuid.lowercaseString {
                 foundService = s
             }
         }
@@ -131,7 +132,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as! CBCharacteristic
-            if c.UUID.UUIDString.lowercaseString == characteristicUuid.derosenthal() {
+            if c.UUID.UUIDString.lowercaseString == characteristicUuid.lowercaseString {
                 foundCharacteristic = c
             }
         }
@@ -143,7 +144,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundService:CBService!
         for service in peripheral.services {
             let s = service as! CBService
-            if s.UUID.UUIDString.lowercaseString == serviceUuid.derosenthal() {
+            if s.UUID.UUIDString.lowercaseString == serviceUuid.lowercaseString {
                 foundService = s
             }
         }
@@ -151,7 +152,7 @@ class PeripheralService: NSObject, CBPeripheralDelegate {
         var foundCharacteristic:CBCharacteristic!
         for characteristic in foundService.characteristics {
             let c = characteristic as! CBCharacteristic
-            if c.UUID.UUIDString.lowercaseString == characteristicUuid.derosenthal() {
+            if c.UUID.UUIDString.lowercaseString == characteristicUuid.lowercaseString {
                 foundCharacteristic = c
             }
         }
