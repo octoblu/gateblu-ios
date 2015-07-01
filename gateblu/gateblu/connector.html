@@ -32,10 +32,7 @@
        }
        
        if(typeof connector.run === 'function'){
-       setTimeout(function(){
-         debugger;
           connector.run()
-        }, 50000)
        }
 
        window.connector = connector;
