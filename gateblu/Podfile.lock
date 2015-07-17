@@ -23,7 +23,7 @@ PODS:
   - Alamofire (1.2.3)
   - Box (1.2.2)
   - DZNEmptyDataSet (1.6.1)
-  - MeshbluKit (1.1.0):
+  - MeshbluKit (1.2.2):
     - Alamofire (~> 1.2)
     - Result (~> 0.4.3)
     - SwiftyJSON (~> 2.2.0)
@@ -46,7 +46,7 @@ SPEC CHECKSUMS:
   Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
   Box: a92e8aa4c099e6bc0733829665caf9e668ef53b8
   DZNEmptyDataSet: 3d31c27758230f03c71199f8c522bcfa99fba16c
-  MeshbluKit: d5532f12b05061a83e6e5b485c98eb213920b6e0
+  MeshbluKit: 772f2159f066e17e422eff3b117a83da300e3a07
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
   Result: b44f6bc8762bbffaf2c5df58f2c7d12c3496ced8
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
