@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		060ACBDD1B14F41C00ABF932 /* 256x256spiral.png in Resources */ = {isa = PBXBuildFile; fileRef = 060ACBDC1B14F41C00ABF932 /* 256x256spiral.png */; };
-		065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A3E1A5B4850000F2915 /* Meshblu.swift */; };
+		063E964E1B59618A00801E19 /* GatebluDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063E964D1B59618A00801E19 /* GatebluDevice.swift */; };
 		065E6A451A5B4CEF000F2915 /* Async.parallel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A411A5B4CEF000F2915 /* Async.parallel.swift */; };
 		065E6A461A5B4CEF000F2915 /* Async.series.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A421A5B4CEF000F2915 /* Async.series.swift */; };
 		065E6A471A5B4CEF000F2915 /* Async.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065E6A431A5B4CEF000F2915 /* Async.swift */; };
@@ -84,7 +84,7 @@
 
 /* Begin PBXFileReference section */
 		060ACBDC1B14F41C00ABF932 /* 256x256spiral.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 256x256spiral.png; sourceTree = "<group>"; };
-		065E6A3E1A5B4850000F2915 /* Meshblu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meshblu.swift; sourceTree = "<group>"; };
+		063E964D1B59618A00801E19 /* GatebluDevice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GatebluDevice.swift; sourceTree = "<group>"; };
 		065E6A401A5B4CEF000F2915 /* Async.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Async.h; sourceTree = "<group>"; };
 		065E6A411A5B4CEF000F2915 /* Async.parallel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.parallel.swift; sourceTree = "<group>"; };
 		065E6A421A5B4CEF000F2915 /* Async.series.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Async.series.swift; sourceTree = "<group>"; };
@@ -236,11 +236,11 @@
 				9A0C958F1A41F77200236CFC /* Images.xcassets */,
 				BBA5E6E91A5E414900265B34 /* LaunchScreen.xib */,
 				9A0C958C1A41F77200236CFC /* Main.storyboard */,
-				065E6A3E1A5B4850000F2915 /* Meshblu.swift */,
 				06A6F7B61B177650004036A0 /* NobleManager.swift */,
 				BB50857B1A44A25100233B1B /* NobleWebsocketServer.swift */,
 				BBA5E6E51A5E02E300265B34 /* NotificationMessageHandler.swift */,
 				BB50857D1A44A71500233B1B /* PeripheralService.swift */,
+				063E964D1B59618A00801E19 /* GatebluDevice.swift */,
 				9A0C95861A41F77200236CFC /* Supporting Files */,
 				D03B39141B1CF5DD00F8DC04 /* Template.swift */,
 				9A0C958A1A41F77200236CFC /* ViewController.swift */,
@@ -487,8 +487,8 @@
 				BB50857C1A44A25100233B1B /* NobleWebsocketServer.swift in Sources */,
 				BB50857E1A44A71500233B1B /* PeripheralService.swift in Sources */,
 				BBA5E6E81A5E2C2300265B34 /* DeviceCell.swift in Sources */,
-				065E6A3F1A5B4850000F2915 /* Meshblu.swift in Sources */,
 				BB43DA741A57CDD00097026D /* DeviceDiscoverer.swift in Sources */,
+				063E964E1B59618A00801E19 /* GatebluDevice.swift in Sources */,
 				065E6A471A5B4CEF000F2915 /* Async.swift in Sources */,
 				BB43DA921A587EFB0097026D /* DeviceBackgroundService.swift in Sources */,
 			);

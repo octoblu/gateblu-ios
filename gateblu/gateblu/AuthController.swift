@@ -12,6 +12,8 @@ class AuthController : NSObject {
   var uuid : String?
   var token : String?
   var userDefaults: NSUserDefaults
+  var onReady: (() -> ())?
+  var gatebluDevice : GatebluDevice?
   
   override init(){
     userDefaults = NSUserDefaults.standardUserDefaults()
@@ -27,22 +29,41 @@ class AuthController : NSObject {
   
   func setFromDefaults() {
     self.setUuidAndToken(userDefaults.stringForKey("uuid")!, token: userDefaults.stringForKey("token")!)
-//    self.setUuidAndToken_test()
+    if onReady != nil {
+      onReady!()
+    }
     println("UUID \(uuid) & Token \(token)")
   }
   
   func register(onSuccess: () -> ()){
-    let meshblu = Meshblu(uuid: nil, token: nil)
+    let meshblu = getGatebluDevice()
     meshblu.register({ (uuid: String, token: String) -> () in
       println("Registered \(uuid) \(token)")
       self.setUuidAndToken(uuid, token: token)
+      if self.onReady != nil {
+        self.onReady!()
+      }
       onSuccess()
     })
   }
   
-  func setUuidAndToken_test(){
-    self.uuid = "930e0016-76d6-4282-9ede-b555c8e74c02"
-    self.token = "30c718cb326a636f28869081fb15c85c9d994bfb"
+  func onDeviceAuth(onReady: ()->()){
+    self.onReady = onReady
+  }
+  
+  func getGatebluDevice() -> GatebluDevice {
+    if self.gatebluDevice == nil {
+      if !isAuthenticated() {
+        self.gatebluDevice = GatebluDevice(meshbluConfig: [:])
+      } else {
+        let device = [
+          "uuid" : self.uuid!,
+          "token" : self.token!
+        ]
+        self.gatebluDevice = GatebluDevice(meshbluConfig: device)
+      }
+    }
+    return self.gatebluDevice!
   }
   
   func setUuidAndToken(uuid: String, token: String) {

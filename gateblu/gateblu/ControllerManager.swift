@@ -30,6 +30,5 @@ class ControllerManager: NSObject {
   
   func getAuthController() -> AuthController {
     return appDelegate.authController!
-  }
-  
+  }  
 }

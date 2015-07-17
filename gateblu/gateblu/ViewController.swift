@@ -18,6 +18,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   var deviceManager : DeviceManager!
   private let reuseIdentifier = "DeviceCell"
   var loading = true
+  var gatebluOwner : String?
   
   @IBOutlet var deviceCollectionView: UICollectionView?
   @IBOutlet var uuidLabel: UILabel?
@@ -28,7 +29,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     if deviceManager.stopped {
       stopAndStart = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Pause, target: self, action: "startOrStopGateblu:")
       self.loading = true
-      SVProgressHUD.showWithStatus("Starting Gateblu...")
+      self.setStatus("Starting Gateblu...")
       deviceManager.startGateblu()
     } else {
       deviceManager.stopGateblu()
@@ -70,11 +71,57 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     self.deviceCollectionView!.emptyDataSetSource = self
     self.deviceCollectionView!.emptyDataSetDelegate = self
     self.startDeviceManager()
+    self.pageTitleView(nil)
+    self.listOnGatebluReady()
   }
   
   override func viewDidAppear(animated: Bool) {
-    SVProgressHUD.showWithStatus("Starting Gateblu...")
+    self.setStatus("Starting Gateblu...")
     super.viewDidAppear(animated)
+  }
+  
+  func pageTitleView(name: String?) {
+    println("Setting page title \(name)")
+    if name == nil {
+      self.navigationBar?.topItem?.title = "Gateblu"
+      return
+    }
+    
+    self.navigationBar?.topItem?.title = name
+  }
+  
+  func getGatebluDevice(){
+    println("Checking gateblu device")
+    let auth = controllerManager.getAuthController()
+    let meshblu = auth.getGatebluDevice()
+    meshblu.getDevice() {
+      (result) -> () in
+      switch result {
+      case let .Failure(error):
+        println("Failed to get gateblu device")
+      case let .Success(success):
+        let json = success.value
+        self.gatebluOwner = json["owner"].string
+        self.pageTitleView(json["name"].string)
+        self.checkGatebluDeviceOnDelay()
+      }
+    }
+  }
+  
+  func checkGatebluDeviceOnDelay() {
+    if self.gatebluOwner != nil {
+      self.deviceCollectionView!.reloadData()
+      return
+    }
+    NSTimer.scheduledTimerWithTimeInterval(10, target: self, selector: Selector("getGatebluDevice"), userInfo: nil, repeats: false)
+  }
+  
+  func listOnGatebluReady() {
+    let auth = controllerManager.getAuthController()
+    auth.onDeviceAuth({
+      println("On Device Auth")
+      self.getGatebluDevice()
+    })
   }
   
   func resetGateblu(){
@@ -95,7 +142,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func resetGatebluNow(){
-    SVProgressHUD.showWithStatus("Resetting...")
+    self.setStatus("Resetting...")
     self.loading = true
     self.deviceManager.stopGateblu()
     self.deviceCollectionView!.reloadData()
@@ -104,6 +151,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     authController.register({
       self.startDeviceManager()
     })
+  }
+  
+  func setStatus(status: String){
+    SVProgressHUD.showWithStatus(status)
   }
   
   func startDeviceManager() {
@@ -143,7 +194,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    if deviceManager.stopped {
+    if deviceManager.stopped || gatebluOwner == nil {
       return 0
     }
     return deviceManager.devices.count
@@ -154,7 +205,11 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     let device = deviceManager.devices[indexPath.item]
     cell.device = device
-    cell.label!.text = device.name
+    if device.online {
+      cell.label!.text = device.name
+    }else{
+      cell.label!.text = "\(device.name!) (offline)"
+    }
     
     let imageUrl = device.getRemoteImageUrl()
     let values = [
@@ -168,12 +223,33 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     return cell
   }
   
+  func emptyDataSetDidTapButton(scrollView: UIScrollView!) {
+    if gatebluOwner == nil {
+      let auth = controllerManager.getAuthController()
+      let meshblu = auth.getGatebluDevice()
+      meshblu.generateToken(auth.uuid!, onSuccess: {
+        (token: String) in
+        let url = NSURL(string: "https://app.octoblu.com/node-wizard/claim/\(auth.uuid!)/\(token)")
+        UIApplication.sharedApplication().openURL(url!)
+      })
+    }
+  }
   
   func titleForEmptyDataSet(scrollView: UIScrollView!) -> NSAttributedString! {
     if deviceManager.stopped {
       return NSAttributedString(string: "Gateblu Stopped")
     }
+    if gatebluOwner == nil {
+      return nil
+    }
     return NSAttributedString(string: "No Devices")
+  }
+  
+  func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState state: UIControlState) -> NSAttributedString! {
+    if gatebluOwner == nil {
+      return NSAttributedString(string: "Claim Gateblu")
+    }
+    return nil
   }
   
   func imageForEmptyDataSet(scrollView: UIScrollView!) -> UIImage! {
@@ -185,6 +261,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func emptyDataSetShouldDisplay(scrollView: UIScrollView!) -> Bool {
-    return deviceManager.stopped || !loading
+    if deviceManager.stopped {
+      return true
+    }
+    if gatebluOwner == nil {
+      return true
+    }
+    return !loading
   }
 }

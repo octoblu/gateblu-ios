@@ -174,16 +174,6 @@ class DeviceManager: NSObject {
     self.updateDevices()
   }
   
-  func deviceExists(device : JSON, completionHandler: (JSON?, NSError?) -> ()){
-    let uuid = device["uuid"].stringValue
-    let token = device["token"].stringValue
-    let meshblu = Meshblu(uuid: uuid, token: token)
-    meshblu.whoami({ (device: Dictionary<String, AnyObject>?) in
-      let deviceJSON = (device == nil) ? nil : JSON(device!)
-      completionHandler(deviceJSON, nil)
-    })
-  }
-  
   func backgroundDevices() {
     deviceBackgroundService.doUpdate({
       self.wakeDevices()

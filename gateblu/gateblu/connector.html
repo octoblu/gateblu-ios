@@ -8,7 +8,8 @@
       };
       console.log = console.error;
       window.onerror = function (errorMsg, url, lineNumber) {
-        console.log("Error occured: " + JSON.stringify(arguments)); //or any message
+        var values = Object.keys(arguments).map(function(key){return a[key]})
+        console.log("Error occured: " + JSON.stringify(values)); //or any message
         return false;
       };
     </script>
@@ -16,12 +17,18 @@
     <script type="text/javascript" src="http://cdn.octoblu.com/js/{{connector}}/latest/{{connector}}.js"></script>
     <script type="text/javascript">
       (function() {
+       if (typeof Connector !== 'function'){
+         alert("{{connector}} plugin not compatible with mobile");
+         return;
+       }
        var connector = new Connector({
          uuid:"{{uuid}}",
          token:"{{token}}"
        });
        
        if(!connector){
+         alert("{{connector}} plugin is invalid");
+       
          return;
        }
        

@@ -9,6 +9,7 @@ target 'gateblu' do
     pod 'SVProgressHUD', :head
     pod 'SwiftyJSON'
     pod 'DZNEmptyDataSet'
+    pod 'MeshbluKit'
 end
 
 target 'gatebluTests' do
