@@ -32,7 +32,7 @@ public extension Async {
         var globalError: NSError? = nil
         var completedTasks = 0
 
-        for (index, task) in enumerate(tasks) {
+        for (_, task) in tasks.enumerate() {
             task() { (error) in
                 if globalError != nil {
                     return
@@ -63,7 +63,7 @@ public extension Async {
         var globalError: NSError? = nil
         var completedTasks = 0
 
-        for (index, task) in enumerate(tasks) {
+        for (index, task) in tasks.enumerate() {
             task() { (result, error) in
                 if globalError != nil {
                     return
@@ -77,7 +77,7 @@ public extension Async {
                 } else if let result = result {
                     optionalResults[index] = result
                 } else {
-                    println("[Async] task at index \(index) must either return an error or a result")
+                    print("[Async] task at index \(index) must either return an error or a result")
                     fatalError("[Async] neither error nor result returned")
                 }
 

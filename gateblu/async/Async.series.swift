@@ -62,7 +62,7 @@ public extension Async {
                 finalResults.append(result)
                 return self._series(remainingTasks, finalResults: finalResults, completionHandler: completionHandler)
             } else {
-                println("[Async] task at index \(finalResults.count) must either return an error or a result")
+                print("[Async] task at index \(finalResults.count) must either return an error or a result")
                 fatalError("[Async] neither error nor result returned")
             }
         }

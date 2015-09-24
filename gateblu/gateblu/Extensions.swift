@@ -32,16 +32,21 @@ extension String {
       
       // make sure the cleaned up string consists solely of hex digits, and that we have even number of them
       
-      var error: NSError?
-      let regex = NSRegularExpression(pattern: "^[0-9a-f]*$", options: .CaseInsensitive, error: &error)
-      let found = regex?.firstMatchInString(trimmedString, options: nil, range: NSMakeRange(0, count(trimmedString)))
-      if found == nil || found?.range.location == NSNotFound || count(trimmedString) % 2 != 0 {
+      do{
+        let regex = try NSRegularExpression(pattern: "^[0-9a-f]*$", options: .CaseInsensitive)
+        let found = regex.firstMatchInString(trimmedString, options: NSMatchingOptions.Anchored, range: NSMakeRange(0, trimmedString.characters.count))
+        if found == nil || found?.range.location == NSNotFound || trimmedString.characters.count % 2 != 0 {
+          return nil
+        }
+      }catch let error as NSError {
+        print("error converting hex data \(error)")
         return nil
       }
       
+      
       // everything ok, so now let's build NSData
       
-      let data = NSMutableData(capacity: count(trimmedString) / 2)
+      let data = NSMutableData(capacity: trimmedString.characters.count / 2)
       
       for var index = trimmedString.startIndex; index < trimmedString.endIndex; index = index.successor().successor() {
         let byteString = trimmedString.substringWithRange(Range<String.Index>(start: index, end: index.successor().successor()))
@@ -55,7 +60,7 @@ extension String {
 
 extension NSData {
     func hexString() -> NSString {
-        var str = NSMutableString()
+        let str = NSMutableString()
         let bytes = UnsafeBufferPointer<UInt8>(start: UnsafePointer(self.bytes), count:self.length)
         for byte in bytes {
             str.appendFormat("%02hhx", byte)

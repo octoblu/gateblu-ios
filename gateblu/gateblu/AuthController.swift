@@ -32,13 +32,13 @@ class AuthController : NSObject {
     if onReady != nil {
       onReady!()
     }
-    println("UUID \(uuid) & Token \(token)")
+    print("UUID \(uuid) & Token \(token)")
   }
   
   func register(onSuccess: () -> ()){
     let meshblu = getGatebluDevice()
     meshblu.register({ (uuid: String, token: String) -> () in
-      println("Registered \(uuid) \(token)")
+      print("Registered \(uuid) \(token)")
       self.setUuidAndToken(uuid, token: token)
       if self.onReady != nil {
         self.onReady!()

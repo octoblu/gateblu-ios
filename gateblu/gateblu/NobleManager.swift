@@ -56,7 +56,7 @@ class NobleManager: NSObject {
     }
     switch action {
     case "startScanning":
-      if !contains(self.scanningSockets, webSocket) {
+      if !self.scanningSockets.contains(webSocket) {
         self.scanningSockets.append(webSocket)
       }
       var uuids:[String] = []
@@ -124,7 +124,7 @@ class NobleManager: NSObject {
       return
       
     default:
-      println("I can't even \(action): \(message)")
+      print("I can't even \(action): \(message)")
     }
   }
   
@@ -147,12 +147,12 @@ class NobleManager: NSObject {
         "serviceUuids": data["services"]!
       ]
     ]
-    println("Discovered: \(message)")
+    print("Discovered: \(message)")
     for uuid in data["services"] as! [String] {
-      var services = self.serviceMap[uuid] as [PSWebSocket]?
+      let services = self.serviceMap[uuid] as [PSWebSocket]?
       if (services != nil) {
         for webSocket in services! {
-          if contains(self.scanningSockets, webSocket) {
+          if self.scanningSockets.contains(webSocket) {
             webSocket.send(message.rawString())
           }
         }

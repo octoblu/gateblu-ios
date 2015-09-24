@@ -81,7 +81,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func pageTitleView(name: String?) {
-    println("Setting page title \(name)")
+    print("Setting page title \(name)")
     if name == nil {
       self.navigationBar?.topItem?.title = "Gateblu"
       return
@@ -91,16 +91,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func getGatebluDevice(){
-    println("Checking gateblu device")
+    print("Checking gateblu device")
     let auth = controllerManager.getAuthController()
     let meshblu = auth.getGatebluDevice()
     meshblu.getDevice() {
       (result) -> () in
       switch result {
-      case let .Failure(error):
-        println("Failed to get gateblu device")
-      case let .Success(success):
-        let json = success.value
+      case .Failure(_):
+        print("Failed to get gateblu device")
+      case let .Success(json):
         self.gatebluOwner = json["owner"].string
         self.pageTitleView(json["name"].string)
         self.checkGatebluDeviceOnDelay()
@@ -119,15 +118,15 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   func listOnGatebluReady() {
     let auth = controllerManager.getAuthController()
     auth.onDeviceAuth({
-      println("On Device Auth")
+      print("On Device Auth")
       self.getGatebluDevice()
     })
   }
   
   func resetGateblu(){
-    var alert = UIAlertController(title: "Reset Gateblu", message: "Are you sure you want to reset this gateblu?", preferredStyle: UIAlertControllerStyle.Alert)
+    let alert = UIAlertController(title: "Reset Gateblu", message: "Are you sure you want to reset this gateblu?", preferredStyle: UIAlertControllerStyle.Alert)
     let alertAction = UIAlertAction(title: "Reset", style: UIAlertActionStyle.Destructive, handler: { action in
-      println("reset gateblu")
+      print("reset gateblu")
       self.resetGatebluNow()
     })
     alert.addAction(alertAction)
@@ -160,25 +159,25 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   func startDeviceManager() {
     let deviceManager = controllerManager.getDeviceManager()
     deviceManager.start()
-    println("started device manager")
+    print("started device manager")
     deviceManager.setOnDevicesChange({() -> () in
       self.loading = false
       self.setUuidLabel()
       self.deviceCollectionView!.reloadData()
-      println("Devices changed!")
+      print("Devices changed!")
       SVProgressHUD.dismiss()
     })
   }
   
   func copyUuid(){
     let uuid = controllerManager.getAuthController().uuid!
-    println("Copying uuid \(uuid)")
+    print("Copying uuid \(uuid)")
     UIPasteboard.generalPasteboard().string = uuid
   }
   
   func copyToken(){
     let token = controllerManager.getAuthController().token!
-    println("Copying token \(token)")
+    print("Copying token \(token)")
     UIPasteboard.generalPasteboard().string = token
   }
   
@@ -188,7 +187,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let meshbluConfig = ["uuid": uuid, "token": token, "server": "meshblu.octoblu.com", "port": 443]
     let meshbluJSON = JSON(meshbluConfig)
     let rawMeshbluJSON = meshbluJSON.rawString()!
-    println("Copying meshblu.json \(rawMeshbluJSON)")
+    print("Copying meshblu.json \(rawMeshbluJSON)")
     UIPasteboard.generalPasteboard().string = rawMeshbluJSON
   
   }

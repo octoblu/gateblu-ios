@@ -45,7 +45,6 @@
 		D00F5C541A52132700498ADB /* hue.png in Resources */ = {isa = PBXBuildFile; fileRef = D00F5C501A52132700498ADB /* hue.png */; };
 		D03B39131B1CF57500F8DC04 /* device.html in Resources */ = {isa = PBXBuildFile; fileRef = D03B39121B1CF57500F8DC04 /* device.html */; };
 		D03B39151B1CF5DD00F8DC04 /* Template.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03B39141B1CF5DD00F8DC04 /* Template.swift */; };
-		D045A1B81B1FB42700C93452 /* gateblu-info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D045A1B71B1FB42700C93452 /* gateblu-info.plist */; };
 		D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19D1A5351EE004D4DC9 /* robot1.png */; };
 		D07CF1A71A5351EE004D4DC9 /* robot2.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19E1A5351EE004D4DC9 /* robot2.png */; };
 		D07CF1A81A5351EE004D4DC9 /* robot3.png in Resources */ = {isa = PBXBuildFile; fileRef = D07CF19F1A5351EE004D4DC9 /* robot3.png */; };
@@ -338,7 +337,8 @@
 		9A0C957B1A41F77200236CFC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastSwiftUpdateCheck = 0700;
+				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = Octoblu;
 				TargetAttributes = {
 					9A0C95821A41F77200236CFC = {
@@ -391,7 +391,6 @@
 				D03B39131B1CF57500F8DC04 /* device.html in Resources */,
 				D07CF1A61A5351EE004D4DC9 /* robot1.png in Resources */,
 				D07CF1AC1A5351EE004D4DC9 /* robot7.png in Resources */,
-				D045A1B81B1FB42700C93452 /* gateblu-info.plist in Resources */,
 				BBA5E6EB1A5E414900265B34 /* LaunchScreen.xib in Resources */,
 				D07CF1AA1A5351EE004D4DC9 /* robot5.png in Resources */,
 				BB6D7CAF1A42968F007B8E17 /* config.xml in Resources */,
@@ -552,6 +551,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -566,10 +566,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -603,9 +607,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_OUTPUT_FORMAT = binary;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
+				PRODUCT_NAME = "";
 				SDKROOT = iphoneos;
+				STRINGS_FILE_OUTPUT_ENCODING = "UTF-8";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -624,6 +632,7 @@
 				INFOPLIST_FILE = "gateblu/gateblu-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.octoblu.gateblu-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -643,6 +652,7 @@
 				INFOPLIST_FILE = "gateblu/gateblu-info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.octoblu.gateblu-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -663,6 +673,7 @@
 				);
 				INFOPLIST_FILE = gatebluTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.octoblu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gateblu.app/gateblu";
 			};
@@ -678,6 +689,7 @@
 				);
 				INFOPLIST_FILE = gatebluTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.octoblu.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/gateblu.app/gateblu";
 			};

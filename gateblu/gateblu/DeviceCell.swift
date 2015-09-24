@@ -19,7 +19,7 @@ class DeviceCell: UICollectionViewCell, UIWebViewDelegate {
     if imageUrl == nil {
       return;
     }
-    println("loading image now \(imageUrl!) \(device!.online)");
+    print("loading image now \(imageUrl!) \(device!.online)");
     self.webView!.stringByEvaluatingJavaScriptFromString("window.updateImage('\(imageUrl!)', \(device!.online))");
   }
   

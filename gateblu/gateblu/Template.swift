@@ -10,13 +10,18 @@ import Foundation
 
 class Template {
   class func getTemplateFromBundle(templateName: String, replaceValues: Dictionary<String, String>) -> String {
-    println("templateName \(templateName)")
-    var htmlFilePath = NSBundle.mainBundle()
+    print("templateName \(templateName)")
+    let htmlFilePath = NSBundle.mainBundle()
         .pathForResource(templateName, ofType:"html")!
-    var html = String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding, error: nil)
-    for (key, value) in replaceValues {
-      html = html!.stringByReplacingOccurrencesOfString("{{\(key)}}", withString: value, options: nil, range: nil)
+    do {
+      var html = try String(contentsOfFile: htmlFilePath, encoding: NSUTF8StringEncoding)
+      for (key, value) in replaceValues {
+        html = html.stringByReplacingOccurrencesOfString("{{\(key)}}", withString: value, options: NSStringCompareOptions.LiteralSearch, range: nil)
+      }
+      return html
+    } catch let error as NSError {
+      print("Error: \(error)")
     }
-    return html!
+    return ""
   }
 }

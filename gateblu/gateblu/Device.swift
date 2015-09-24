@@ -49,7 +49,7 @@ class Device {
   func update(device: Dictionary<String, AnyObject>){
     self.uuid = device["uuid"] as! String
     self.name = device["name"] as! String?
-    var online = device["online"] as! Bool?
+    let online = device["online"] as! Bool?
     self.online = online == true
     self.type = device["type"] as! String?
     setDefaults()
@@ -86,13 +86,13 @@ class Device {
   }
   
   func getImagePath() -> String {
-    let parsedType = split(self.type!) {$0 == ":"}
-    let folder = parsedType[0]
+    let parsedType = self.type!.componentsSeparatedByString(":")
+    _ = parsedType[0]
     let file = parsedType[1]
-    if contains(soSmartDevices, file) {
+    if soSmartDevices.contains(file) {
       return file + ".png"
     } else {
-      var randomIndex = abs(self.type!.hash) % notSoSmartRobots.count
+      let randomIndex = abs(self.type!.hash) % notSoSmartRobots.count
       return notSoSmartRobots[randomIndex];
     }
   }
@@ -101,7 +101,7 @@ class Device {
     if self.logo != nil {
       return self.logo!
     }
-    let parsedType = split(self.type!) {$0 == ":"}
+    let parsedType = self.type!.componentsSeparatedByString(":")
     let folder = parsedType[0]
     let file = parsedType[1]
     let urlString = "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg"

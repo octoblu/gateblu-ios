@@ -41,7 +41,7 @@ class DeviceViewController: NSObject {
     let controller = controllerManager.getViewController()
     let parentView = controller.view as UIView
     parentView.addSubview(self.view)
-    println("Started Device View!!!")
+    print("Started Device View!!!")
   }
 
   func getJavascript() -> String {

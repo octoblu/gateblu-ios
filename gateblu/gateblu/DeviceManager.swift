@@ -55,7 +55,7 @@ class DeviceManager: NSObject {
   }
   
   func startDeviceManagerView(){
-    println("Starting Device Manager View")
+    print("Starting Device Manager View")
     self.deviceManagerView = DeviceManagerView()
     self.deviceManagerView.startWebView()
   }
@@ -69,33 +69,33 @@ class DeviceManager: NSObject {
   }
   
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
-    println("onGatebluMesssage: \(message)")
+    print("onGatebluMesssage: \(message)")
     let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
     let jsonResult = JSON(data: data)
     let action = jsonResult["action"].stringValue
     let id = jsonResult["id"].stringValue
     let dataResult = jsonResult["data"]
-    var responseMessage = ["id": id]
+    let responseMessage = ["id": id]
     
     switch action {
     case "stopDevice":
-      println("[Stopping Device]")
+      print("[Stopping Device]")
       self.findAndStopDevice(dataResult)
     case "startDevice":
-      println("[Starting Device]")
+      print("[Starting Device]")
       self.findAndStartDevice(dataResult)
     case "removeDevice":
-      println("[Removing Device]")
+      print("[Removing Device]")
       self.removeDevice(dataResult)
     case "addDevice":
-      println("[Adding Device]")
+      print("[Adding Device]")
       let device = Device(json: dataResult)
       self.addDevice(device)
     case "ready":
-      println("[Gateblu Ready]")
+      print("[Gateblu Ready]")
       updateDevices()
     default:
-      println("I can't even: \(action)")
+      print("I can't even: \(action)")
     }
     let jsonResponse = JSON(responseMessage)
     gatebluWebsocketServer.send(webSocket, message: jsonResponse.rawString())
@@ -134,7 +134,7 @@ class DeviceManager: NSObject {
   
   func startDevice(device: Device){
     if let name = device.name {
-      println("Starting Device \(name)...")
+      print("Starting Device \(name)...")
     }
     device.wakeUp()
   }
@@ -201,7 +201,7 @@ class DeviceManager: NSObject {
     var filteredArray : [JSON] = []
     for item in collection {
       let itemJSON = item as! JSON
-      if let i = (itemJSON)["uuid"].string {
+      if let _ = (itemJSON)["uuid"].string {
         filteredArray.append(itemJSON)
       }
     }

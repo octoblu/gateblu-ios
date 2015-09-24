@@ -8,14 +8,13 @@
 
 import Foundation
 import MeshbluKit
-import Result
 import SwiftyJSON
 
 class GatebluDevice : AnyObject {
   var meshbluHttp: MeshbluHttp!
 
   init(meshbluConfig: [String: AnyObject]){
-    println("GATEBLU DEVICE")
+    print("GATEBLU DEVICE")
     self.meshbluHttp = MeshbluHttp(meshbluConfig: meshbluConfig)
     let uuid = meshbluConfig["uuid"] as? String
     let token = meshbluConfig["token"] as? String
@@ -25,7 +24,7 @@ class GatebluDevice : AnyObject {
   }
   
   init(meshbluHttp: MeshbluHttp) {
-    println("GATEBLU DEVICE")
+    print("GATEBLU DEVICE")
     self.meshbluHttp = meshbluHttp
   }
   
@@ -42,10 +41,9 @@ class GatebluDevice : AnyObject {
     
     self.meshbluHttp.register(device) { (result) -> () in
       switch result {
-      case let .Failure(error):
-        println("Failed to register")
-      case let .Success(success):
-        let json = success.value
+      case .Failure(_):
+        print("Failed to register")
+      case let .Success(json):
         let uuid = json["uuid"].stringValue
         let token = json["token"].stringValue
         
@@ -66,7 +64,7 @@ class GatebluDevice : AnyObject {
   }
   
   func sendMessage(payload: [String: AnyObject], handler: (Result<JSON, NSError>) -> ()){
-    var message : [String: AnyObject] = [
+    let message : [String: AnyObject] = [
       "devices" : ["*"],
       "payload" : payload,
       "topic" : "some-topic"
@@ -82,11 +80,11 @@ class GatebluDevice : AnyObject {
     self.meshbluHttp.generateToken(uuid) {
       (result) -> () in
       switch result {
-      case let .Failure(error):
-        println("Failed to generate token")
-      case let .Success(success):
-        println("Generated token")
-        let json = success.value
+      case .Failure(_):
+        print("Failed to generate token")
+      case let .Success(json):
+        print("Generated token")
+        let json = json
         let token = json["token"].stringValue
         
         onSuccess(token: token)

@@ -24,32 +24,32 @@ class GatebluWebsocketServer: NSObject, PSWebSocketServerDelegate {
   }
   
   func serverDidStart(server:PSWebSocketServer!) {
-    println("GatebluWebsocketServer starting")
+    print("GatebluWebsocketServer starting")
     onStart()
   }
   
   func serverDidStop(server:PSWebSocketServer!) {
-    println("GatebluWebsocketServer stopping")
+    print("GatebluWebsocketServer stopping")
   }
   
   func server(server:PSWebSocketServer!, acceptWebSocketWithRequest request:NSURLRequest) -> (Bool) {
-    println("GatebluWebsocketServer should accept request: \(request)")
+    print("GatebluWebsocketServer should accept request: \(request)")
     return true
   }
   
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didReceiveMessage message:AnyObject) {
-    println("GatebluWebsocketServer websocket did receive message:")
+    print("GatebluWebsocketServer websocket did receive message:")
     onMessage(webSocket, "\(message)")
   }
   
   func server(server:PSWebSocketServer!, webSocketDidOpen webSocket:PSWebSocket!) {
-    println("GatebluWebsocketServer websocket did open \(webSocket)")
+    print("GatebluWebsocketServer websocket did open \(webSocket)")
   }
   
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didCloseWithCode code:NSInteger, reason:String, wasClean:Bool) {
-    println("GatebluWebsocketServer websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
+    print("GatebluWebsocketServer websocket did close with code: \(code), reason: \(reason), wasClean: \(wasClean)")
   }
   func server(server:PSWebSocketServer!, webSocket:PSWebSocket!, didFailWithError error:NSError) {
-    println("GatebluWebsocketServer websocket did fail with error: \(error)")
+    print("GatebluWebsocketServer websocket did fail with error: \(error)")
   }
 }

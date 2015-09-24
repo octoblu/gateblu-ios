@@ -15,17 +15,17 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
     let name = message.name
     switch name {
       case "deviceConfig":
-        println("ONCONFIG: \(message.body)")
+        print("ONCONFIG: \(message.body)")
         let responseObject = message.body as! Dictionary<String, AnyObject>
         if let device: AnyObject = responseObject["device"] {
           self.updateDeviceName(device as! Dictionary<String, AnyObject>)
         }
       case "managerConfig":
-        println("MANAGER_DEBUG: \(message.body)")
+        print("MANAGER_DEBUG: \(message.body)")
       case "connectorNotification":
-        println("CONNECTOR_DEBUG: \(message.body)")
+        print("CONNECTOR_DEBUG: \(message.body)")
       default:
-        println("SOME_DEBUG: \(message.body)")
+        print("SOME_DEBUG: \(message.body)")
     }
   }
   
