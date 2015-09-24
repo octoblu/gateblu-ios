@@ -22,12 +22,13 @@ PODS:
     - AFNetworking/NSURLSession
   - Alamofire (2.0.2)
   - DZNEmptyDataSet (1.7.1)
-  - MeshbluKit (1.3.0):
+  - MeshbluKit (1.4.3):
     - Alamofire (~> 2.0.2)
     - SwiftyJSON (~> 2.3.0)
   - PocketSocket (0.6.4)
   - SVProgressHUD (HEAD based on 1.1.3)
   - SwiftyJSON (2.3.0)
+  - SwiftyUUID (1.0.0)
 
 DEPENDENCIES:
   - AFNetworking
@@ -36,14 +37,16 @@ DEPENDENCIES:
   - PocketSocket
   - SVProgressHUD (HEAD)
   - SwiftyJSON
+  - SwiftyUUID
 
 SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   Alamofire: 8edbab00802a752bb5240cc2abe70e7e881488ad
   DZNEmptyDataSet: 2a398066c2bf5848f7f693fb50954b5064debd12
-  MeshbluKit: a9e0c602781c49d496d6118b0ab4c6b3e8785af3
+  MeshbluKit: e01e08c40708f97238ca6f1eed8519d9c8306082
   PocketSocket: eee7ef375f55b98e7ca79e097d9c61fd688e9494
   SVProgressHUD: 748080e4f36e603f6c02aec292664239df5279c1
   SwiftyJSON: 8d6b61a70277ef2a5d710d372e06e7e2d87fb9e4
+  SwiftyUUID: d0c372a879bbf5d7cfb507eba78e36a2d7f2a363
 
 COCOAPODS: 0.38.2

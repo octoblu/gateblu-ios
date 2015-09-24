@@ -32,7 +32,7 @@ class AuthController : NSObject {
     if onReady != nil {
       onReady!()
     }
-    print("UUID \(uuid) & Token \(token)")
+    print("UUID \(uuid!) & TOKEN \(token!)")
   }
   
   func register(onSuccess: () -> ()){
