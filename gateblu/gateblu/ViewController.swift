@@ -90,6 +90,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     self.navigationBar?.topItem?.title = name
   }
   
+  func hasOwner() -> Bool {
+    return self.gatebluOwner != nil || self.gatebluOwner == ""
+  }
+  
   func getGatebluDevice(){
     print("Checking gateblu device")
     let auth = controllerManager.getAuthController()
@@ -97,8 +101,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     meshblu.getDevice() {
       (result) -> () in
       switch result {
-      case .Failure(_):
-        print("Failed to get gateblu device")
+      case let .Failure(error):
+        print("Failed to get gateblu device \(error)")
       case let .Success(json):
         self.gatebluOwner = json["owner"].string
         self.pageTitleView(json["name"].string)
@@ -193,7 +197,10 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-    if deviceManager.stopped || gatebluOwner == nil {
+    if deviceManager.stopped {
+      return 0
+    }
+    if !hasOwner() {
       return 0
     }
     return deviceManager.devices.count
@@ -205,9 +212,9 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     let device = deviceManager.devices[indexPath.item]
     cell.device = device
     if device.online {
-      cell.label!.text = device.name
+      cell.label!.text = device.getName()
     }else{
-      cell.label!.text = "\(device.name!) (offline)"
+      cell.label!.text = "\(device.getName()) (offline)"
     }
     
     let imageUrl = device.getRemoteImageUrl()
@@ -223,7 +230,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func emptyDataSetDidTapButton(scrollView: UIScrollView!) {
-    if gatebluOwner == nil {
+    if !hasOwner() {
       let auth = controllerManager.getAuthController()
       let meshblu = auth.getGatebluDevice()
       meshblu.generateToken(auth.uuid!, onSuccess: {
@@ -245,7 +252,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState state: UIControlState) -> NSAttributedString! {
-    if gatebluOwner == nil {
+    if !hasOwner() {
       return NSAttributedString(string: "Claim Gateblu")
     }
     return nil
@@ -263,7 +270,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     if deviceManager.stopped {
       return true
     }
-    if gatebluOwner == nil {
+    if !hasOwner() {
       return true
     }
     return !loading

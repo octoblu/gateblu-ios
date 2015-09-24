@@ -68,6 +68,11 @@ class DeviceManager: NSObject {
     self.deviceChange = deviceChange
   }
   
+  func getGatebluDevice() -> GatebluDevice {
+    let auth = ControllerManager().getAuthController()
+    return auth.getGatebluDevice()
+  }
+  
   func onGatebluMessage(webSocket:PSWebSocket, message:String) {
     print("onGatebluMesssage: \(message)")
     let data = message.dataUsingEncoding(NSUTF8StringEncoding)!
@@ -76,6 +81,7 @@ class DeviceManager: NSObject {
     let id = jsonResult["id"].stringValue
     let dataResult = jsonResult["data"]
     let responseMessage = ["id": id]
+
     
     switch action {
     case "stopDevice":
@@ -133,6 +139,7 @@ class DeviceManager: NSObject {
   }
   
   func startDevice(device: Device){
+    self.getGatebluDevice().sendLogMessage("start-device", state: "begin", device: device, message: "")
     if let name = device.name {
       print("Starting Device \(name)...")
     }
@@ -140,10 +147,10 @@ class DeviceManager: NSObject {
   }
   
   func removeDevice(json:JSON) {
-    let uuidToRempve = json["uuid"].stringValue
+    let uuidToRemove = json["uuid"].stringValue
     for var index = 0; index < devices.count; ++index {
       let device = devices[index]
-      if device.uuid == uuidToRempve  {
+      if device.uuid == uuidToRemove  {
         self.devices.removeAtIndex(index)
       }
     }
@@ -162,12 +169,13 @@ class DeviceManager: NSObject {
     }
   }
   
-  func updateDeviceByUuid(uuid: String, name: String?, logo: String?, type: String?, online: Bool){
+  func updateDeviceByUuid(uuid: String, name: String?, logo: String?, type: String?, initializing: Bool, online: Bool){
     for device in self.devices {
       if device.uuid == uuid {
         device.setName(name)
         device.logo = logo
         device.online = online
+        device.initializing = initializing
         device.type = type
       }
     }

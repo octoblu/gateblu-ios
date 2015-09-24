@@ -18,17 +18,19 @@ class Device {
   var type:String?
   var connector:String?
   var logo:String?
+  var initializing:Bool
   var webViewController:DeviceViewController!
   let notSoSmartRobots : [String] = ["robot1", "robot2", "robot3", "robot4", "robot5", "robot6"]
   let soSmartDevices : [String] = ["blink1", "bean", "hue", "generic"]
   
-  init(uuid: String, token: String, online: Bool, name: String?, type: String?, connector: String?, logo: String?) {
+  init(uuid: String, token: String, online: Bool, initializing: Bool, name: String?, type: String?, connector: String?, logo: String?) {
     self.uuid = uuid
     self.token = token
     self.name = name
     self.type = type
     self.online = online
     self.connector = connector
+    self.initializing = initializing
     self.logo = logo
     self.setDefaults()
     self.webViewController = DeviceViewController(self)
@@ -38,6 +40,7 @@ class Device {
     self.uuid = json["uuid"].stringValue
     self.token = json["token"].stringValue
     self.online = json["online"].boolValue
+    self.initializing = json["initializing"].boolValue
     self.name = json["name"].string
     self.type = json["type"].string
     self.connector = json["connector"].string
@@ -51,6 +54,8 @@ class Device {
     self.name = device["name"] as! String?
     let online = device["online"] as! Bool?
     self.online = online == true
+    let initializing = device["initializing"] as! Bool?
+    self.initializing = initializing == true
     self.type = device["type"] as! String?
     setDefaults()
     self.start()
@@ -62,6 +67,16 @@ class Device {
     }else{
       self.name = name
     }
+  }
+  
+  func getName() -> String {
+    if self.initializing {
+      return "[Initializing]"
+    }
+    if name == nil || name == "" {
+      return "[Unknown Name]"
+    }
+    return name!
   }
   
   func setDefaults(){
