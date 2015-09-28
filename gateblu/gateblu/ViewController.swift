@@ -19,6 +19,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   private let reuseIdentifier = "DeviceCell"
   var loading = true
   var gatebluOwner : String?
+  var claimingGateblu : Bool = false
   
   @IBOutlet var deviceCollectionView: UICollectionView?
   @IBOutlet var uuidLabel: UILabel?
@@ -106,13 +107,17 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
       case let .Success(json):
         self.gatebluOwner = json["owner"].string
         self.pageTitleView(json["name"].string)
-        self.checkGatebluDeviceOnDelay()
+        if self.claimingGateblu {
+          self.checkGatebluDeviceOnDelay()
+          return
+        }
+        self.deviceCollectionView!.reloadData()
       }
     }
   }
   
   func checkGatebluDeviceOnDelay() {
-    if self.gatebluOwner != nil {
+    if hasOwner() {
       self.deviceCollectionView!.reloadData()
       return
     }
@@ -231,6 +236,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   func emptyDataSetDidTapButton(scrollView: UIScrollView!) {
     if !hasOwner() {
+      claimingGateblu = true
       let auth = controllerManager.getAuthController()
       let meshblu = auth.getGatebluDevice()
       meshblu.generateToken(auth.uuid!, onSuccess: {
@@ -253,7 +259,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   
   func buttonTitleForEmptyDataSet(scrollView: UIScrollView!, forState state: UIControlState) -> NSAttributedString! {
     if !hasOwner() {
-      return NSAttributedString(string: "Claim Gateblu")
+      return NSAttributedString(string: "Click here to claim Gateblu")
     }
     return nil
   }

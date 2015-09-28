@@ -24,6 +24,7 @@ class DeviceViewController: NSObject {
     let handler = NotificationScriptMessageHandler()
     userContentController.addScriptMessageHandler(handler, name: "connectorNotification")
     userContentController.addScriptMessageHandler(handler, name: "deviceConfig")
+    userContentController.addScriptMessageHandler(handler, name: "sendLogMessage")
     let configuration = WKWebViewConfiguration()
     configuration.userContentController = userContentController
     let rect:CGRect = CGRectMake(0,0,0,0)

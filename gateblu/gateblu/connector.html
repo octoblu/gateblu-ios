@@ -7,44 +7,55 @@
         window.webkit.messageHandlers.connectorNotification.postMessage({ connector: "{{connector}}", body: error });
       };
       console.log = console.error;
+      window.sendLogMessage = function(workflow, state, message){
+        window.webkit.messageHandlers.sendLogMessage.postMessage({ workflow: workflow, state: state, uuid: '{{uuid}}', message: message });
+      };
       window.onerror = function (errorMsg, url, lineNumber) {
         var values = Object.keys(arguments).map(function(key){return a[key]})
-        console.log("Error occured: " + JSON.stringify(values)); //or any message
+        var stringifiedValues = JSON.stringify(values);
+        console.log("Error occured: " + stringifiedValues); //or any message
+        sendLogMessage('running-device', 'error', stringifiedValues);
         return false;
       };
-    </script>
+      </script>
     
-    <script type="text/javascript" src="http://cdn.octoblu.com/js/{{connector}}/latest/{{connector}}.js"></script>
-    <script type="text/javascript">
-      (function() {
-       if (typeof Connector !== 'function'){
-         alert("{{connector}} plugin not compatible with mobile");
-         return;
-       }
-       var connector = new Connector({
-         uuid:"{{uuid}}",
-         token:"{{token}}"
-       });
-       
-       if(!connector){
-         alert("{{connector}} plugin is invalid");
-       
-         return;
-       }
-       
-       if(typeof connector.on === 'function' ){
-         connector.on("config", function(device){
+      <script type="text/javascript" src="http://cdn.octoblu.com/js/{{connector}}/latest/{{connector}}.js"></script>
+      <script type="text/javascript">
+        (function() {
+          var message, running = false;
+          if (typeof Connector !== 'function'){
+            message = "{{connector}} plugin not compatible with mobile";
+            sendLogMessage('start-device', 'error', message);
+            return;
+          }
+          var connector = new Connector({
+            uuid:"{{uuid}}",
+            token:"{{token}}"
+          });
+         
+         if(!connector){
+            message = "{{connector}} plugin is invalid";
+            sendLogMessage('start-device', 'error', message);
+            return;
+         }
+         
+         if(typeof connector.on === 'function' ){
+          connector.on("config", function(device){
+            if(!running){
+              sendLogMessage('start-device', 'end', '');
+              running = true
+            }
             window.webkit.messageHandlers.deviceConfig.postMessage({ device: device });
-         });
-       }
-       
-       if(typeof connector.run === 'function'){
-          connector.run()
-       }
-
-       window.connector = connector;
-      })();
-    </script>
+          });
+         }
+         
+         if(typeof connector.run === 'function'){
+           connector.run()
+         }
+         
+          window.connector = connector;
+        })();
+      </script>
   </head>
   <body>
   </body>

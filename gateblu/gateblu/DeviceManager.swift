@@ -114,26 +114,28 @@ class DeviceManager: NSObject {
   
   func findAndStartDevice(json: JSON){
     let uuidToStart = json["uuid"].stringValue
-    var found = false
-    for device in devices {
-      if device.uuid == uuidToStart  {
-        found = true
-        startDevice(device)
-      }
-    }
-    if found == false {
+    if let device = findDevice(uuidToStart) {
+      startDevice(device)
+    }else{
       let device = Device(json: json)
       addDevice(device)
     }
     updateDevices()
   }
   
+  func findDevice(uuid: String) -> Device? {
+    for device in devices {
+      if device.uuid == uuid {
+        return device
+      }
+    }
+    return nil
+  }
+  
   func findAndStopDevice(json: JSON) {
     let uuidToStop = json["uuid"].stringValue
-    for device in devices {
-      if device.uuid == uuidToStop {
-        stopDevice(device)
-      }
+    if let device = findDevice(uuidToStop) {
+      stopDevice(device)
     }
     updateDevices()
   }

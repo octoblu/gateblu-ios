@@ -14,14 +14,16 @@
       };
     </script>
     
-    <script type="text/javascript" src="http://cdn.octoblu.com/js/gateblu-websocket/latest/gateblu-websocket.js"></script>
+    <script type="text/javascript" src="https://cdn.octoblu.com/js/gateblu-websocket/latest/gateblu-websocket.js"></script>
     <script type="text/javascript">
       (function() {
-         var gatebluWebsocket = new GatebluWebsocket({
-           uuid: "{{uuid}}",
-           token: "{{token}}"
-         });
-         gatebluWebsocket.run();
+       
+       var gatebluWebsocket = new GatebluWebsocket({
+         uuid: "{{uuid}}",
+         token: "{{token}}"
+       });
+       gatebluWebsocket.run();
+       
       })();
     </script>
   </head>

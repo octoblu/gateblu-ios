@@ -4,13 +4,12 @@ platform :ios, '8.0'
 use_frameworks!
 
 target 'gateblu' do
-    pod 'PocketSocket'
-    pod 'AFNetworking'
-    pod 'SVProgressHUD', :head
-    pod 'SwiftyJSON'
-    pod 'DZNEmptyDataSet'
-    pod 'MeshbluKit'
-    pod 'SwiftyUUID'
+    pod 'PocketSocket', '~> 0.6.4'
+    pod 'SVProgressHUD', '~> 1.1.3'
+    pod 'SwiftyJSON', '~> 2.3.0'
+    pod 'DZNEmptyDataSet', '~> 1.7.2'
+    pod 'MeshbluKit', '~> 1.5.0'
+    pod 'SwiftyUUID', '~> 1.0.0'
 end
 
 target 'gatebluTests' do

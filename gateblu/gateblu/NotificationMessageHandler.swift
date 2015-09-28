@@ -22,11 +22,27 @@ class NotificationScriptMessageHandler: NSObject, WKScriptMessageHandler {
         }
       case "managerConfig":
         print("MANAGER_DEBUG: \(message.body)")
+      case "managerNotification":
+        print("MANAGER_DEBUG: \(message.body)")
       case "connectorNotification":
         print("CONNECTOR_DEBUG: \(message.body)")
+      case "sendLogMessage":
+        print("SEND LOG MESSAGE: \(message.body)")
+        let responseObject = message.body as! Dictionary<String, AnyObject>
+        sendLogMessage(responseObject)
       default:
         print("SOME_DEBUG: \(message.body)")
     }
+  }
+  
+  func sendLogMessage(responseObject: Dictionary<String, AnyObject>){
+    let uuid = responseObject["uuid"] as! String
+    let workflow = responseObject["workflow"] as! String
+    let state = responseObject["state"] as! String
+    let message = responseObject["message"] as! String
+    let deviceManager = ControllerManager().getDeviceManager()
+    let device = deviceManager.findDevice(uuid)
+    deviceManager.getGatebluDevice().sendLogMessage(workflow, state: state, device: device!, message: message)
   }
   
   func updateDevice(deviceDictionary: Dictionary<String, AnyObject>){
