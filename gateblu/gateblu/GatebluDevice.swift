@@ -10,6 +10,7 @@ import Foundation
 import MeshbluKit
 import SwiftyJSON
 import SwiftyUUID
+import LNRSimpleNotifications
 
 
 class GatebluDevice : AnyObject {
@@ -121,12 +122,12 @@ class GatebluDevice : AnyObject {
       "platform": "ios",
       "gatebluVersion": version
     ]
-    let message : [String: AnyObject] = [
+    let meshbluMessage : [String: AnyObject] = [
       "devices" : [GATEBLU_LOGGER_UUID, self.uuid!],
       "topic": "gateblu_log",
       "payload": payload
     ]
-    sendMessage(message) {
+    sendMessage(meshbluMessage) {
       (result) in
       switch result {
       case .Failure(_):
@@ -135,6 +136,20 @@ class GatebluDevice : AnyObject {
         print("Successfully logged message")
       }
     }
+    
+    startNotification("\(device.getName()) Error", body: message)
+    
   }
- 
+  
+  func startNotification(title: String, body: String){
+    LNRSimpleNotifications.sharedNotificationManager.showNotification(title, body: body, callback: { () -> Void in
+      NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: Selector("endNotification"), userInfo: nil, repeats: false)
+    })
+  }
+
+  func endNotification(){
+    LNRSimpleNotifications.sharedNotificationManager.dismissActiveNotification({ () -> Void in
+      print("Notification dismissed")
+    })
+  }
 }

@@ -119,7 +119,7 @@ class Device {
     let parsedType = self.type!.componentsSeparatedByString(":")
     let folder = parsedType[0]
     let file = parsedType[1]
-    let urlString = "https://ds78apnml6was.cloudfront.net/\(folder)/\(file).svg"
+    let urlString = "https://icons.octoblu.com/\(folder)/\(file).svg"
   
     return urlString
   }

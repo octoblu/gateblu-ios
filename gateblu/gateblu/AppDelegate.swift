@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import LNRSimpleNotifications
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -31,6 +32,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if authController == nil {
       authController = AuthController()
     }
+    LNRSimpleNotifications.sharedNotificationManager.notificationsPosition = LNRNotificationPosition.Top
+    LNRSimpleNotifications.sharedNotificationManager.notificationsBackgroundColor = UIColor.darkGrayColor()
+    LNRSimpleNotifications.sharedNotificationManager.notificationsTitleTextColor = UIColor.whiteColor()
+    LNRSimpleNotifications.sharedNotificationManager.notificationsBodyTextColor = UIColor.whiteColor()
+    LNRSimpleNotifications.sharedNotificationManager.notificationsSeperatorColor = UIColor.grayColor()
+    
     if let options = launchOptions {
       if var _: NSArray = options[UIApplicationLaunchOptionsBluetoothCentralsKey] as? NSArray {
         // Awake as Bluetooth Central

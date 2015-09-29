@@ -92,7 +92,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
   }
   
   func hasOwner() -> Bool {
-    return self.gatebluOwner != nil || self.gatebluOwner == ""
+    return self.gatebluOwner != nil && self.gatebluOwner != ""
   }
   
   func getGatebluDevice(){
@@ -105,8 +105,12 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
       case let .Failure(error):
         print("Failed to get gateblu device \(error)")
       case let .Success(json):
-        self.gatebluOwner = json["owner"].string
-        self.pageTitleView(json["name"].string)
+        let name = json["name"].string
+        let owner = json["owner"].string
+        self.gatebluOwner = owner
+        self.pageTitleView(owner)
+        print("Name \(name)");
+        print("Owner \(owner)");
         if self.claimingGateblu {
           self.checkGatebluDeviceOnDelay()
           return
@@ -227,7 +231,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
       "imageUrl": imageUrl
     ]
     let html = Template.getTemplateFromBundle("device", replaceValues: values)
-    cell.webView!.loadHTMLString(html, baseURL: NSURL(fileURLWithPath:"http://app.octoblu.com"))
+    cell.webView!.loadHTMLString(html, baseURL: NSURL(fileURLWithPath:"https://app.octoblu.com"))
     cell.webView!.scrollView.scrollEnabled = false
     cell.webView!.scrollView.bounces = false
     
@@ -251,7 +255,7 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     if deviceManager.stopped {
       return NSAttributedString(string: "Gateblu Stopped")
     }
-    if gatebluOwner == nil {
+    if !hasOwner() {
       return nil
     }
     return NSAttributedString(string: "No Devices")

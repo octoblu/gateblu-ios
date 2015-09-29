@@ -10,6 +10,7 @@ target 'gateblu' do
     pod 'DZNEmptyDataSet', '~> 1.7.2'
     pod 'MeshbluKit', '~> 1.5.0'
     pod 'SwiftyUUID', '~> 1.0.0'
+    pod 'LNRSimpleNotifications', '~> 0.2.0'
 end
 
 target 'gatebluTests' do

@@ -34,7 +34,7 @@ class DeviceViewController: NSObject {
   }
   
   func reload() {
-    self.view.loadHTMLString(self.getJavascript(), baseURL: NSURL(string: "http://app.octoblu.com"))
+    self.view.loadHTMLString(self.getJavascript(), baseURL: NSURL(string: "https://app.octoblu.com"))
   }
   
   func startWebView() {
