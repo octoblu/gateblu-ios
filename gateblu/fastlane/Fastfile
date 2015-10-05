@@ -28,7 +28,7 @@ platform :ios do
 
     # increment_build_number
 
-    gym(scheme: 'gateblu') # Build your app - more options available
+    gym # Build your app - more options available
 
     # xctool # run the tests of your app
   end
