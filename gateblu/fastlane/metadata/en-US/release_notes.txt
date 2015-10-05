@@ -1,0 +1,4 @@
+Background logging
+Upgraded to latest version of iOS
+Bug fixes
+Plugin install notifications

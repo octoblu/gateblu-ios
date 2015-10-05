@@ -1,0 +1,7 @@
+Gateblu allows you to connect smart devices and things to Octoblu! Octoblu is a Internet of Things platform allowing you to control IoT devices and services. Hook up your wearables and stream data through Meshblu, our machine to machine communications platform and control it remotely. BLE devices have never been easier to connect to the internet!
+
+This app can run in the background and can stream data directly to the cloud. Gateblu can also be stopped and started if you don't want control its background usage. 
+
+It is possible to add custom devices to Gateblu for iOS through isolated javascript plugins. 
+
+See http://gateblu.octoblu.com/ for more information.

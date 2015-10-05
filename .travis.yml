@@ -2,7 +2,6 @@ language: objective-c
 osx_image: xcode611  # we're telling travis to use xcode 6.1.1 and cocoapods 0.35.0
 before_install:
 - xcode-select --install
-- sudo gem install fastlane --verbose
-env:
-  global:
-  - RELEASE_NOTES=`git log --format=%B -n 1 $TRAVIS_COMMIT`
+- sudo gem install fastlane
+script:
+- ./build
