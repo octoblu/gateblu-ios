@@ -29,9 +29,13 @@ class AuthController : NSObject {
   
   func setFromDefaults() {
     self.setUuidAndToken(userDefaults.stringForKey("uuid")!, token: userDefaults.stringForKey("token")!)
-    if onReady != nil {
-      onReady!()
-    }
+    let meshblu = getGatebluDevice()
+    meshblu.updateDefaults({ () -> () in
+      print("On ready")
+      if self.onReady != nil {
+        self.onReady!()
+      }
+    })
     print("UUID \(uuid!) & TOKEN \(token!)")
   }
   

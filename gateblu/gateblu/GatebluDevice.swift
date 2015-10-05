@@ -42,6 +42,7 @@ class GatebluDevice : AnyObject {
   func register(onSuccess: (uuid: String, token: String) -> ()) {
     let device = [
       "type": "device:gateblu", // Set your own device type
+      "platform": "ios",
       "online" : "true"
     ]
     
@@ -49,6 +50,7 @@ class GatebluDevice : AnyObject {
       switch result {
       case let .Failure(error):
         print("Failed to register \(error)")
+        self.startNotification("Unable to Register Gateblu", body: "")
       case let .Success(json):
         let uuid = json["uuid"].stringValue
         let token = json["token"].stringValue
@@ -56,6 +58,16 @@ class GatebluDevice : AnyObject {
         self.meshbluHttp.setCredentials(uuid, token: token)
         onSuccess(uuid: uuid, token: token)
       }
+    }
+  }
+  
+  func updateDefaults(onSuccess: () -> ()) {
+    let properties = [
+      "platform": "ios"
+    ]
+    
+    self.meshbluHttp.update(properties) { (result) -> () in
+      onSuccess()
     }
   }
   
@@ -92,6 +104,7 @@ class GatebluDevice : AnyObject {
       switch result {
       case .Failure(_):
         print("Failed to generate token")
+        self.startNotification("Unable to Generate Token", body: "")
       case let .Success(json):
         print("Generated token")
         let token = json["token"].stringValue
@@ -136,9 +149,9 @@ class GatebluDevice : AnyObject {
         print("Successfully logged message")
       }
     }
-    
-    startNotification("\(device.getName()) Error", body: message)
-    
+    if state == "error" {
+      startNotification("\(device.getName()) Error", body: message)
+    }
   }
   
   func startNotification(title: String, body: String){

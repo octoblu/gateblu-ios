@@ -32,7 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     if authController == nil {
       authController = AuthController()
     }
-    LNRSimpleNotifications.sharedNotificationManager.notificationsPosition = LNRNotificationPosition.Top
+    LNRSimpleNotifications.sharedNotificationManager.notificationsPosition = LNRNotificationPosition.Bottom
     LNRSimpleNotifications.sharedNotificationManager.notificationsBackgroundColor = UIColor.darkGrayColor()
     LNRSimpleNotifications.sharedNotificationManager.notificationsTitleTextColor = UIColor.whiteColor()
     LNRSimpleNotifications.sharedNotificationManager.notificationsBodyTextColor = UIColor.whiteColor()
